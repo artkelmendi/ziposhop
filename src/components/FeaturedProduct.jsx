@@ -5,8 +5,8 @@ import { featuredProductId } from "../data/homeContent";
 import { productUrl } from "../data/store";
 import styles from "./HomeHighlights.module.css";
 
-export default function FeaturedProduct() {
-  const product = products.find((item) => item.id === featuredProductId);
+export default function FeaturedProduct({ productId = featuredProductId }) {
+  const product = products.find((item) => item.id === productId);
   if (!product) return null;
   return (
     <section

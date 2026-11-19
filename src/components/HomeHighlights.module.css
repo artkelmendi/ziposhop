@@ -84,6 +84,15 @@
 .reviewHeading {
   max-width: 760px;
 }
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+.instagramLink {
+  flex-shrink: 0;
+}
 .reviewHeading > p {
   color: var(--muted);
   line-height: 1.55;
@@ -120,6 +129,11 @@
   color: var(--muted);
 }
 @media (max-width: 750px) {
+  .reviewHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
   .featureSection {
     padding-top: 40px;
   }

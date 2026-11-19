@@ -18,10 +18,13 @@ Install dependencies with `npm ci`, then run `npm run dev`. Open `http://127.0.0
 - `src/pages/` contains the home, catalog, product detail and contact views.
 - `src/data/catalog.js` contains the illustrative product records and categories. `src/data/store.js` contains the shop details and URL helpers.
 - `src/data/homeContent.js` selects the featured product and stores the customer-review copy. The supplied quotes are labeled examples. Replace them with approved customer quotes before setting `customerFeedback.isDemo` to false.
+
 - `public/collection.json` selects products for the continuous collection. It is fetched at runtime and shuffled once per home-page visit.
 - `public/assets/` contains the product images, map and locally hosted font.
 - `src/styles/` contains the storefront design and shared loading styles.
 - `build/loading-shell.js` supplies a delayed placeholder before the application bundle loads.
+
+`FeaturedProduct` accepts a `productId` prop so the future admin-backed homepage settings can supply its selection. The image, description, specifications and “Shiko produktin” destination all resolve from that same ID. The current preview defaults to `featuredProductId` in `src/data/homeContent.js`.
 
 ## Navigation and production output
 
