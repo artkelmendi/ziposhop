@@ -1545,7 +1545,6 @@ footer {
     animation: content-enter 700ms 80ms var(--ease) both;
   }
   .page-entering .category-tile,
-  .page-entering #product-grid > .product-card,
   .page-entering .related .product-card {
     animation: content-enter 850ms calc(260ms + var(--entrance-order, 0) * 65ms)
       var(--ease) both;
