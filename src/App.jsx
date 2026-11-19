@@ -89,7 +89,7 @@ export default function App() {
         Kalo te përmbajtja
       </a>
       <Header loading={leaving} />
-      <div className={leaving ? "route-out" : ""}>
+      <div className={"page-content" + (leaving ? " route-out" : "")}>
         <RouteError key={page}>
           <Suspense
             fallback={
