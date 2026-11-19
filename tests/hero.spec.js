@@ -4,7 +4,7 @@ for (const width of [440, 1440]) {
   test("hero composition stays positioned at " + width + "px", async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto("/");
+    await page.goto("/?hero=classic");
     const hero = page.locator(".hero");
     await expect(page.locator(".still-piece")).toHaveCount(5);
     await expect(page.locator(".still-piece[aria-busy=true]")).toHaveCount(0);

@@ -1,13 +1,17 @@
 import Hero from "../components/Hero";
+import StudioHero from "../components/StudioHero";
+import { useSearchParams } from "react-router-dom";
 import Collection from "../components/Collection";
 import AppLink from "../components/AppLink";
 import CategoryCard from "../components/CategoryCard";
 import Icon from "../components/Icon";
 import { categories } from "../data/catalog";
 export default function HomePage() {
+  const [params] = useSearchParams();
+  const classic = params.get("hero") === "classic";
   return (
     <>
-      <Hero />
+      {classic ? <Hero /> : <StudioHero />}
       <section
         className="wrap categories-section"
         id="kategorite"

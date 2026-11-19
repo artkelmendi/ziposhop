@@ -99,7 +99,16 @@ export default function App() {
             }
           >
             <PageEntry
-              key={page + "-" + (productId || category?.id || "directory")}
+              key={
+                page +
+                "-" +
+                (productId || category?.id || "directory") +
+                (page === "home"
+                  ? "-" +
+                    (new URLSearchParams(location.search).get("hero") ||
+                      "studio")
+                  : "")
+              }
               location={location}
               title={title}
             >

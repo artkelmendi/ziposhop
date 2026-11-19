@@ -26,6 +26,8 @@ Install dependencies with `npm ci`, then run `npm run dev`. Open `http://127.0.0
 
 The existing `/index.html`, `/produktet.html` and `/kontakti.html` URLs remain entry points. Category, search and product links use query parameters. React Router handles navigation and browser history after startup.
 
+The default home page uses the unified product display in `StudioHero.jsx`. The previous hero remains available at `/index.html?hero=classic` through the original `Hero.jsx`. The Git tag `design/home-classic-2026-11-19` preserves the full source state before this alternative.
+
 Produktet opens the category directory. Selecting a category opens its products using `?kategoria=telefona` and equivalent category IDs. Search applies within that category, and product lists paginate at 24 items using `faqja`. Category changes have their own route entry so their headings and products animate on navigation and browser back.
 
 Vite generates content-hashed script and stylesheet filenames. Every HTML entry points to the same compiled application, so updates to the shared navigation reach every page.
