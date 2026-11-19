@@ -12,59 +12,6 @@ function markNavigation(key) {
   });
 }
 
-// The header stays in place as one page departs and the next arrives.
-const reducePageMotion = matchMedia("(prefers-reduced-motion: reduce)");
-let departure;
-document.addEventListener("click", (event) => {
-  const link = event.target.closest("a[href]");
-  if (
-    !link ||
-    event.defaultPrevented ||
-    event.button !== 0 ||
-    event.metaKey ||
-    event.ctrlKey ||
-    event.shiftKey ||
-    event.altKey ||
-    link.target === "_blank" ||
-    link.hasAttribute("download") ||
-    reducePageMotion.matches
-  )
-    return;
-  const destination = new URL(link.href);
-  if (
-    destination.origin !== location.origin ||
-    (destination.pathname === location.pathname &&
-      destination.search === location.search)
-  )
-    return;
-  if (!document.querySelector("main").animate) return;
-  event.preventDefault();
-  departure?.cancel();
-  departure = document.querySelector("main").animate(
-    [
-      { opacity: 1, transform: "translateY(0)" },
-      { opacity: 0.82, transform: "translateY(-7px)" },
-    ],
-    { duration: 145, easing: "cubic-bezier(.4,0,.8,.4)", fill: "forwards" },
-  );
-  departure.onfinish = () => location.assign(destination.href);
-});
-function enterPage() {
-  departure?.cancel();
-  departure = undefined;
-  if (!reducePageMotion.matches)
-    document.querySelector("main").animate?.(
-      [
-        { opacity: 0.78, transform: "translateY(11px)" },
-        { opacity: 1, transform: "translateY(0)" },
-      ],
-      { duration: 410, easing: "cubic-bezier(.16,1,.3,1)" },
-    );
-}
-enterPage();
-window.addEventListener("pageshow", (event) => {
-  if (event.persisted) enterPage();
-});
 document.querySelectorAll("[data-icon]").forEach((el) => {
   el.innerHTML = icon(el.dataset.icon);
 });
@@ -97,7 +44,7 @@ function initHome() {
   const slides = [
     {
       product: null,
-      title: "Teknologji<br><em>në lëvizje</em>",
+      title: "Teknologji<br>në lëvizje",
       type: "ZIPO",
       category: "Pesë kategori",
       description:
@@ -107,7 +54,7 @@ function initHome() {
     },
     {
       product: "iphone-17-pro",
-      title: "iPhone<br><em>17 Pro</em>",
+      title: "iPhone<br>17 Pro",
       type: "17",
       category: "Telefon",
       description:
@@ -117,7 +64,7 @@ function initHome() {
     },
     {
       product: "niu-nqi-sport",
-      title: "Qyteti me<br><em>energji</em>",
+      title: "Qyteti me<br>energji",
       type: "NQi",
       category: "Motor elektrik",
       description:
@@ -132,7 +79,13 @@ function initHome() {
     const entry = slides[slide];
     const product = products.find((item) => item.id === entry.product);
     hero.dataset.slide = String(slide);
-    $("#hero-title").innerHTML = entry.title + '<span class="accent">.</span>';
+    $("#hero-title").innerHTML = entry.title
+      .split("<br>")
+      .map(
+        (line) =>
+          '<span class="headline-line"><span>' + line + "</span></span>",
+      )
+      .join("");
     $("#hero-description").textContent = entry.description;
     $("#hero-primary").href = entry.href;
     $("#hero-primary").textContent = entry.cta;
@@ -241,7 +194,7 @@ function initCatalog() {
       .trim();
   }
   function updateResults(changeUrl) {
-    markNavigation(category || "catalog");
+    markNavigation("catalog");
     const query = normalize(input.value);
     const results = products.filter(
       (product) =>
@@ -325,7 +278,7 @@ function initDetail(product) {
   }
   document.title = product.name + " — ZIPO Mobil Shop";
   const category = categoryName(product.category);
-  markNavigation(product.category);
+  markNavigation("catalog");
   const alternatives = product.finishes || product.views;
   const options = alternatives
     ? `<div class="image-options" role="group" aria-label="${product.finishes ? "Ngjyra" : "Pamja"}">${alternatives
@@ -345,11 +298,11 @@ function initDetail(product) {
     .slice(0, 4);
   view.innerHTML = `<nav class="breadcrumb" aria-label="Vendndodhja"><a href="index.html">Ballina</a><span>/</span><a href="produktet.html">Produktet</a><span>/</span><a href="${catalogUrl(product.category)}">${category}</a></nav>
     <article class="detail-layout"><div class="detail-photo"><img src="assets/${product.image}" alt="${product.name}" id="detail-image"></div>
-      <div class="detail-copy"><h1>${product.name}<span class="accent">.</span></h1><p>${product.description}</p>
+      <div class="detail-copy"><h1>${product.name}</h1><p>${product.description}</p>
       ${options}<dl class="detail-specs">${product.specs.map(([key, value]) => `<div><dt>${key}</dt><dd>${value}</dd></div>`).join("")}</dl>
       <a class="btn btn-dark" id="product-inquiry" href="${whatsapp}" target="_blank" rel="noopener">${icon("message")} Pyet në WhatsApp</a>
       <p class="catalog-note">Model ilustrues. Kontakto dyqanin për çmimin dhe disponueshmërinë.</p></div></article>
-      <section class="related"><div class="section-heading"><h2>Shiko edhe<span class="accent">.</span></h2><a class="section-link" href="produktet.html">Të gjitha produktet</a></div>
+      <section class="related"><div class="section-heading"><h2>Shiko edhe</h2><a class="section-link" href="produktet.html">Të gjitha produktet</a></div>
       <div class="product-grid">${related.map(productCard).join("")}</div></section>`;
   function choose(index) {
     const option = alternatives?.[index];
@@ -386,3 +339,5 @@ if (home) initHome();
 else if (document.body.dataset.page === "catalog" && params.has("produkt"))
   initDetail(products.find((product) => product.id === params.get("produkt")));
 else if (document.body.dataset.page === "catalog") initCatalog();
+
+PageMotion.enter();

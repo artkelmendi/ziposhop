@@ -25,24 +25,11 @@ const mapUrl =
 const instagram = "https://www.instagram.com/mobilshopzipo/";
 const brand = `<a class="brand" href="index.html" aria-label="ZIPO Mobil Shop — Ballina"><span class="wordmark">ZIPO</span><span class="brand-sub">MOBIL<br>SHOP</span></a>`;
 
-const departmentLabels = {
-  telefona: "iPhone & telefona",
-  motore: "Motorë",
-  trotineta: "Trotineta",
-  tableta: "Tableta",
-  aksesore: "Aksesorë",
-};
-
-function storeNavigation(current, departmentsOnly = false) {
+function storeNavigation(current) {
   const links = [
-    ["catalog", "Të gjitha produktet", catalogUrl()],
-    ...categories.map((cat) => [
-      cat.id,
-      departmentLabels[cat.id],
-      catalogUrl(cat.id),
-    ]),
+    ["catalog", "Produktet", catalogUrl()],
+    ["contact", "Kontakti", "kontakti.html"],
   ];
-  if (!departmentsOnly) links.push(["contact", "Kontakti", "kontakti.html"]);
   return links
     .map(
       ([key, label, href]) =>
@@ -58,7 +45,6 @@ function headerMarkup(page) {
     <div class="header-tools"><a class="icon-btn search-shortcut" href="produktet.html#kerko" aria-label="Kërko në katalog">${icon("search")}</a>
     <span class="tools-divider"></span><a class="location-link" href="kontakti.html">${icon("pin")} Pejë, Kosovë</a>
     <button class="icon-btn mobile-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Hap menunë">${icon("menu")}</button></div></div>
-    <nav class="shop-strip" aria-label="Kategoritë e dyqanit">${storeNavigation(page, true)}</nav>
     <nav id="mobile-nav" class="mobile-nav" aria-label="Navigimi në telefon" hidden><a href="index.html">Ballina</a>${nav}</nav>`;
 }
 

@@ -27,6 +27,9 @@ customElements.define("zipo-skeleton", Skeleton);
     const host = img.closest(containers);
     if (!host || !img.getAttribute("src")) return;
     pending.get(img)?.();
+    host
+      .querySelectorAll(".media-skeleton")
+      .forEach((element) => element.remove());
     host.querySelector(".media-failure")?.remove();
     img.classList.remove("media-unavailable");
     if (img.complete && img.naturalWidth) {
@@ -35,6 +38,7 @@ customElements.define("zipo-skeleton", Skeleton);
     }
     let skeleton;
     let active = true;
+    img.classList.add("media-pending");
     host.setAttribute("aria-busy", "true");
     const timer = setTimeout(() => {
       if (active && host.isConnected) {
@@ -50,13 +54,34 @@ customElements.define("zipo-skeleton", Skeleton);
       img.removeEventListener("load", loaded);
       img.removeEventListener("error", failed);
       host.setAttribute("aria-busy", "false");
+      img.classList.remove("media-pending");
       pending.delete(img);
     }
     function loaded() {
       // Retain the placeholder while a large photo decodes.
       img.decode().then(
         () => {
-          if (active) finish();
+          if (!active) return;
+          const placeholder = skeleton;
+          finish();
+          if (
+            !placeholder ||
+            matchMedia("(prefers-reduced-motion: reduce)").matches
+          )
+            return;
+          host.append(placeholder);
+          const fade = placeholder.animate([{ opacity: 1 }, { opacity: 0 }], {
+            duration: 360,
+            easing: "ease-out",
+          });
+          fade.onfinish = () => placeholder.remove();
+          img.animate(
+            [
+              { opacity: 0, translate: "0 10px" },
+              { opacity: 1, translate: "0 0" },
+            ],
+            { duration: 500, easing: "cubic-bezier(.16,1,.3,1)" },
+          );
         },
         () => {
           if (active) failed();

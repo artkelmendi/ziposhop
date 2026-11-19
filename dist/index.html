@@ -22,18 +22,18 @@
     <script src="catalog.js" defer></script>
     <script src="shared.js" defer></script>
     <script src="collection.js" defer></script>
+    <script src="motion.js" defer></script>
     <script src="site.js" defer></script>
   </head>
   <body data-page="home">
     <a class="skip-link" href="#kryesore">Kalo te përmbajtja</a>
     <header class="site-header" id="header">
       <!--static:header--><div class="header-inner"><a class="brand" href="index.html" aria-label="ZIPO Mobil Shop — Ballina"><span class="wordmark">ZIPO</span><span class="brand-sub">MOBIL<br>SHOP</span></a>
-    <nav class="main-nav" aria-label="Navigimi kryesor"><a data-nav="catalog" class="nav-link" href="produktet.html">Të gjitha produktet</a><a data-nav="telefona" class="nav-link" href="produktet.html?kategoria=telefona">iPhone & telefona</a><a data-nav="motore" class="nav-link" href="produktet.html?kategoria=motore">Motorë</a><a data-nav="trotineta" class="nav-link" href="produktet.html?kategoria=trotineta">Trotineta</a><a data-nav="tableta" class="nav-link" href="produktet.html?kategoria=tableta">Tableta</a><a data-nav="aksesore" class="nav-link" href="produktet.html?kategoria=aksesore">Aksesorë</a><a data-nav="contact" class="nav-link" href="kontakti.html">Kontakti</a></nav>
+    <nav class="main-nav" aria-label="Navigimi kryesor"><a data-nav="catalog" class="nav-link" href="produktet.html">Produktet</a><a data-nav="contact" class="nav-link" href="kontakti.html">Kontakti</a></nav>
     <div class="header-tools"><a class="icon-btn search-shortcut" href="produktet.html#kerko" aria-label="Kërko në katalog"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></a>
     <span class="tools-divider"></span><a class="location-link" href="kontakti.html"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.3"/></svg> Pejë, Kosovë</a>
     <button class="icon-btn mobile-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Hap menunë"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 8h18M3 16h18"/></svg></button></div></div>
-    <nav class="shop-strip" aria-label="Kategoritë e dyqanit"><a data-nav="catalog" class="nav-link" href="produktet.html">Të gjitha produktet</a><a data-nav="telefona" class="nav-link" href="produktet.html?kategoria=telefona">iPhone & telefona</a><a data-nav="motore" class="nav-link" href="produktet.html?kategoria=motore">Motorë</a><a data-nav="trotineta" class="nav-link" href="produktet.html?kategoria=trotineta">Trotineta</a><a data-nav="tableta" class="nav-link" href="produktet.html?kategoria=tableta">Tableta</a><a data-nav="aksesore" class="nav-link" href="produktet.html?kategoria=aksesore">Aksesorë</a></nav>
-    <nav id="mobile-nav" class="mobile-nav" aria-label="Navigimi në telefon" hidden><a href="index.html">Ballina</a><a data-nav="catalog" class="nav-link" href="produktet.html">Të gjitha produktet</a><a data-nav="telefona" class="nav-link" href="produktet.html?kategoria=telefona">iPhone & telefona</a><a data-nav="motore" class="nav-link" href="produktet.html?kategoria=motore">Motorë</a><a data-nav="trotineta" class="nav-link" href="produktet.html?kategoria=trotineta">Trotineta</a><a data-nav="tableta" class="nav-link" href="produktet.html?kategoria=tableta">Tableta</a><a data-nav="aksesore" class="nav-link" href="produktet.html?kategoria=aksesore">Aksesorë</a><a data-nav="contact" class="nav-link" href="kontakti.html">Kontakti</a></nav><!--end:header-->
+    <nav id="mobile-nav" class="mobile-nav" aria-label="Navigimi në telefon" hidden><a href="index.html">Ballina</a><a data-nav="catalog" class="nav-link" href="produktet.html">Produktet</a><a data-nav="contact" class="nav-link" href="kontakti.html">Kontakti</a></nav><!--end:header-->
     </header>
     <main id="kryesore">
       <section
@@ -68,9 +68,7 @@
             </div>
           </div>
           <div class="hero-copy">
-            <h1 id="hero-title">
-              Teknologji<br /><em>në lëvizje</em><span class="accent">.</span>
-            </h1>
+            <h1 id="hero-title">Teknologji<br />në lëvizje</h1>
             <p id="hero-description">
               Nga telefonat te lëvizja elektrike. Zbulo pajisjet që i japin
               ritëm ditës tënde.
@@ -114,9 +112,7 @@
         aria-labelledby="categories-title"
       >
         <div class="section-heading">
-          <h2 id="categories-title">
-            Eksploro kategoritë<span class="accent">.</span>
-          </h2>
+          <h2 id="categories-title">Eksploro kategoritë</h2>
           <a
             class="section-link"
             href="produktet.html"
@@ -138,9 +134,7 @@
       >
         <div class="wrap">
           <div class="section-heading">
-            <h2 id="selection-title">
-              Nga koleksioni<span class="accent">.</span>
-            </h2>
+            <h2 id="selection-title">Nga koleksioni</h2>
             <div class="collection-actions">
               <button
                 id="collection-motion"

@@ -24,6 +24,8 @@ The preview uses Albanian for local shoppers. Models are illustrative. The shop 
 
 A predominantly white storefront, clean product imagery sourced independently of Instagram, a prominent product hero and smooth scrolling transitions.
 
+The header links to Produktet and Kontakti. Categories are explored from the home page and catalog. Headings use one consistent sans-serif family with plain punctuation. Each page has a visible entrance sequence, with delayed shimmer placeholders for media and data that take longer than 200 milliseconds to load.
+
 ## Preview sources
 
 The address and contact details are transcribed from the [shop listing](https://100dyqane.com/dyqan/mobilshopzipo). The product illustrations come from the manufacturers. Image use for the final public storefront should follow the owner's supplier agreements.

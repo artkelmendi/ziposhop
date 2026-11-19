@@ -1,11 +1,4 @@
 @font-face {
-  font-family: "Instrument Serif";
-  src: url("assets/instrument-serif-italic.woff2") format("woff2");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
   font-family: Instrument Sans;
   src: url("assets/instrument-sans.woff2") format("woff2");
   font-style: normal;
@@ -127,9 +120,7 @@ svg {
   background: white;
   padding: 12px;
 }
-.accent {
-  color: var(--orange);
-}
+
 .site-header {
   height: 76px;
   background: #fffffff5;
@@ -161,13 +152,7 @@ svg {
   display: inline-flex;
   align-items: baseline;
 }
-.wordmark::after {
-  content: "";
-  width: 0.18em;
-  height: 0.18em;
-  background: var(--orange);
-  margin-left: 0.065em;
-}
+
 .brand-sub {
   font-size: 0.64rem;
   letter-spacing: 0.15em;
@@ -202,7 +187,7 @@ svg {
   height: 2px;
   bottom: 15px;
   width: 16px;
-  background: var(--orange);
+  background: var(--ink);
   transform: scaleX(0);
   transition: transform 0.25s var(--ease);
 }
@@ -1348,20 +1333,15 @@ footer {
   }
 }
 
-/* Storefront navigation */
+/* Simple storefront navigation */
 .header-inner {
-  grid-template-columns: auto 1fr auto;
-  gap: clamp(18px, 2.5vw, 38px);
+  grid-template-columns: 1fr auto 1fr;
 }
 .main-nav {
-  justify-self: center;
-  gap: clamp(14px, 1.85vw, 32px);
+  gap: 36px;
 }
 .nav-link {
   white-space: nowrap;
-}
-.shop-strip {
-  display: none;
 }
 .site-footer {
   padding: 28px 0;
@@ -1370,84 +1350,14 @@ footer {
   padding: 0;
   border: 0;
 }
-@media (max-width: 1100px) {
-  :root {
-    scroll-padding-top: 118px;
-  }
-  .site-header {
-    height: 102px;
-  }
+@media (max-width: 750px) {
   .header-inner {
     display: flex;
-    justify-content: space-between;
-    height: 60px;
-  }
-  .main-nav {
-    display: none;
-  }
-  .mobile-toggle {
-    display: grid;
-  }
-  .mobile-nav:not([hidden]) {
-    display: grid;
-    position: absolute;
-    top: 59px;
-    inset-inline: 0;
-    background: white;
-    border-bottom: 1px solid var(--line);
-    padding: 12px 5% 18px;
-    box-shadow: 0 12px 20px #1617140e;
-    z-index: 2;
-    max-height: calc(100dvh - 62px);
-    overflow: auto;
-  }
-  .mobile-nav a {
-    padding: 9px 0;
-    display: block;
-    font-size: 1rem;
-    font-weight: 550;
-  }
-  .mobile-nav a:after {
-    display: none;
-  }
-  .mobile-nav [aria-current] {
-    color: #a54017;
-  }
-  .shop-strip {
-    display: flex;
-    height: 42px;
-    align-items: center;
-    gap: 23px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    padding-inline: 5%;
-    border-top: 1px solid #eeeee9;
-  }
-  .shop-strip::-webkit-scrollbar {
-    display: none;
-  }
-  .shop-strip .nav-link {
-    font-size: 0.83rem;
-    flex: none;
-  }
-  .shop-strip .nav-link:after {
-    bottom: 2px;
   }
 }
-
 /* Five independent studio cutouts share a single ground plane. */
-.hero-copy h1 em,
-.contact-info h1 em {
-  font-family: "Instrument Serif", Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.035em;
-}
 .hero-copy h1 {
   font-weight: 550;
-}
-.hero-copy h1 em {
-  font-size: 1.12em;
 }
 .hero[data-slide="0"] {
   background: radial-gradient(
@@ -1863,16 +1773,172 @@ zipo-skeleton .skeleton-title {
     grid-template-columns: 1fr;
     gap: 32px;
   }
-  .contact-info h1 br {
-    display: none;
-  }
-  .contact-info h1 em:before {
-    content: " ";
-  }
   .map-caption {
     padding: 18px 16px 12px;
   }
   .map-credit {
     margin-inline: 16px;
+  }
+}
+
+/* Page entrances begin after each page has rendered its own content. */
+.headline-line {
+  display: block;
+  overflow: clip;
+  padding-block: 0.05em 0.1em;
+  margin-block: -0.05em -0.1em;
+}
+.headline-line > span {
+  display: block;
+}
+.media-pending {
+  opacity: 0;
+}
+.site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #3b3d38 45%,
+    #191a19 65%,
+    transparent 100%
+  );
+  transform: scaleX(0);
+  transform-origin: left;
+  background-size: 35% 100%;
+  background-repeat: no-repeat;
+}
+[data-navigation-loading] .site-header::after {
+  transform: scaleX(1);
+  animation: navigation-loading 1.05s ease-in-out infinite;
+}
+@keyframes navigation-loading {
+  0% {
+    background-position: -55% 0;
+  }
+  100% {
+    background-position: 155% 0;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .page-entering .headline-line > span {
+    animation: headline-enter 950ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .page-entering .headline-line:nth-child(2) > span {
+    animation-delay: 110ms;
+  }
+  .page-entering .hero-copy > p {
+    animation: content-enter 800ms 200ms var(--ease) both;
+  }
+  .page-entering .hero-actions {
+    animation: content-enter 800ms 300ms var(--ease) both;
+  }
+  .page-entering .hero-type {
+    animation: type-enter 1100ms 100ms var(--ease) both;
+  }
+  .page-entering .still-piece {
+    animation: product-enter 1050ms
+      calc(100ms + var(--entrance-order, 0) * 65ms)
+      cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .page-entering .hero-caption,
+  .page-entering .slide-controls {
+    animation: content-enter 800ms 350ms var(--ease) both;
+  }
+  .page-entering .categories-section > .section-heading,
+  .page-entering .breadcrumb {
+    animation: content-enter 700ms 80ms var(--ease) both;
+  }
+  .page-entering .category-tile,
+  .page-entering #product-grid > .product-card,
+  .page-entering .related .product-card {
+    animation: content-enter 850ms calc(260ms + var(--entrance-order, 0) * 65ms)
+      var(--ease) both;
+  }
+  .page-entering .catalog-top h1,
+  .page-entering .contact-info h1,
+  .page-entering .detail-copy h1 {
+    animation: heading-enter 900ms 60ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .page-entering .catalog-top p,
+  .page-entering .contact-info > p,
+  .page-entering .detail-copy > p {
+    animation: content-enter 800ms 180ms var(--ease) both;
+  }
+  .page-entering .catalog-search,
+  .page-entering .contact-info > .btn,
+  .page-entering .detail-specs {
+    animation: content-enter 800ms 240ms var(--ease) both;
+  }
+  .page-entering .filter-list,
+  .page-entering .result-count,
+  .page-entering .contact-facts,
+  .page-entering .detail-copy > .btn,
+  .page-entering .image-options {
+    animation: content-enter 850ms 300ms var(--ease) both;
+  }
+  .page-entering .contact-map,
+  .page-entering .detail-photo {
+    animation: product-enter 1000ms 120ms var(--ease) both;
+  }
+  @keyframes headline-enter {
+    from {
+      opacity: 0;
+      transform: translateY(105%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes heading-enter {
+    from {
+      opacity: 0;
+      translate: 0 38px;
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+      clip-path: inset(0);
+    }
+  }
+  @keyframes content-enter {
+    from {
+      opacity: 0;
+      translate: 0 24px;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+  @keyframes product-enter {
+    from {
+      opacity: 0;
+      translate: 0 55px;
+      scale: 0.96;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+      scale: 1;
+    }
+  }
+  @keyframes type-enter {
+    from {
+      opacity: 0;
+      translate: 26px 0;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
   }
 }
