@@ -17,7 +17,7 @@ Install dependencies with `npm ci`, then run `npm run dev`. Open `http://127.0.0
 - `src/components/CategoryCard.jsx` and its scoped stylesheet provide the shared product compositions for the home page and category directory.
 - `src/pages/` contains the home, catalog, product detail and contact views.
 - `src/data/catalog.js` contains the illustrative product records and categories. `src/data/store.js` contains the shop details and URL helpers.
-- `src/data/homeContent.js` selects the featured product and stores the customer-review copy. The supplied quotes are labeled examples. Replace them with approved customer quotes before setting `customerFeedback.isDemo` to false.
+- `src/data/homeContent.js` selects the featured product. The Instagram section links directly to the profile configured in store.js.
 
 - `public/collection.json` selects products for the continuous collection. It is fetched at runtime and shuffled once per home-page visit.
 - `public/assets/` contains the product images, map and locally hosted font.

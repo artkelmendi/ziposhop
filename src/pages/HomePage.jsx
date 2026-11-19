@@ -3,7 +3,7 @@ import StudioHero from "../components/StudioHero";
 import { useSearchParams } from "react-router-dom";
 import Collection from "../components/Collection";
 import FeaturedProduct from "../components/FeaturedProduct";
-import Testimonials from "../components/Testimonials";
+import InstagramSection from "../components/InstagramSection";
 import AppLink from "../components/AppLink";
 import CategoryCard from "../components/CategoryCard";
 import Icon from "../components/Icon";
@@ -40,7 +40,7 @@ export default function HomePage() {
       </section>
       <Collection />
       <FeaturedProduct />
-      <Testimonials />
+      <InstagramSection />
     </>
   );
 }
