@@ -1,4 +1,4 @@
-.media-frame {
+:where(.media-frame) {
   position: relative;
 }
 .media-frame[data-media-state="loading"] > img,
