@@ -14,6 +14,7 @@ Install dependencies with `npm ci`, then run `npm run dev`. Open `http://127.0.0
 - `src/components/Header.jsx` and `Header.module.css` own all desktop and mobile navigation. Desktop and mobile links use distinct scoped classes.
 - `src/components/Media.jsx` and `Skeleton.jsx` handle loading, image decoding and unavailable images. Skeletons appear after 200 milliseconds.
 - `src/components/Hero.jsx`, `Collection.jsx`, `ProductCard.jsx`, `Brand.jsx` and `Footer.jsx` provide shared storefront components.
+- `src/components/CategoryCard.jsx` and its scoped stylesheet provide the shared product compositions for the home page and category directory.
 - `src/pages/` contains the home, catalog, product detail and contact views.
 - `src/data/catalog.js` contains the illustrative product records and categories. `src/data/store.js` contains the shop details and URL helpers.
 - `public/collection.json` selects products for the continuous collection. It is fetched at runtime and shuffled once per home-page visit.
@@ -24,6 +25,8 @@ Install dependencies with `npm ci`, then run `npm run dev`. Open `http://127.0.0
 ## Navigation and production output
 
 The existing `/index.html`, `/produktet.html` and `/kontakti.html` URLs remain entry points. Category, search and product links use query parameters. React Router handles navigation and browser history after startup.
+
+Produktet opens the category directory. Selecting a category opens its products using `?kategoria=telefona` and equivalent category IDs. Search applies within that category, and product lists paginate at 24 items using `faqja`. Category changes have their own route entry so their headings and products animate on navigation and browser back.
 
 Vite generates content-hashed script and stylesheet filenames. Every HTML entry points to the same compiled application, so updates to the shared navigation reach every page.
 

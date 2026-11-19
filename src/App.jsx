@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PageSkeleton from "./components/PageSkeleton";
 import RouteError from "./components/RouteError";
-import { products } from "./data/catalog";
+import { categories, products } from "./data/catalog";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const CatalogPage = lazy(() => import("./pages/CatalogPage"));
@@ -46,13 +46,16 @@ export default function App() {
         ? "catalog"
         : "home";
   const productId = new URLSearchParams(location.search).get("produkt");
+  const category = categories.find(
+    (item) => item.id === new URLSearchParams(location.search).get("kategoria"),
+  );
   const title = productId
     ? (products.find((product) => product.id === productId)?.name ||
         "Modeli nuk u gjet") + " — ZIPO Mobil Shop"
     : page === "home"
       ? "ZIPO Mobil Shop — Teknologji në lëvizje"
       : page === "catalog"
-        ? "Produktet — ZIPO Mobil Shop"
+        ? (category?.name || "Produktet") + " — ZIPO Mobil Shop"
         : "Kontakti — ZIPO Mobil Shop";
   useEffect(() => {
     setLeaving(false);
@@ -91,12 +94,12 @@ export default function App() {
           <Suspense
             fallback={
               <main id="kryesore">
-                <PageSkeleton page={page} />
+                <PageSkeleton page={page} directory={!productId && !category} />
               </main>
             }
           >
             <PageEntry
-              key={page + "-" + (productId || "")}
+              key={page + "-" + (productId || category?.id || "directory")}
               location={location}
               title={title}
             >

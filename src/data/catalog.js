@@ -1,17 +1,75 @@
 // The owner can replace this illustrative assortment with a live catalog later.
 export const categories = [
-  { id: "telefona", name: "Telefona", image: "phone-17-pro-orange.webp" },
-  { id: "motore", name: "Motorë elektrikë", image: "moto-niu.webp" },
+  {
+    id: "telefona",
+    name: "iPhone & telefona",
+    image: "phone-17-pro-orange.webp",
+    description:
+      "Nga iPhone Air te modelet Pro. Gjej telefonin tënd të ardhshëm.",
+    artwork: [
+      "phone-15-pro-blue.webp",
+      "phone-17-lavender.webp",
+      "phone-17-pro-orange.webp",
+      "phone-air-blue.webp",
+    ],
+  },
+  {
+    id: "motore",
+    name: "Motorë elektrikë",
+    image: "moto-niu.webp",
+    description: "Dy rrota elektrike për rrugët e përditshme.",
+    artwork: ["moto-niu.webp"],
+  },
   {
     id: "trotineta",
     name: "Trotineta elektrikë",
     image: "scooter-g2-side.webp",
+    description: "Lëviz me ritmin tënd, kudo në qytet.",
+    artwork: ["scooter-g2-side.webp", "scooter-g2.webp"],
   },
-  { id: "tableta", name: "Tableta", image: "tablet-air-blue.webp" },
-  { id: "aksesore", name: "Aksesorë", image: "audio-airpods-pro-3.webp" },
+  {
+    id: "tableta",
+    name: "Tableta",
+    image: "tablet-air-blue.webp",
+    description: "Për të punuar, krijuar dhe mësuar në lëvizje.",
+    artwork: ["tablet-air-purple.webp", "tablet-air-blue.webp"],
+  },
+  {
+    id: "aksesore",
+    name: "Aksesorë",
+    image: "audio-airpods-pro-3.webp",
+    description: "Tingull, orë inteligjente dhe detajet e përditshme.",
+    artwork: ["watch-se-3.webp", "audio-airpods-pro-3.webp"],
+  },
 ];
 
 export const products = [
+  {
+    id: "iphone-17",
+    name: "iPhone 17",
+    category: "telefona",
+    image: "phone-17-lavender.webp",
+    description:
+      "Një vështrim në iPhone 17 në ngjyrën Lavender. Pyet dyqanin për kapacitetet dhe ngjyrat e disponueshme.",
+    specs: [
+      ["Marka", "Apple"],
+      ["Modeli", "iPhone 17"],
+      ["Ngjyra në foto", "Lavender"],
+    ],
+  },
+  {
+    id: "iphone-air",
+    name: "iPhone Air",
+    category: "telefona",
+    image: "phone-air-blue.webp",
+    description:
+      "Eksploro iPhone Air në Sky Blue. Kontakto dyqanin për detajet e modelit që të intereson.",
+    specs: [
+      ["Marka", "Apple"],
+      ["Modeli", "iPhone Air"],
+      ["Ngjyra në foto", "Sky Blue"],
+    ],
+  },
   {
     id: "kukirin-g2",
     name: "KuKirin G2",

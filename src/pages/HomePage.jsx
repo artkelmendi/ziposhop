@@ -1,10 +1,9 @@
 import Hero from "../components/Hero";
 import Collection from "../components/Collection";
 import AppLink from "../components/AppLink";
-import Media from "../components/Media";
+import CategoryCard from "../components/CategoryCard";
 import Icon from "../components/Icon";
 import { categories } from "../data/catalog";
-import { catalogUrl } from "../data/store";
 export default function HomePage() {
   return (
     <>
@@ -29,16 +28,7 @@ export default function HomePage() {
         </div>
         <div className="category-grid">
           {categories.map((cat, i) => (
-            <AppLink
-              key={cat.id}
-              className="category-tile"
-              data-cat={cat.id}
-              to={catalogUrl(cat.id)}
-              style={{ "--entrance-order": i }}
-            >
-              <Media className="category-photo" src={cat.image} eager />
-              <span className="category-name">{cat.name}</span>
-            </AppLink>
+            <CategoryCard key={cat.id} category={cat} compact order={i} />
           ))}
         </div>
       </section>

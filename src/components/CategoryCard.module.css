@@ -1,0 +1,272 @@
+.card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  overflow: hidden;
+  background: #f3f4f1;
+  border-radius: 16px;
+  min-width: 0;
+}
+.card:hover {
+  background: #eceee9;
+}
+@media (prefers-reduced-motion: no-preference) {
+  :global(.page-entering) .card {
+    animation: category-card-enter 850ms
+      calc(120ms + var(--entrance-order, 0) * 65ms) var(--ease) both;
+  }
+  @keyframes category-card-enter {
+    from {
+      opacity: 0;
+      translate: 0 30px;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+}
+.copy {
+  position: relative;
+  z-index: 2;
+}
+.copy h3 {
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  line-height: 1.13;
+}
+.copy p {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 31ch;
+  margin-top: 10px;
+}
+.artwork {
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  min-height: 0;
+}
+.item {
+  position: absolute;
+}
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 9px 7px #1a211512);
+  transition: translate 0.7s var(--ease);
+}
+.card:hover .item img {
+  translate: 0 -4px;
+}
+.telefona .item0 {
+  left: 4%;
+  bottom: 8%;
+  height: 68%;
+  width: 27%;
+  rotate: -8deg;
+  z-index: 1;
+}
+.telefona .item1 {
+  left: 25%;
+  bottom: 10%;
+  height: 85%;
+  width: 22%;
+  rotate: -5deg;
+  z-index: 2;
+}
+.telefona .item2 {
+  left: 41%;
+  bottom: 1%;
+  height: 97%;
+  width: 36%;
+  rotate: 5deg;
+  z-index: 3;
+}
+.telefona .item3 {
+  left: 75%;
+  bottom: 9%;
+  height: 83%;
+  width: 20%;
+  rotate: 9deg;
+  z-index: 1;
+}
+.motore .item0 {
+  width: 87%;
+  height: 94%;
+  left: 7%;
+  bottom: 0;
+}
+.trotineta .item0 {
+  width: 57%;
+  height: 76%;
+  left: 1%;
+  bottom: 2%;
+  opacity: 0.9;
+}
+.trotineta .item1 {
+  width: 50%;
+  height: 99%;
+  right: 0;
+  bottom: 0;
+}
+.tableta .item0 {
+  width: 54%;
+  height: 87%;
+  left: 7%;
+  bottom: 9%;
+  rotate: -9deg;
+}
+.tableta .item1 {
+  width: 57%;
+  height: 96%;
+  right: 5%;
+  bottom: 0;
+  rotate: 7deg;
+}
+.aksesore .item0 {
+  width: 47%;
+  height: 92%;
+  left: 12%;
+  bottom: 0;
+  rotate: -12deg;
+}
+.aksesore .item1 {
+  width: 42%;
+  height: 65%;
+  right: 8%;
+  bottom: 2%;
+  rotate: 9deg;
+}
+.compact {
+  flex-direction: column-reverse;
+  align-items: center;
+  aspect-ratio: 1.17;
+  padding: 16px 12px 19px;
+  min-height: 180px;
+  gap: 15px;
+}
+.compact .artwork {
+  width: 100%;
+}
+.compact .copy {
+  text-align: center;
+}
+.compact h3 {
+  font-size: clamp(0.95rem, 1.19vw, 1.28rem);
+}
+.feature {
+  min-height: 360px;
+  flex-direction: column;
+  padding: 30px;
+}
+.feature .copy h3 {
+  font-size: clamp(1.8rem, 2.6vw, 2.6rem);
+}
+.feature .artwork {
+  min-height: 225px;
+  margin-top: 24px;
+}
+.feature.telefona {
+  grid-column: 1/-1;
+  min-height: 380px;
+  flex-direction: row;
+  align-items: center;
+  background: #eceeeb;
+  gap: 25px;
+  padding: 40px;
+}
+.feature.telefona .copy {
+  width: 33%;
+}
+.feature.telefona .artwork {
+  height: 305px;
+  margin: 0;
+}
+@media (max-width: 1000px) {
+  .compact {
+    padding: 13px 7px 15px;
+    min-height: 155px;
+  }
+}
+@media (max-width: 750px) {
+  .compact {
+    grid-column: span 2;
+    aspect-ratio: 1.1;
+    min-height: 138px;
+  }
+  .compact:nth-child(n + 4) {
+    grid-column: span 3;
+    aspect-ratio: 1.66;
+  }
+  .compact h3 {
+    font-size: 1rem;
+  }
+  .feature {
+    padding: 23px;
+    min-height: 340px;
+  }
+  .feature .artwork {
+    min-height: 200px;
+  }
+  .feature.telefona {
+    padding: 26px;
+    min-height: 350px;
+  }
+  .feature.telefona .copy {
+    width: 38%;
+  }
+  .feature.telefona .artwork {
+    height: 250px;
+  }
+}
+@media (max-width: 520px) {
+  .compact,
+  .compact:nth-child(n + 4) {
+    grid-column: auto;
+    aspect-ratio: 1.1;
+    min-height: 137px;
+  }
+  .compact:last-child {
+    grid-column: 1/-1;
+    aspect-ratio: auto;
+    min-height: 100px;
+    flex-direction: row;
+    padding: 12px 23px;
+    justify-content: space-between;
+  }
+  .compact:last-child .artwork {
+    flex: none;
+    width: 110px;
+    height: 76px;
+  }
+  .feature {
+    min-height: 330px;
+    padding: 23px;
+  }
+  .feature.telefona {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 25px;
+    min-height: 370px;
+  }
+  .feature.telefona .copy {
+    width: 100%;
+  }
+  .feature.telefona .artwork {
+    min-height: 220px;
+    height: 220px;
+    margin-top: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .item img {
+    transition: none;
+  }
+  .card:hover .item img {
+    translate: 0;
+  }
+}

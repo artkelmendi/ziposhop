@@ -1,5 +1,27 @@
 import Skeleton from "./Skeleton";
-export default function PageSkeleton({ page }) {
+export default function PageSkeleton({ page, directory = false }) {
+  if (page === "catalog" && directory)
+    return (
+      <div
+        className="route-skeleton wrap catalog-main"
+        aria-busy="true"
+        aria-label="Duke ngarkuar kategoritë"
+      >
+        <div className="directory-skeleton-heading">
+          <Skeleton />
+        </div>
+        <div className="directory-skeleton-search">
+          <Skeleton />
+        </div>
+        <div className="directory-skeleton-grid">
+          {Array.from({ length: 5 }, (_, i) => (
+            <div key={i}>
+              <Skeleton />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   if (page === "home")
     return (
       <div

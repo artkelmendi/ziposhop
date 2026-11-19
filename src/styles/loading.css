@@ -99,6 +99,59 @@
 .route-skeleton {
   min-height: 65vh;
 }
+.directory-skeleton-heading {
+  height: 180px;
+  max-width: 710px;
+  padding-top: 45px;
+  position: relative;
+}
+.directory-skeleton-heading > .skeleton {
+  width: 100%;
+  height: 90px;
+  border-radius: 10px;
+}
+.directory-skeleton-search {
+  height: 48px;
+  max-width: 575px;
+  position: relative;
+}
+.directory-skeleton-search > .skeleton {
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+}
+.directory-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 32px;
+}
+.directory-skeleton-grid > div {
+  height: 360px;
+  position: relative;
+}
+.directory-skeleton-grid > div:first-child {
+  grid-column: 1/-1;
+  height: 385px;
+}
+.directory-skeleton-grid .skeleton {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+}
+@media (max-width: 520px) {
+  .directory-skeleton-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 25px;
+  }
+  .directory-skeleton-grid > div:first-child {
+    height: 385px;
+  }
+  .directory-skeleton-grid > div {
+    height: 330px;
+  }
+}
 .route-skeleton > .skeleton-detail {
   max-width: 550px;
   margin-block: 32px;

@@ -26,6 +26,8 @@ A predominantly white storefront, clean product imagery sourced independently of
 
 The header links to Produktet and Kontakti. Categories are explored from the home page and catalog. Headings use one consistent sans-serif family with plain punctuation. Each page has a visible entrance sequence, with delayed shimmer placeholders for media and data that take longer than 200 milliseconds to load.
 
+Produktet first opens a category directory. Selecting a category shows its products, with category-specific search and a maximum of 24 products per page. Home and catalog category artwork share one component and show representative families of devices. The displayed products remain illustrative pending the owner's inventory.
+
 ## Preview sources
 
 The address and contact details are transcribed from the [shop listing](https://100dyqane.com/dyqan/mobilshopzipo). The product illustrations come from the manufacturers. Image use for the final public storefront should follow the owner's supplier agreements.
@@ -37,4 +39,6 @@ The address and contact details are transcribed from the [shop listing](https://
 - [Apple iPad Air](https://www.apple.com/shop/buy-ipad/ipad-air)
 - [Apple AirPods Pro 3](https://www.apple.com/shop/buy-airpods/airpods-pro-3)
 - [Apple Watch SE](https://www.apple.com/shop/buy-watch/apple-watch-se)
+- [Apple iPhone 17](https://www.apple.com/shop/buy-iphone/iphone-17)
+- [Apple iPhone Air](https://www.apple.com/shop/buy-iphone/iphone-air)
 - [OpenStreetMap street geometry for the Pejë map](https://www.openstreetmap.org/way/138470351)
