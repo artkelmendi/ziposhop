@@ -11,7 +11,7 @@
   background: #eceee9;
 }
 @media (prefers-reduced-motion: no-preference) {
-  :global(.page-entering) .card {
+  :global(.page-entering) .feature {
     animation: category-card-enter 850ms
       calc(120ms + var(--entrance-order, 0) * 65ms) var(--ease) both;
   }

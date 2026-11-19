@@ -4,6 +4,8 @@ import { useSearchParams } from "react-router-dom";
 import Collection from "../components/Collection";
 import FeaturedProduct from "../components/FeaturedProduct";
 import InstagramSection from "../components/InstagramSection";
+import VisitShop from "../components/VisitShop";
+import ScrollReveal from "../components/ScrollReveal";
 import AppLink from "../components/AppLink";
 import CategoryCard from "../components/CategoryCard";
 import Icon from "../components/Icon";
@@ -32,15 +34,22 @@ export default function HomePage() {
             <Icon name="grid" />
           </AppLink>
         </div>
-        <div className="category-grid">
+        <ScrollReveal className="category-grid">
           {categories.map((cat, i) => (
             <CategoryCard key={cat.id} category={cat} compact order={i} />
           ))}
-        </div>
+        </ScrollReveal>
       </section>
-      <Collection />
-      <FeaturedProduct />
-      <InstagramSection />
+      <ScrollReveal>
+        <Collection />
+      </ScrollReveal>
+      <ScrollReveal>
+        <FeaturedProduct />
+      </ScrollReveal>
+      <VisitShop />
+      <ScrollReveal>
+        <InstagramSection />
+      </ScrollReveal>
     </>
   );
 }

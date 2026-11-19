@@ -15,6 +15,8 @@ Install dependencies with `npm ci`, then run `npm run dev`. Open `http://127.0.0
 - `src/components/Media.jsx` and `Skeleton.jsx` handle loading, image decoding and unavailable images. Skeletons appear after 200 milliseconds.
 - `src/components/Hero.jsx`, `Collection.jsx`, `ProductCard.jsx`, `Brand.jsx` and `Footer.jsx` provide shared storefront components.
 - `src/components/CategoryCard.jsx` and its scoped stylesheet provide the shared product compositions for the home page and category directory.
+- `src/components/ScrollReveal.jsx` adds a single viewport entrance to home sections. It leaves content visible by default, disconnects after its first intersection, and respects reduced-motion preferences.
+- VisitShop.jsx provides the Pejë map and links to the contact page.
 - `src/pages/` contains the home, catalog, product detail and contact views.
 - `src/data/catalog.js` contains the illustrative product records and categories. `src/data/store.js` contains the shop details and URL helpers.
 - `src/data/homeContent.js` selects the featured product. The Instagram section links directly to the profile configured in store.js.

@@ -1,0 +1,89 @@
+.visit {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+  gap: clamp(32px, 6vw, 90px);
+  padding-block: 76px;
+}
+.visit h2 {
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  line-height: 1.05;
+  font-weight: 550;
+  letter-spacing: -0.04em;
+  max-width: 16ch;
+}
+.visitCopy > p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-top: 19px;
+  max-width: 39ch;
+}
+.visit {
+  padding-block: 76px 15px;
+}
+.visitCopy address {
+  font-style: normal;
+  line-height: 1.6;
+  margin-top: 20px;
+  color: var(--ink);
+}
+.visitActions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
+.map {
+  min-width: 0;
+}
+.mapPhoto {
+  height: 325px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.mapPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.map small {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 9px;
+}
+.map small a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 750px) {
+  .visit {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-block: 42px;
+  }
+  .visit h2 {
+    max-width: 19ch;
+  }
+  .visitCopy > p {
+    max-width: 44ch;
+  }
+  .visit {
+    padding-block: 46px 0;
+  }
+  .mapPhoto {
+    height: 280px;
+  }
+}
+@media (max-width: 520px) {
+  .visit {
+    padding-block: 34px;
+  }
+  .visit h2 {
+    font-size: 2.25rem;
+  }
+  .visit {
+    padding-bottom: 0;
+  }
+}

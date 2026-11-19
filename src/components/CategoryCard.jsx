@@ -1,5 +1,5 @@
 import AppLink from "./AppLink";
-import Media from "./Media";
+import CategoryArtwork from "./CategoryArtwork";
 import { catalogUrl } from "../data/store";
 import styles from "./CategoryCard.module.css";
 
@@ -19,16 +19,7 @@ export default function CategoryCard({ category, compact = false, order = 0 }) {
         <h3>{category.name}</h3>
         {!compact && <p>{category.description}</p>}
       </div>
-      <div className={styles.artwork} aria-hidden="true">
-        {category.artwork.map((image, i) => (
-          <Media
-            key={image}
-            className={[styles.item, styles["item" + i]].join(" ")}
-            src={image}
-            eager
-          />
-        ))}
-      </div>
+      <CategoryArtwork category={category} />
     </AppLink>
   );
 }
