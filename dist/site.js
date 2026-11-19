@@ -3,54 +3,68 @@
 const $ = (selector, root = document) => root.querySelector(selector);
 const home = document.body.dataset.page === "home";
 const params = new URLSearchParams(location.search);
-const paths = {
-  search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',
-  pin: '<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.3"/>',
-  grid: '<rect x="3" y="3" width="7" height="7" rx="1.4"/><rect x="14" y="3" width="7" height="7" rx="1.4"/><rect x="3" y="14" width="7" height="7" rx="1.4"/><rect x="14" y="14" width="7" height="7" rx="1.4"/>',
-  menu: '<path d="M3 8h18M3 16h18"/>',
-  close: '<path d="m6 6 12 12M18 6 6 18"/>',
-  prev: '<path d="m14.5 5.5-6 6.5 6 6.5"/>',
-  next: '<path d="m9.5 5.5 6 6.5-6 6.5"/>',
-  message:
-    '<path d="M20.5 11.5A8.5 8.5 0 0 1 8.2 19l-4.7 1.5L5 15.8a8.5 8.5 0 1 1 15.5-4.3Z"/><path d="M8.8 8.2c.9 3.5 2.7 5.4 6.4 6.8"/>',
-};
-const icon = (name) =>
-  `<svg aria-hidden="true" viewBox="0 0 24 24">${paths[name]}</svg>`;
-const categoryName = (id) => categories.find((item) => item.id === id).name;
-const catalogUrl = (id) =>
-  "produktet.html" + (id ? "?kategoria=" + encodeURIComponent(id) : "");
-const productUrl = (id) => "produktet.html?produkt=" + encodeURIComponent(id);
-const whatsapp = "https://wa.me/38344856416";
-const mapUrl =
-  "https://www.google.com/maps/search/?api=1&query=Mobil+Shop+ZIPO+Rruga+Mbret%C3%ABresha+Teut%C3%AB+Pej%C3%AB";
-const instagram = "https://www.instagram.com/mobilshopzipo/";
-const brand = `<a class="brand" href="index.html" aria-label="ZIPO Mobil Shop — Ballina"><span class="wordmark">ZIPO</span><span class="brand-sub">MOBIL<br>SHOP</span></a>`;
-const navItems = [
-  ["Ballina", "index.html", "home"],
-  ["Produktet", "produktet.html", "catalog"],
-  ["Kategoritë", home ? "#kategorite" : "index.html#kategorite", "categories"],
-  ["Kontakti", "#kontakt", "contact"],
-];
-const navigation = navItems
-  .map(([label, href, page]) => {
-    const current = page === document.body.dataset.page;
-    return `<a class="nav-link${current ? " active" : ""}" href="${href}"${current ? ' aria-current="page"' : ""}>${label}</a>`;
-  })
-  .join("");
+function markNavigation(key) {
+  document.querySelectorAll("[data-nav]").forEach((link) => {
+    const current = link.dataset.nav === key;
+    link.classList.toggle("active", current);
+    if (current) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  });
+}
 
-$("#header").innerHTML = `<div class="header-inner">${brand}
-  <nav class="main-nav" aria-label="Navigimi kryesor">${navigation}</nav>
-  <div class="header-tools"><a class="icon-btn search-shortcut" href="produktet.html#kerko" aria-label="Kërko në katalog">${icon("search")}</a>
-  <span class="tools-divider"></span><a class="location-link" href="#kontakt">${icon("pin")} Pejë, Kosovë</a>
-  <button class="icon-btn mobile-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Hap menunë">${icon("menu")}</button></div>
-  </div><nav id="mobile-nav" class="mobile-nav" aria-label="Navigimi në telefon" hidden>${navigation}</nav>`;
-
-$("#kontakt").innerHTML = `<div class="wrap"><div class="contact-main">
-  <div class="contact-copy"><h2>Na vizito në Pejë<span class="accent">.</span></h2><p>Rr. Mbretëresha Teutë, Pejë, Kosovë</p></div>
-  <div class="contact-actions"><a class="btn btn-light" href="${whatsapp}" target="_blank" rel="noopener">${icon("message")} Na shkruaj në WhatsApp</a>
-  <a class="map-link" href="${mapUrl}" target="_blank" rel="noopener">${icon("pin")} Hap hartën</a></div></div>
-  <div class="footer-bottom">${brand}<div class="footer-links"><a href="tel:+38344856416">+383 44 856 416</a><a href="${instagram}" target="_blank" rel="noopener">Instagram</a></div></div></div>`;
-
+// The header stays in place as one page departs and the next arrives.
+const reducePageMotion = matchMedia("(prefers-reduced-motion: reduce)");
+let departure;
+document.addEventListener("click", (event) => {
+  const link = event.target.closest("a[href]");
+  if (
+    !link ||
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey ||
+    link.target === "_blank" ||
+    link.hasAttribute("download") ||
+    reducePageMotion.matches
+  )
+    return;
+  const destination = new URL(link.href);
+  if (
+    destination.origin !== location.origin ||
+    (destination.pathname === location.pathname &&
+      destination.search === location.search)
+  )
+    return;
+  if (!document.querySelector("main").animate) return;
+  event.preventDefault();
+  departure?.cancel();
+  departure = document.querySelector("main").animate(
+    [
+      { opacity: 1, transform: "translateY(0)" },
+      { opacity: 0.82, transform: "translateY(-7px)" },
+    ],
+    { duration: 145, easing: "cubic-bezier(.4,0,.8,.4)", fill: "forwards" },
+  );
+  departure.onfinish = () => location.assign(destination.href);
+});
+function enterPage() {
+  departure?.cancel();
+  departure = undefined;
+  if (!reducePageMotion.matches)
+    document.querySelector("main").animate?.(
+      [
+        { opacity: 0.78, transform: "translateY(11px)" },
+        { opacity: 1, transform: "translateY(0)" },
+      ],
+      { duration: 410, easing: "cubic-bezier(.16,1,.3,1)" },
+    );
+}
+enterPage();
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) enterPage();
+});
 document.querySelectorAll("[data-icon]").forEach((el) => {
   el.innerHTML = icon(el.dataset.icon);
 });
@@ -74,36 +88,18 @@ document.addEventListener("click", (event) => {
   if (!mobileMenu.hidden && !event.composedPath().includes($("#header")))
     setMenu(false);
 });
-matchMedia("(min-width:751px)").addEventListener("change", () =>
+matchMedia("(min-width:1101px)").addEventListener("change", () =>
   setMenu(false),
 );
 
-function productCard(product) {
-  return `<a class="product-card" href="${productUrl(product.id)}">
-    <div class="product-visual"><img loading="lazy" decoding="async" src="assets/${product.image}" alt=""></div>
-    <span class="product-label">${categoryName(product.category)}</span><h3>${product.name}</h3></a>`;
-}
-
 function initHome() {
-  $("#category-grid").innerHTML = categories
-    .map(
-      (
-        cat,
-      ) => `<a class="category-tile" data-cat="${cat.id}" href="${catalogUrl(cat.id)}">
-    <span class="category-photo"><img decoding="async" src="assets/${cat.image}" alt=""></span>
-    <span class="category-name">${cat.name}</span></a>`,
-    )
-    .join("");
-  $("#featured-grid").innerHTML = products
-    .slice(0, 4)
-    .map(productCard)
-    .join("");
+  initCollection();
   const slides = [
     {
-      product: "kukirin-g2",
-      title: "Teknologji<br> në lëvizje",
-      type: "G2",
-      category: "Trotinet elektrik",
+      product: null,
+      title: "Teknologji<br><em>në lëvizje</em>",
+      type: "ZIPO",
+      category: "Pesë kategori",
       description:
         "Nga telefonat te lëvizja elektrike. Zbulo pajisjet që i japin ritëm ditës tënde.",
       cta: "Shfleto produktet",
@@ -111,7 +107,7 @@ function initHome() {
     },
     {
       product: "iphone-17-pro",
-      title: "iPhone<br> 17 Pro",
+      title: "iPhone<br><em>17 Pro</em>",
       type: "17",
       category: "Telefon",
       description:
@@ -121,7 +117,7 @@ function initHome() {
     },
     {
       product: "niu-nqi-sport",
-      title: "Qyteti me<br> energji",
+      title: "Qyteti me<br><em>energji</em>",
       type: "NQi",
       category: "Motor elektrik",
       description:
@@ -140,10 +136,12 @@ function initHome() {
     $("#hero-description").textContent = entry.description;
     $("#hero-primary").href = entry.href;
     $("#hero-primary").textContent = entry.cta;
-    $("#hero-image").src = "assets/" + product.image;
-    $("#hero-model").textContent = product.name;
+    $(".hero-single").hidden = !product;
+    $(".still-life").hidden = Boolean(product);
+    if (product) $("#hero-image").src = "assets/" + product.image;
+    $("#hero-model").textContent = product?.name || "Koleksioni ZIPO";
     $("#hero-category").textContent = entry.category;
-    $("#hero-caption").href = productUrl(product.id);
+    $("#hero-caption").href = product ? productUrl(product.id) : catalogUrl();
     $("#hero-type").textContent = entry.type;
     $("#slide-count").textContent = String(slide + 1).padStart(2, "0");
     if (animate) {
@@ -151,7 +149,7 @@ function initHome() {
       void hero.offsetWidth;
       hero.classList.add("is-changing");
       $("#slide-announcement").textContent =
-        `Pamja ${slide + 1} nga 3. ${product.name}.`;
+        `Pamja ${slide + 1} nga 3. ${product?.name || "Koleksioni ZIPO"}.`;
     }
   }
   const step = (amount) => {
@@ -224,11 +222,9 @@ function initHome() {
       },
       { threshold: 0.08 },
     );
-    document
-      .querySelectorAll(".category-tile,.selection .product-card,.contact-main")
-      .forEach((el) => {
-        if (el.getBoundingClientRect().top >= innerHeight) observer.observe(el);
-      });
+    document.querySelectorAll(".category-tile").forEach((el) => {
+      if (el.getBoundingClientRect().top >= innerHeight) observer.observe(el);
+    });
   }
 }
 
@@ -237,13 +233,6 @@ function initCatalog() {
   let category = params.get("kategoria");
   if (!categories.some((cat) => cat.id === category)) category = "";
   input.value = params.get("q") || "";
-  const filters = [{ id: "", name: "Të gjitha" }, ...categories];
-  $("#filters").innerHTML = filters
-    .map(
-      (cat) =>
-        `<button type="button" class="filter" data-category="${cat.id}">${cat.name}</button>`,
-    )
-    .join("");
   function normalize(value) {
     return value
       .normalize("NFD")
@@ -252,6 +241,7 @@ function initCatalog() {
       .trim();
   }
   function updateResults(changeUrl) {
+    markNavigation(category || "catalog");
     const query = normalize(input.value);
     const results = products.filter(
       (product) =>
@@ -323,6 +313,7 @@ function initCatalog() {
 }
 
 function initDetail(product) {
+  delete document.documentElement.dataset.detailBoot;
   $("#catalog-view").hidden = true;
   const view = $("#detail-view");
   view.hidden = false;
@@ -334,6 +325,7 @@ function initDetail(product) {
   }
   document.title = product.name + " — ZIPO Mobil Shop";
   const category = categoryName(product.category);
+  markNavigation(product.category);
   const alternatives = product.finishes || product.views;
   const options = alternatives
     ? `<div class="image-options" role="group" aria-label="${product.finishes ? "Ngjyra" : "Pamja"}">${alternatives
@@ -391,6 +383,6 @@ function initDetail(product) {
 }
 
 if (home) initHome();
-else if (params.has("produkt"))
+else if (document.body.dataset.page === "catalog" && params.has("produkt"))
   initDetail(products.find((product) => product.id === params.get("produkt")));
-else initCatalog();
+else if (document.body.dataset.page === "catalog") initCatalog();

@@ -10,6 +10,8 @@ web
 
 Delegated. The preview uses static HTML, CSS and JavaScript. The catalog data lives in a separate file so the owner can choose an inventory system later.
 
+The collection on the home page reads the product IDs in `dist/collection.json` and shuffles them once per visit. Change this list to curate the moving row. Product records live in `dist/catalog.js`. Run `node prerender.mjs` after changing product records or shared navigation to refresh the initial HTML.
+
 ## Product purpose
 
 Introduce the Pejë shop and let visitors explore phones, electric motorcycles, electric scooters, tablets and accessories. The first release is a front-end concept for the owner to review.
@@ -33,3 +35,4 @@ The address and contact details are transcribed from the [shop listing](https://
 - [Apple iPad Air](https://www.apple.com/shop/buy-ipad/ipad-air)
 - [Apple AirPods Pro 3](https://www.apple.com/shop/buy-airpods/airpods-pro-3)
 - [Apple Watch SE](https://www.apple.com/shop/buy-watch/apple-watch-se)
+- [OpenStreetMap street geometry for the Pejë map](https://www.openstreetmap.org/way/138470351)
