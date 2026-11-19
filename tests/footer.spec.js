@@ -12,11 +12,11 @@ for (const width of [440, 1440]) {
         "/",
       ]) {
         await page.goto(route);
-      await expect(page.locator("main [aria-busy=true]")).toHaveCount(0);
         const footer = page.locator("footer");
         await expect(
           footer.getByRole("heading", { name: "Na gjen në Pejë" }),
         ).toBeVisible();
+        await expect(page.locator("main > .route-skeleton")).toHaveCount(0);
         const layout = await page.evaluate(() => {
           const footer = document
             .querySelector("footer")
