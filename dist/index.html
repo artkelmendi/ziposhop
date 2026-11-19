@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="sq">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta
+      name="description"
+      content="Eksploro telefona, motorë elektrikë, trotineta, tableta dhe aksesorë te ZIPO Mobil Shop në Pejë."
+    />
+    <title>ZIPO Mobil Shop — Teknologji në lëvizje</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="assets/instrument-sans.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="catalog.js" defer></script>
+    <script src="site.js" defer></script>
+  </head>
+  <body data-page="home">
+    <a class="skip-link" href="#kryesore">Kalo te përmbajtja</a>
+    <header class="site-header" id="header"></header>
+    <main id="kryesore">
+      <section
+        class="hero"
+        data-slide="0"
+        aria-roledescription="karusel"
+        aria-label="Përzgjedhje nga koleksioni"
+      >
+        <div class="hero-shell">
+          <div class="hero-visual" aria-hidden="true">
+            <span class="hero-type" id="hero-type">G2</span>
+            <div class="hero-shadow"></div>
+            <img
+              class="hero-image"
+              id="hero-image"
+              src="assets/scooter-g2.webp"
+              alt=""
+              fetchpriority="high"
+            />
+          </div>
+          <div class="hero-copy">
+            <h1 id="hero-title">
+              Teknologji<br />në lëvizje<span class="accent">.</span>
+            </h1>
+            <p id="hero-description">
+              Nga telefonat te lëvizja elektrike. Zbulo pajisjet që i japin
+              ritëm ditës tënde.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-dark" id="hero-primary" href="produktet.html"
+                >Shfleto produktet</a
+              >
+              <a class="hero-secondary" href="#kategorite">Shiko kategoritë</a>
+            </div>
+          </div>
+          <div class="slide-controls">
+            <button
+              class="round-control"
+              id="prev-slide"
+              aria-label="Pamja e mëparshme"
+            ></button>
+            <span class="slide-position"
+              ><b id="slide-count">01</b
+              ><span class="count-line"></span>03</span
+            >
+            <button
+              class="round-control"
+              id="next-slide"
+              aria-label="Pamja tjetër"
+            ></button>
+          </div>
+          <a id="hero-caption" class="hero-caption" href="produktet.html">
+            <span class="caption-line"></span
+            ><span
+              ><strong id="hero-model">KuKirin G2</strong
+              ><small id="hero-category">Trotinet elektrik</small></span
+            >
+          </a>
+          <div id="slide-announcement" class="sr-only" aria-live="polite"></div>
+        </div>
+      </section>
+      <section
+        class="wrap categories-section"
+        id="kategorite"
+        aria-labelledby="categories-title"
+      >
+        <div class="section-heading">
+          <h2 id="categories-title">
+            Eksploro kategoritë<span class="accent">.</span>
+          </h2>
+          <a
+            class="section-link"
+            href="produktet.html"
+            aria-label="Të gjitha produktet"
+            ><span
+              >Të gjitha<span class="long-link-label"> produktet</span></span
+            >
+            <span data-icon="grid"></span
+          ></a>
+        </div>
+        <div class="category-grid" id="category-grid"></div>
+      </section>
+      <section
+        class="selection"
+        id="perzgjedhja"
+        aria-labelledby="selection-title"
+      >
+        <div class="wrap">
+          <div class="section-heading">
+            <h2 id="selection-title">
+              Nga koleksioni<span class="accent">.</span>
+            </h2>
+            <a class="section-link" href="produktet.html"
+              >Hap katalogun <span data-icon="grid"></span
+            ></a>
+          </div>
+          <div class="product-grid" id="featured-grid"></div>
+          <p class="catalog-note">
+            Modele ilustruese. Pyet dyqanin për çmimin dhe disponueshmërinë.
+          </p>
+        </div>
+      </section>
+    </main>
+    <footer id="kontakt"></footer>
+  </body>
+</html>
