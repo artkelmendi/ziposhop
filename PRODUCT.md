@@ -8,9 +8,9 @@ web
 
 ## Stack
 
-Delegated. The preview uses static HTML, CSS and JavaScript. The catalog data lives in a separate file so the owner can choose an inventory system later.
+React, Vite and React Router. Shared components provide the header, footer, product cards, hero, continuous collection, image loading and skeleton states. Navigation styles live in Header.module.css. The production build uses hashed assets.
 
-The collection on the home page reads the product IDs in `dist/collection.json` and shuffles them once per visit. Change this list to curate the moving row. Product records live in `dist/catalog.js`. Run `node prerender.mjs` after changing product records or shared navigation to refresh the initial HTML.
+The home page reads product IDs from public/collection.json. Product records live in src/data/catalog.js, and store details live in src/data/store.js. Development and build commands are documented in README.md.
 
 ## Product purpose
 

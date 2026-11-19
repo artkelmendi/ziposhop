@@ -1,0 +1,204 @@
+.media-frame {
+  position: relative;
+}
+.media-frame[data-media-state="loading"] > img,
+.media-frame[data-media-state="error"] > img {
+  opacity: 0;
+}
+.media-frame > .skeleton-media {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.skeleton {
+  --skeleton-base: #e5e7eb;
+  --skeleton-glint: #f1f2f4;
+  display: block;
+  pointer-events: none;
+}
+.skeleton-media,
+.skeleton-card > span,
+.skeleton-detail > span {
+  background-color: var(--skeleton-base);
+  background-image: linear-gradient(
+    102deg,
+    transparent 24%,
+    var(--skeleton-glint) 49%,
+    transparent 74%
+  );
+  background-size: 215% 100%;
+  animation: skeleton-glide 1.7s ease-in-out infinite;
+}
+@keyframes skeleton-glide {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+@keyframes skeleton-threshold {
+  from {
+    visibility: hidden;
+  }
+  to {
+    visibility: visible;
+  }
+}
+.media-failure {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 8px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.skeleton-card > span,
+.skeleton-detail > span {
+  display: block;
+  border-radius: 4px;
+}
+.skeleton-photo {
+  width: 100%;
+  aspect-ratio: 1.24;
+  border-radius: 14px !important;
+}
+.skeleton-label {
+  width: 30%;
+  height: 0.97rem;
+  margin-top: 16px;
+}
+.skeleton-title {
+  width: 68%;
+  height: clamp(1.34rem, 1.77vw, 1.8rem);
+  margin-top: 4px;
+}
+.skeleton-heading {
+  width: 85%;
+  height: 4.9rem;
+}
+.skeleton-copy {
+  width: 95%;
+  height: 3.3rem;
+  margin: 17px 0 25px;
+}
+.skeleton-specs {
+  width: 100%;
+  height: 10rem;
+}
+.collection-placeholder > .skeleton-card {
+  width: var(--rail-card);
+  flex: none;
+}
+.collection-placeholder,
+.route-skeleton {
+  animation: skeleton-threshold 200ms step-end both;
+}
+.route-skeleton {
+  min-height: 65vh;
+}
+.route-skeleton > .skeleton-detail {
+  max-width: 550px;
+  margin-block: 32px;
+}
+.route-skeleton .detail-photo > .skeleton {
+  width: 100%;
+  height: 100%;
+}
+.skeleton-dismiss {
+  animation: skeleton-dismiss 360ms ease-out forwards;
+}
+@keyframes skeleton-dismiss {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .media-revealed > img {
+    animation: media-reveal 500ms var(--ease) both;
+  }
+  @keyframes media-reveal {
+    from {
+      opacity: 0;
+      translate: 0 10px;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+  .route-out main {
+    animation: route-out 180ms ease-in both;
+  }
+  @keyframes route-out {
+    to {
+      opacity: 0.4;
+      translate: 0 -14px;
+      scale: 0.99;
+    }
+  }
+}
+.hero-single > img {
+  width: 82%;
+  height: 90%;
+  position: absolute;
+  left: 50%;
+  top: 49.5%;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+}
+.hero[data-slide="1"] .hero-single > img {
+  width: 65%;
+  height: 80%;
+  transform: translate(-50%, -50%) rotate(8deg);
+}
+.hero[data-slide="2"] .hero-single > img {
+  height: 80%;
+  width: 79%;
+}
+.hero-single > .skeleton {
+  inset: 10%;
+  border-radius: 14px;
+}
+.still-piece > .skeleton {
+  inset: 9%;
+  border-radius: 14px;
+}
+@media (max-width: 750px) {
+  .hero-single > img {
+    height: 79%;
+    width: 98%;
+    top: 48%;
+  }
+}
+@media (max-width: 520px) {
+  .hero-single > img {
+    height: 98%;
+    width: 88%;
+    top: 50%;
+  }
+  .hero[data-slide="1"] .hero-single > img,
+  .hero[data-slide="2"] .hero-single > img {
+    height: 90%;
+  }
+  .skeleton-label {
+    margin-top: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .collection-placeholder,
+  .route-skeleton {
+    animation-duration: 200ms !important;
+  }
+  .skeleton-media,
+  .skeleton-card > span,
+  .skeleton-detail > span {
+    background-image: none;
+  }
+  .skeleton-dismiss {
+    display: none;
+  }
+}

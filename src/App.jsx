@@ -1,0 +1,111 @@
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { NavigationContext } from "./components/AppLink";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import PageSkeleton from "./components/PageSkeleton";
+import RouteError from "./components/RouteError";
+import { products } from "./data/catalog";
+
+const HomePage = lazy(() => import("./pages/HomePage"));
+const CatalogPage = lazy(() => import("./pages/CatalogPage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
+const pages = { home: HomePage, catalog: CatalogPage, contact: ContactPage };
+
+function PageEntry({ children, location, title }) {
+  const [entering, setEntering] = useState(true);
+  useEffect(() => {
+    document.title = title;
+    const timer = setTimeout(() => setEntering(false), 1500);
+    const frame = requestAnimationFrame(() => {
+      if (location.hash && location.hash !== "#kerko")
+        document.getElementById(location.hash.slice(1))?.scrollIntoView();
+      else if (!location.hash) window.scrollTo({ top: 0, behavior: "instant" });
+    });
+    return () => {
+      clearTimeout(timer);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+  return (
+    <main id="kryesore" className={entering ? "page-entering" : ""}>
+      {children}
+    </main>
+  );
+}
+
+export default function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [leaving, setLeaving] = useState(false);
+  const timer = useRef(null);
+  const page =
+    location.pathname === "/kontakti.html"
+      ? "contact"
+      : location.pathname === "/produktet.html"
+        ? "catalog"
+        : "home";
+  const productId = new URLSearchParams(location.search).get("produkt");
+  const title = productId
+    ? (products.find((product) => product.id === productId)?.name ||
+        "Modeli nuk u gjet") + " — ZIPO Mobil Shop"
+    : page === "home"
+      ? "ZIPO Mobil Shop — Teknologji në lëvizje"
+      : page === "catalog"
+        ? "Produktet — ZIPO Mobil Shop"
+        : "Kontakti — ZIPO Mobil Shop";
+  useEffect(() => {
+    setLeaving(false);
+  }, [location]);
+  useEffect(() => () => clearTimeout(timer.current), []);
+  function transition(to) {
+    clearTimeout(timer.current);
+    const destination = new URL(to, window.location.href);
+    if (
+      destination.pathname === location.pathname &&
+      destination.search === location.search
+    ) {
+      if (destination.hash === "#kerko")
+        document.getElementById("catalog-search")?.focus();
+      else if (destination.hash)
+        document.getElementById(destination.hash.slice(1))?.scrollIntoView();
+      navigate(to);
+      return;
+    }
+    if (matchMedia("(prefers-reduced-motion:reduce)").matches) {
+      navigate(to);
+      return;
+    }
+    setLeaving(true);
+    timer.current = setTimeout(() => navigate(to), 180);
+  }
+  const Page = pages[page];
+  return (
+    <NavigationContext.Provider value={transition}>
+      <a className="skip-link" href="#kryesore">
+        Kalo te përmbajtja
+      </a>
+      <Header loading={leaving} />
+      <div className={leaving ? "route-out" : ""}>
+        <RouteError key={page}>
+          <Suspense
+            fallback={
+              <main id="kryesore">
+                <PageSkeleton page={page} />
+              </main>
+            }
+          >
+            <PageEntry
+              key={page + "-" + (productId || "")}
+              location={location}
+              title={title}
+            >
+              <Page />
+            </PageEntry>
+          </Suspense>
+        </RouteError>
+      </div>
+      <Footer />
+    </NavigationContext.Provider>
+  );
+}

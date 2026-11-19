@@ -1,7 +1,5 @@
-"use strict";
-
 // The owner can replace this illustrative assortment with a live catalog later.
-const categories = [
+export const categories = [
   { id: "telefona", name: "Telefona", image: "phone-17-pro-orange.webp" },
   { id: "motore", name: "Motorë elektrikë", image: "moto-niu.webp" },
   {
@@ -13,7 +11,7 @@ const categories = [
   { id: "aksesore", name: "Aksesorë", image: "audio-airpods-pro-3.webp" },
 ];
 
-const products = [
+export const products = [
   {
     id: "kukirin-g2",
     name: "KuKirin G2",
