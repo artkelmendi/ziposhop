@@ -40,6 +40,13 @@ Vite generates content-hashed script and stylesheet filenames. Every HTML entry 
 
 The production host serves `dist/` using `.openai/hosting.json`. The catalog and featured selection are ready to connect to the owner's chosen inventory system.
 
+## GitHub Pages
+
+The public storefront is hosted at https://artkelmendi.github.io/ziposhop/.
+Pushing to `main` on `artkelmendi/ziposhop` runs `.github/workflows/deploy.yml`, builds with `--base=/ziposhop/`, and publishes `dist/` through GitHub Pages.
+The router, product images and collection request use Vite's base URL, so local development and root-hosted builds still work without extra configuration.
+The existing HTML entry points support direct links and refreshes on GitHub Pages.
+
 ## Verification
 
 `npm test` builds the production app and runs the browser regression tests in installed Google Chrome. The suite checks consistent menu rows across routes, persistent navigation, resizing, Escape and outside-click behavior, and delayed product images.

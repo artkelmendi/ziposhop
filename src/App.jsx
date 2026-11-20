@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { resolvePath, useLocation, useNavigate } from "react-router-dom";
 import { NavigationContext } from "./components/AppLink";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -63,7 +63,7 @@ export default function App() {
   useEffect(() => () => clearTimeout(timer.current), []);
   function transition(to) {
     clearTimeout(timer.current);
-    const destination = new URL(to, window.location.href);
+    const destination = resolvePath(to, location.pathname);
     if (
       destination.pathname === location.pathname &&
       destination.search === location.search

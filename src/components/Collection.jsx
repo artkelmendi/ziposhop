@@ -22,7 +22,7 @@ export default function Collection() {
     async function load() {
       let pool = products;
       try {
-        const response = await fetch("/collection.json", {
+        const response = await fetch(import.meta.env.BASE_URL + "collection.json", {
           signal: controller.signal,
         });
         if (!response.ok) throw new Error("Collection unavailable");

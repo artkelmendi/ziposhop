@@ -68,7 +68,7 @@ function MediaFrame({ src, alt, className, eager, style, ...props }) {
     >
       <img
         ref={image}
-        src={"/assets/" + src}
+        src={import.meta.env.BASE_URL + "assets/" + src}
         alt={alt}
         loading={eager ? "eager" : "lazy"}
         decoding="async"
