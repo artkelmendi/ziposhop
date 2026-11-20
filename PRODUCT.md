@@ -10,11 +10,11 @@ web
 
 React, Vite and React Router. Shared components provide the header, footer, product cards, hero, continuous collection, image loading and skeleton states. Navigation styles live in Header.module.css. The production build uses hashed assets.
 
-The home page reads product IDs from public/collection.json. Product records live in src/data/catalog.js, and store details live in src/data/store.js. Development and build commands are documented in README.md.
+The production catalog, categories and homepage selections are stored in Supabase and read through CatalogContext. The separate admin.html entry provides email/password sign-in and the product, category and homepage editors. Database row-level security restricts edits to verified allowlisted administrators. The original illustrative records in src/data/catalog.js and public/collection.json remain for unconfigured previews and test fixtures. Store details live in src/data/store.js. Development, deployment and administration are documented in README.md and ADMIN.md.
 
 ## Product purpose
 
-Introduce the Pejë shop and let visitors explore phones, electric motorcycles, electric scooters, tablets and accessories. The first release is a front-end concept for the owner to review.
+Introduce the Pejë shop and let visitors explore phones, electric motorcycles, electric scooters, tablets and accessories, with inquiries handled by WhatsApp. The owner manages the catalog through a private admin account.
 
 ## Content
 

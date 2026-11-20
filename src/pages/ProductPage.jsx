@@ -3,9 +3,10 @@ import AppLink from "../components/AppLink";
 import Media from "../components/Media";
 import ProductCard from "../components/ProductCard";
 import Icon from "../components/Icon";
-import { products } from "../data/catalog";
-import { catalogUrl, categoryName, store } from "../data/store";
+import { useCatalog } from "../data/CatalogContext";
+import { catalogUrl, store } from "../data/store";
 export default function ProductPage({ product }) {
+  const { products, categories, demo } = useCatalog();
   const [choice, setChoice] = useState(0);
   if (!product)
     return (
@@ -29,7 +30,8 @@ export default function ProductPage({ product }) {
     encodeURIComponent(
       "Përshëndetje ZIPO! Më intereson " +
         name +
-        ". A është në dispozicion dhe sa kushton?",
+        ". A është në dispozicion dhe sa kushton? " +
+        window.location.href,
     );
   const related = products
     .filter((item) => item.id !== product.id)
@@ -47,7 +49,10 @@ export default function ProductPage({ product }) {
         <AppLink to="/produktet.html">Produktet</AppLink>
         <span>/</span>
         <AppLink to={catalogUrl(product.category)}>
-          {categoryName(product.category)}
+          {
+            categories.find((category) => category.id === product.category)
+              ?.name
+          }
         </AppLink>
       </nav>
       <article className="detail-layout">
@@ -61,6 +66,19 @@ export default function ProductPage({ product }) {
         <div className="detail-copy">
           <h1>{product.name}</h1>
           <p>{product.description}</p>
+          {product.price != null && (
+            <p className="detail-price">
+              {new Intl.NumberFormat("sq-XK", {
+                style: "currency",
+                currency: "EUR",
+              }).format(Number(product.price))}
+            </p>
+          )}
+          {product.available === false && (
+            <p className="availability-note">
+              Për momentin i padisponueshëm. Pyet dyqanin për këtë model.
+            </p>
+          )}
           {options && (
             <div
               className="image-options"
@@ -101,7 +119,9 @@ export default function ProductPage({ product }) {
             Pyet në WhatsApp
           </a>
           <p className="catalog-note">
-            Model ilustrues. Kontakto dyqanin për çmimin dhe disponueshmërinë.
+            {demo || product.is_demo
+              ? "Model ilustrues. Kontakto dyqanin për çmimin dhe disponueshmërinë."
+              : "Kontakto dyqanin për porosinë dhe detajet e produktit."}
           </p>
         </div>
       </article>

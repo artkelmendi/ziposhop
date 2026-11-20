@@ -7,9 +7,10 @@
     "dev": "vite --host 127.0.0.1 --port 4173 --strictPort",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4173 --strictPort",
-    "test": "npm run build && playwright test"
+    "test": "vite build --mode test && playwright test"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.119.2",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-router-dom": "7.18.6"

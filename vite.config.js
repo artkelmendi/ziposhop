@@ -9,11 +9,13 @@ export default defineConfig({
     {
       name: "initial-loading-shell",
       transformIndexHtml(html, context) {
-        const page = context.filename.endsWith("produktet.html")
-          ? "catalog"
-          : context.filename.endsWith("kontakti.html")
-            ? "contact"
-            : "home";
+        const page = context.filename.endsWith("admin.html")
+          ? "admin"
+          : context.filename.endsWith("produktet.html")
+            ? "catalog"
+            : context.filename.endsWith("kontakti.html")
+              ? "contact"
+              : "home";
         return html.replace("<!--initial-loading-->", loadingShell(page));
       },
     },
@@ -24,6 +26,7 @@ export default defineConfig({
         home: resolve(import.meta.dirname, "index.html"),
         catalog: resolve(import.meta.dirname, "produktet.html"),
         contact: resolve(import.meta.dirname, "kontakti.html"),
+        admin: resolve(import.meta.dirname, "admin.html"),
       },
     },
   },

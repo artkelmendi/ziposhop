@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures";
 
 test("the mobile menu has identical rows on every route", async ({ page }) => {
   await page.setViewportSize({ width: 440, height: 956 });

@@ -3,9 +3,10 @@ import AppLink from "./AppLink";
 import ProductCard from "./ProductCard";
 import Skeleton from "./Skeleton";
 import Icon from "./Icon";
-import { products } from "../data/catalog";
+import { useCatalog } from "../data/CatalogContext";
 
 export default function Collection() {
+  const { products, settings, demo } = useCatalog();
   const [selection, setSelection] = useState(null);
   const [paused, setPaused] = useState(
     () => matchMedia("(prefers-reduced-motion:reduce)").matches,
@@ -21,22 +22,32 @@ export default function Collection() {
     let active = true;
     async function load() {
       let pool = products;
-      try {
-        const response = await fetch(import.meta.env.BASE_URL + "collection.json", {
-          signal: controller.signal,
-        });
-        if (!response.ok) throw new Error("Collection unavailable");
-        const config = await response.json();
-        if (Array.isArray(config.productIds))
-          pool = products.filter((product) =>
-            config.productIds.includes(product.id),
+      if (!demo) {
+        const ids = settings.collection_product_ids || [];
+        pool = products
+          .filter((product) => ids.includes(product.id))
+          .slice(0, 12);
+      } else {
+        try {
+          const response = await fetch(
+            import.meta.env.BASE_URL + "collection.json",
+            {
+              signal: controller.signal,
+            },
           );
-      } catch {
-        /* Keep the local assortment available after a failed request. */
+          if (!response.ok) throw new Error("Collection unavailable");
+          const config = await response.json();
+          if (Array.isArray(config.productIds))
+            pool = products.filter((product) =>
+              config.productIds.includes(product.id),
+            );
+        } catch {
+          /* Keep the local assortment available after a failed request. */
+        }
       }
       clearTimeout(timeout);
       if (!active) return;
-      const shuffled = [...pool];
+      const shuffled = pool.slice(0, 12);
       for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -49,7 +60,7 @@ export default function Collection() {
       clearTimeout(timeout);
       controller.abort();
     };
-  }, []);
+  }, [products, settings, demo]);
   useEffect(() => {
     const reduced = matchMedia("(prefers-reduced-motion:reduce)");
     const change = () => setPaused(reduced.matches);
@@ -173,7 +184,7 @@ export default function Collection() {
           )}
         </div>
         <p className="catalog-note">
-          Modele ilustruese. Pyet dyqanin për çmimin dhe disponueshmërinë.
+          Pyet dyqanin për çmimin dhe disponueshmërinë.
         </p>
       </div>
     </section>

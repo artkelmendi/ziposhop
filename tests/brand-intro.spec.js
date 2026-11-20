@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures";
 
 for (const width of [440, 1440]) {
   test(`logo intro reveals the loaded page once per session at ${width}px`, async ({

@@ -41,6 +41,9 @@ body {
   flex: 1;
   min-width: 0;
 }
+.product-price { margin-top: 6px; font-size: .95rem; font-weight: 550; }
+.detail-price { font-size: 1.5rem; font-weight: 550; color: var(--ink); }
+.availability-note { font-size: .85rem; color: var(--muted); }
 button,
 input {
   font: inherit;

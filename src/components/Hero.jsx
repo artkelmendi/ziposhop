@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import AppLink from "./AppLink";
 import Media from "./Media";
 import Icon from "./Icon";
-import { products } from "../data/catalog";
+import { useCatalog } from "../data/CatalogContext";
 import { catalogUrl, productUrl } from "../data/store";
 
 const slides = [
@@ -44,6 +44,7 @@ const stills = [
   ["audio", "audio-airpods-pro-3.webp"],
 ];
 export default function Hero() {
+  const { products } = useCatalog();
   const [index, setIndex] = useState(0);
   const touch = useRef(null);
   const slide = slides[index];

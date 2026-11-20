@@ -9,8 +9,9 @@ import ScrollReveal from "../components/ScrollReveal";
 import AppLink from "../components/AppLink";
 import CategoryCard from "../components/CategoryCard";
 import Icon from "../components/Icon";
-import { categories } from "../data/catalog";
+import { useCatalog } from "../data/CatalogContext";
 export default function HomePage() {
+  const { categories } = useCatalog();
   const [params] = useSearchParams();
   const classic = params.get("hero") === "classic";
   return (

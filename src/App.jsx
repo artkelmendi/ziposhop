@@ -6,19 +6,18 @@ import Footer from "./components/Footer";
 import PageSkeleton from "./components/PageSkeleton";
 import RouteError from "./components/RouteError";
 import { useIntroCovered } from "./components/BrandIntro";
-import { categories, products } from "./data/catalog";
+import { useCatalog } from "./data/CatalogContext";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const CatalogPage = lazy(() => import("./pages/CatalogPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const pages = { home: HomePage, catalog: CatalogPage, contact: ContactPage };
 
-function PageEntry({ children, location, title }) {
+function PageEntry({ children, location, title, loading }) {
   const introCovered = useIntroCovered();
   const [entering, setEntering] = useState(true);
   useEffect(() => {
-    document.title = title;
-    if (introCovered) return;
+    if (introCovered || loading) return;
     const timer = setTimeout(() => setEntering(false), 1500);
     const frame = requestAnimationFrame(() => {
       if (location.hash && location.hash !== "#kerko")
@@ -29,7 +28,10 @@ function PageEntry({ children, location, title }) {
       clearTimeout(timer);
       cancelAnimationFrame(frame);
     };
-  }, [introCovered]);
+  }, [introCovered, loading, location.hash]);
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
   return (
     <main
       id="kryesore"
@@ -42,6 +44,7 @@ function PageEntry({ children, location, title }) {
 }
 
 export default function App() {
+  const { categories, products, loading, error, refresh } = useCatalog();
   const location = useLocation();
   const navigate = useNavigate();
   const [leaving, setLeaving] = useState(false);
@@ -90,6 +93,17 @@ export default function App() {
     timer.current = setTimeout(() => navigate(to), 180);
   }
   const Page = pages[page];
+  const contentLoading = loading && page !== "contact";
+  const contentError = error && page !== "contact";
+  const routeKey =
+    page +
+    "-" +
+    (productId ||
+      new URLSearchParams(location.search).get("kategoria") ||
+      "directory") +
+    (page === "home"
+      ? "-" + (new URLSearchParams(location.search).get("hero") || "studio")
+      : "");
   return (
     <NavigationContext.Provider value={transition}>
       <a className="skip-link" href="#kryesore">
@@ -97,32 +111,36 @@ export default function App() {
       </a>
       <Header loading={leaving} />
       <div className={"page-content" + (leaving ? " route-out" : "")}>
-        <RouteError key={page}>
-          <Suspense
-            fallback={
-              <main id="kryesore">
+        <PageEntry
+          key={routeKey}
+          location={location}
+          title={title}
+          loading={contentLoading}
+        >
+          <RouteError key={page}>
+            <Suspense
+              fallback={
                 <PageSkeleton page={page} directory={!productId && !category} />
-              </main>
-            }
-          >
-            <PageEntry
-              key={
-                page +
-                "-" +
-                (productId || category?.id || "directory") +
-                (page === "home"
-                  ? "-" +
-                    (new URLSearchParams(location.search).get("hero") ||
-                      "studio")
-                  : "")
               }
-              location={location}
-              title={title}
             >
-              <Page />
-            </PageEntry>
-          </Suspense>
-        </RouteError>
+              {contentLoading ? (
+                <PageSkeleton page={page} directory={!productId && !category} />
+              ) : contentError ? (
+                <div className="wrap catalog-main">
+                  <div className="empty-state">
+                    <h1>Katalogu nuk u ngarkua</h1>
+                    <p role="alert">{error}</p>
+                    <button className="btn btn-dark" onClick={refresh}>
+                      Provo përsëri
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <Page />
+              )}
+            </Suspense>
+          </RouteError>
+        </PageEntry>
       </div>
       <Footer />
     </NavigationContext.Provider>

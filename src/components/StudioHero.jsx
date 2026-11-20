@@ -2,6 +2,7 @@ import AppLink from "./AppLink";
 import Media from "./Media";
 import { catalogUrl, productUrl } from "../data/store";
 import styles from "./StudioHero.module.css";
+import { useCatalog } from "../data/CatalogContext";
 
 const displayProducts = [
   {
@@ -56,6 +57,7 @@ const displayProducts = [
 ];
 
 export default function StudioHero() {
+  const { products, categories, demo } = useCatalog();
   return (
     <section className={styles.hero} aria-label="Zbulo koleksionin ZIPO">
       <div className={styles.intro}>
@@ -73,10 +75,25 @@ export default function StudioHero() {
         {displayProducts.map((product, i) => (
           <AppLink
             key={product.id}
-            to={productUrl(product.id)}
+            to={
+              products.some((item) => item.id === product.id)
+                ? productUrl(product.id)
+                : categories.some(
+                      (category) => category.id === product.category,
+                    )
+                  ? catalogUrl(product.category)
+                  : catalogUrl()
+            }
             className={[styles.product, styles[product.position]].join(" ")}
             style={{ "--order": i }}
-            aria-label={"Shiko " + product.name}
+            aria-label={
+              products.some((item) => item.id === product.id) || demo
+                ? "Shiko " + product.name
+                : "Shfleto " +
+                  (categories.find(
+                    (category) => category.id === product.category,
+                  )?.name || "produktet")
+            }
             data-category={product.category}
           >
             <Media className={styles.photo} src={product.image} eager />

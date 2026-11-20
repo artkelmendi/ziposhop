@@ -1,11 +1,12 @@
 import AppLink from "./AppLink";
 import Media from "./Media";
-import { products } from "../data/catalog";
-import { featuredProductId } from "../data/homeContent";
+import { useCatalog } from "../data/CatalogContext";
 import { productUrl } from "../data/store";
 import styles from "./HomeHighlights.module.css";
 
-export default function FeaturedProduct({ productId = featuredProductId }) {
+export default function FeaturedProduct({ productId }) {
+  const { products, settings, demo } = useCatalog();
+  productId ??= settings.featured_product_id;
   const product = products.find((item) => item.id === productId);
   if (!product) return null;
   return (
@@ -16,7 +17,7 @@ export default function FeaturedProduct({ productId = featuredProductId }) {
     >
       <div className={styles.heading}>
         <h2 id="featured-title">Produkti më i kërkuar</h2>
-        <p>Përzgjedhje demonstrimi</p>
+        {(demo || product.is_demo) && <p>Përzgjedhje demonstrimi</p>}
       </div>
       <div className={styles.feature}>
         <Media

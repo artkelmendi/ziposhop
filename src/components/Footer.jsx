@@ -1,10 +1,11 @@
 import Brand from "./Brand";
 import AppLink from "./AppLink";
 import { store } from "../data/store";
-import { categories } from "../data/catalog";
+import { useCatalog } from "../data/CatalogContext";
 import { catalogUrl } from "../data/store";
 import styles from "./Footer.module.css";
 export default function Footer() {
+  const { categories } = useCatalog();
   return (
     <footer className={styles.footer} id="footer">
       <div className={"wrap " + styles.content}>
@@ -48,6 +49,7 @@ export default function Footer() {
       <div className={"wrap " + styles.bottom}>
         <span>© {new Date().getFullYear()} ZIPO Mobil Shop</span>
         <AppLink to="/kontakti.html">Kontakti</AppLink>
+        <a href={import.meta.env.BASE_URL + "admin.html"}>Administrimi</a>
       </div>
     </footer>
   );

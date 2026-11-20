@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures";
 
 test("category product cards enter once without restarting after page entry or scroll", async ({
   page,

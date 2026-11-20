@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures";
 for (const width of [440, 1440]) {
   test("home scroll reveals run once at " + width + "px", async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });

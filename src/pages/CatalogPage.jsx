@@ -4,8 +4,8 @@ import AppLink from "../components/AppLink";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
 import Icon from "../components/Icon";
-import { categories, products } from "../data/catalog";
-import { catalogUrl, categoryName } from "../data/store";
+import { useCatalog } from "../data/CatalogContext";
+import { catalogUrl } from "../data/store";
 import ProductPage from "./ProductPage";
 import "./CatalogPage.css";
 
@@ -55,6 +55,7 @@ function CatalogSearch({ value, onChange, directory = false }) {
 }
 
 function CategoryDirectory() {
+  const { categories, products } = useCatalog();
   const [params] = useSearchParams();
   const [query, setQuery] = useState(params.get("q") || "");
   const results = categories.filter((category) =>
@@ -99,13 +100,14 @@ function CategoryDirectory() {
         )}
       </div>
       <p className="catalog-note">
-        Fotot paraqesin modele ilustruese. Pyet dyqanin për disponueshmërinë.
+        Kontakto dyqanin për porositë dhe disponueshmërinë.
       </p>
     </div>
   );
 }
 
 function CategoryProducts({ category }) {
+  const { categories, products } = useCatalog();
   const [params, setParams] = useSearchParams();
   const query = params.get("q") || "";
   const results = products.filter(
@@ -114,7 +116,7 @@ function CategoryProducts({ category }) {
       normalize(
         product.name +
           " " +
-          categoryName(product.category) +
+          category.name +
           " " +
           product.specs.flat().join(" "),
       ).includes(normalize(query)),
@@ -225,14 +227,14 @@ function CategoryProducts({ category }) {
         )}
       </div>
       <p className="catalog-note">
-        Katalog ilustrues. Dyqani konfirmon çmimin dhe disponueshmërinë e
-        secilit model.
+        Dyqani konfirmon çmimin dhe disponueshmërinë e secilit model.
       </p>
     </div>
   );
 }
 
 export default function CatalogPage() {
+  const { categories, products } = useCatalog();
   const [params] = useSearchParams();
   if (params.has("produkt")) {
     const id = params.get("produkt");

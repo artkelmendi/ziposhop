@@ -2,6 +2,8 @@
 
 The storefront runs on React, Vite and React Router. The home, catalog, product detail and contact views share one application layout and header.
 
+The owner dashboard is at `admin.html`. It uses Supabase Auth, Postgres with row-level security, and image storage. See [ADMIN.md](ADMIN.md) for account setup, environment variables, owner workflows and access controls. Published catalog changes feed the storefront without a deployment.
+
 ## Run locally
 
 Install dependencies with `npm ci`, then run `npm run dev`. Open `http://127.0.0.1:4173/`.
@@ -27,7 +29,7 @@ Install dependencies with `npm ci`, then run `npm run dev`. Open `http://127.0.0
 - `src/styles/` contains the storefront design and shared loading styles.
 - `build/loading-shell.js` supplies a delayed placeholder before the application bundle loads.
 
-`FeaturedProduct` accepts a `productId` prop so the future admin-backed homepage settings can supply its selection. The image, description, specifications and “Shiko produktin” destination all resolve from that same ID. The current preview defaults to `featuredProductId` in `src/data/homeContent.js`.
+`FeaturedProduct` reads the selected product from Supabase homepage settings. The image, description, specifications and “Shiko produktin” destination resolve from that same ID. Unconfigured previews use `featuredProductId` in `src/data/homeContent.js`.
 
 ## Navigation and production output
 
@@ -39,7 +41,7 @@ Produktet opens the category directory. Selecting a category opens its products 
 
 Vite generates content-hashed script and stylesheet filenames. Every HTML entry points to the same compiled application, so updates to the shared navigation reach every page.
 
-The production host serves `dist/` using `.openai/hosting.json`. The catalog and featured selection are ready to connect to the owner's chosen inventory system.
+The production hosts serve `dist/`. The GitHub Pages deployment is configured below; `.openai/hosting.json` preserves the earlier preview host configuration. Production product/category content and homepage selections are backed by Supabase.
 
 ## GitHub Pages
 
@@ -50,4 +52,4 @@ The existing HTML entry points support direct links and refreshes on GitHub Page
 
 ## Verification
 
-`npm test` builds the production app and runs the browser regression tests in installed Google Chrome. The suite checks consistent menu rows across routes, persistent navigation, resizing, Escape and outside-click behavior, and delayed product images.
+`npm test` builds in test mode and runs the browser regression tests in installed Google Chrome. API fixtures isolate tests from the owner's live catalog. The suite covers storefront navigation, motion, media loading, admin authentication, product uploads and CRUD, categories, homepage settings and a 200-product admin list.

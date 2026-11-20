@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Skeleton from "./Skeleton";
+import { imageUrl } from "../lib/backend";
 
 export default function Media({
   src,
@@ -68,7 +69,7 @@ function MediaFrame({ src, alt, className, eager, style, ...props }) {
     >
       <img
         ref={image}
-        src={import.meta.env.BASE_URL + "assets/" + src}
+        src={imageUrl(src)}
         alt={alt}
         loading={eager ? "eager" : "lazy"}
         decoding="async"

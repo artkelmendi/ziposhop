@@ -7,7 +7,7 @@ export default class RouteError extends Component {
   render() {
     if (!this.state.failed) return this.props.children;
     return (
-      <main id="kryesore" className="wrap catalog-main">
+      <div className="wrap catalog-main" role="alert">
         <div className="empty-state">
           <h1>Faqja nuk u ngarkua.</h1>
           <p>Kontrollo lidhjen dhe provo përsëri.</p>
@@ -18,7 +18,7 @@ export default class RouteError extends Component {
             Provo përsëri
           </button>
         </div>
-      </main>
+      </div>
     );
   }
 }
