@@ -31,6 +31,7 @@ export default function Icon({ name }) {
     close: <path d="m6 6 12 12M18 6 6 18" />,
     prev: <path d="m14.5 5.5-6 6.5 6 6.5" />,
     next: <path d="m9.5 5.5 6 6.5-6 6.5" />,
+    arrow: <path d="M4 12h16m-6-6 6 6-6 6" />,
     pause: <path d="M8 5v14M16 5v14" strokeWidth="2.5" />,
     play: <path d="m8 5 10 7-10 7z" />,
     message: (

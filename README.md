@@ -16,6 +16,7 @@ Install dependencies with `npm ci`, then run `npm run dev`. Open `http://127.0.0
 - `src/components/Hero.jsx`, `Collection.jsx`, `ProductCard.jsx`, `Brand.jsx` and `Footer.jsx` provide shared storefront components.
 - `src/components/CategoryCard.jsx` and its scoped stylesheet provide the shared product compositions for the home page and category directory.
 - `src/components/ScrollReveal.jsx` adds a single viewport entrance to home sections. It leaves content visible by default, disconnects after its first intersection, and respects reduced-motion preferences.
+- `src/components/BrandIntro.jsx` draws the ZIPO wordmark on the first visit in a tab session, then opens an aperture from the O into the loaded page. Page entrances pause behind it and resume at the reveal. The intro can be skipped, respects reduced motion, and can be replayed by opening `?intro=1`.
 - VisitShop.jsx provides the Pejë map and links to the contact page.
 - `src/pages/` contains the home, catalog, product detail and contact views.
 - `src/data/catalog.js` contains the illustrative product records and categories. `src/data/store.js` contains the shop details and URL helpers.

@@ -1,0 +1,147 @@
+.shell {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  min-width: 0;
+}
+.shell[data-intro-covered] *,
+.shell[data-intro-covered] *::before,
+.shell[data-intro-covered] *::after {
+  animation-play-state: paused !important;
+}
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  color: var(--ink);
+  isolation: isolate;
+  touch-action: none;
+}
+.curtain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  stroke: none;
+}
+.aperture {
+  transform: scale(0);
+  transform-box: view-box;
+}
+.identity {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(240px, 40vw, 480px);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.logo {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  stroke: none;
+}
+.letter {
+  fill: currentColor;
+  fill-opacity: 0;
+  stroke: currentColor;
+  stroke-width: 7;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation:
+    trace 750ms calc(var(--letter-order) * 65ms) cubic-bezier(0.4, 0, 0.2, 1)
+      both,
+    ink 350ms calc(620ms + var(--letter-order) * 65ms) ease-out both;
+}
+.caption {
+  margin-top: 22px;
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  animation: caption 450ms 430ms var(--ease) both;
+}
+.bottom {
+  position: absolute;
+  inset: auto 5% max(22px, env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+}
+.bottom > span {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+.skip {
+  display: inline-flex;
+  min-height: 44px;
+  padding: 12px 0 12px 16px;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.81rem;
+  transition: color 150ms ease;
+}
+.skip:hover {
+  color: var(--ink);
+}
+.skip svg {
+  width: 17px;
+  height: 17px;
+}
+.overlay[data-phase="opening"] .aperture {
+  animation: open-aperture 750ms cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+.overlay[data-phase="opening"] .identity,
+.overlay[data-phase="opening"] .bottom {
+  animation: leave 180ms ease-out both;
+}
+@keyframes trace {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes ink {
+  to {
+    fill-opacity: 1;
+  }
+}
+@keyframes caption {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100%);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0);
+  }
+}
+@keyframes open-aperture {
+  to {
+    transform: scale(var(--aperture-radius));
+  }
+}
+@keyframes leave {
+  to {
+    opacity: 0;
+  }
+}
+@media (max-width: 520px) {
+  .identity {
+    width: min(70vw, 310px);
+  }
+  .caption {
+    margin-top: 20px;
+    font-size: 0.68rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    display: none;
+  }
+}

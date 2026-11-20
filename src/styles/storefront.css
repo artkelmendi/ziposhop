@@ -81,6 +81,7 @@ input {
   color: #1c1916;
 }
 html {
+  scrollbar-gutter: stable;
   scrollbar-color: #a8aaa5 #f4f4f2;
 }
 h1,

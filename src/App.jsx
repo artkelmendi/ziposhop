@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PageSkeleton from "./components/PageSkeleton";
 import RouteError from "./components/RouteError";
+import { useIntroCovered } from "./components/BrandIntro";
 import { categories, products } from "./data/catalog";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -13,9 +14,11 @@ const ContactPage = lazy(() => import("./pages/ContactPage"));
 const pages = { home: HomePage, catalog: CatalogPage, contact: ContactPage };
 
 function PageEntry({ children, location, title }) {
+  const introCovered = useIntroCovered();
   const [entering, setEntering] = useState(true);
   useEffect(() => {
     document.title = title;
+    if (introCovered) return;
     const timer = setTimeout(() => setEntering(false), 1500);
     const frame = requestAnimationFrame(() => {
       if (location.hash && location.hash !== "#kerko")
@@ -26,9 +29,13 @@ function PageEntry({ children, location, title }) {
       clearTimeout(timer);
       cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [introCovered]);
   return (
-    <main id="kryesore" className={entering ? "page-entering" : ""}>
+    <main
+      id="kryesore"
+      tabIndex={-1}
+      className={entering ? "page-entering" : ""}
+    >
       {children}
     </main>
   );
