@@ -8,6 +8,7 @@ test("the mobile menu has identical rows on every route", async ({ page }) => {
     "/produktet.html?kategoria=telefona",
     "/produktet.html?produkt=iphone-15-pro",
     "/kontakti.html",
+    "/pyetje.html",
   ]) {
     await page.goto(route);
     await page.getByRole("button", { name: "Hap menunë" }).click();
@@ -15,6 +16,7 @@ test("the mobile menu has identical rows on every route", async ({ page }) => {
     await expect(menu.getByRole("link")).toHaveText([
       "Ballina",
       "Produktet",
+      "Pyetje të shpeshta",
       "Kontakti",
     ]);
     const rows = await menu.getByRole("link").evaluateAll((links) =>

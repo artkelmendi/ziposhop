@@ -97,6 +97,7 @@ for (const width of [440, 1440]) {
       .getByRole("button", { name: "Shto produkt", exact: true })
       .click();
     await page.getByLabel("Emri i produktit").fill("Produkt provë");
+    await page.getByLabel(/Çmimi/).fill("429.50");
     await page
       .getByRole("combobox", { name: "Kategoria", exact: true })
       .selectOption("telefona");
@@ -116,10 +117,13 @@ for (const width of [440, 1440]) {
     ).toBeVisible();
     expect(backend.uploads).toHaveLength(2);
     expect(backend.catalog.products.at(-1).published).toBe(true);
+    expect(backend.catalog.products.at(-1).price).toBe(429.50);
     await page
       .getByRole("button", { name: "Produkt provë", exact: true })
       .click();
     await page.getByLabel("Emri i produktit").fill("Produkt i ndryshuar");
+    await expect(page.getByLabel(/Çmimi/)).toHaveValue("429.5");
+    await page.getByLabel(/Çmimi/).fill("399");
     backend.failedSave = true;
     await page
       .getByRole("button", { name: "Ruaj produktin", exact: true })
@@ -134,6 +138,7 @@ for (const width of [440, 1440]) {
     await expect(
       page.getByRole("button", { name: "Produkt i ndryshuar", exact: true }),
     ).toBeVisible();
+    expect(backend.catalog.products.find(product => product.name === "Produkt i ndryshuar").price).toBe(399);
     await page
       .getByRole("button", { name: "Produkt i ndryshuar", exact: true })
       .click();

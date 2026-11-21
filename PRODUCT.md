@@ -10,7 +10,7 @@ web
 
 React, Vite and React Router. Shared components provide the header, footer, product cards, hero, continuous collection, image loading and skeleton states. Navigation styles live in Header.module.css. The production build uses hashed assets.
 
-The production catalog, categories and homepage selections are stored in Supabase and read through CatalogContext. The separate admin.html entry provides email/password sign-in and the product, category and homepage editors. Database row-level security restricts edits to verified allowlisted administrators. The original illustrative records in src/data/catalog.js and public/collection.json remain for unconfigured previews and test fixtures. Store details live in src/data/store.js. Development, deployment and administration are documented in README.md and ADMIN.md.
+The production catalog, categories and homepage selections are stored in Supabase and read through CatalogContext. The separate admin.html entry provides email/password sign-in and the product, category and homepage editors. Database row-level security restricts edits to verified allowlisted administrators. The initial records in src/data/catalog.js and public/collection.json remain for unconfigured previews and test fixtures. Store details live in src/data/store.js. Development, deployment and administration are documented in README.md and ADMIN.md.
 
 ## Product purpose
 
@@ -18,7 +18,7 @@ Introduce the Pejë shop and let visitors explore phones, electric motorcycles, 
 
 ## Content
 
-The preview uses Albanian for local shoppers. Models are illustrative. The shop confirms prices and availability directly. Its public profile lists Rr. Mbretëresha Teutë, Pejë and the WhatsApp number +383 44 856 416.
+The storefront uses Albanian for local shoppers. The nine initial products have temporary euro prices requested by the owner; these are stored in Supabase and editable in the admin. Public product pages do not display illustrative-model notices. The shop confirms availability directly. Its public profile lists Rr. Mbretëresha Teutë, Pejë and the WhatsApp number +383 44 856 416.
 
 ## Brand commitments
 
@@ -26,11 +26,13 @@ A predominantly white storefront, clean product imagery sourced independently of
 
 The established, self-hosted Instrument Sans typography is preserved during palette and control refinements.
 
-The header links to Produktet and Kontakti. Categories are explored from the home page and catalog. Headings use one consistent sans-serif family with plain punctuation. Each page has a visible entrance sequence. Page layouts and headings render immediately, without skeleton screens. Delayed skeletons are limited to catalog product cards, product detail photos and admin product rows; home, contact, category artwork and authentication have none. The public footer has no admin link.
+The header links to Produktet, Pyetje të shpeshta and Kontakti. Categories are explored from the home page and catalog. Headings use one consistent sans-serif family with plain punctuation. Each page has a visible entrance sequence. Page layouts and headings render immediately, without skeleton screens. Delayed skeletons are limited to catalog product cards, product detail photos and admin product rows; home, contact, category artwork and authentication have none. The public footer has no admin link.
 
-Produktet first opens a category directory. Selecting a category shows its products, with a maximum of 24 products per page. A compact animated disclosure replaces the category chip row. Category pages have no inline search; the header search opens the catalog's general search, which finds products across all categories. Search state and pagination are shareable through URL parameters. Home and catalog category artwork share one component and show representative families of devices. The displayed products remain illustrative pending the owner's inventory.
+Produktet first opens a category directory. Selecting a category shows its products, with a maximum of 24 products per page. A compact animated disclosure replaces the category chip row. Category pages have no inline search; the header search opens the catalog's general search, which finds products across all categories. Search state and pagination are shareable through URL parameters. Home and catalog category artwork share one component and show representative families of devices. The owner can edit the initial catalog entries and prices in the admin.
 
 Category results use a shallow, pale blue banner with the category title and description, plus representative artwork on larger screens. Shared surfaces carry a faint blue tint while white remains dominant. The admin login is minimal and in English. Admin sections and editors share brief, interruptible exit and entrance transitions; controls and save results provide quiet feedback, with a reduced-motion alternative.
+
+The Pyetje të shpeshta page contains six professional Albanian answers, including owner-confirmed product originality, used products and inventory beyond the website. A reusable single-open accordion animates expansion and collapse, supports keyboard interaction and respects reduced motion. Additional answers describe the existing WhatsApp inquiry flow, availability and shop location. No warranty, delivery or payment policy has been invented.
 
 ## Preview sources
 

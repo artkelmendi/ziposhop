@@ -10,6 +10,7 @@ export default defineConfig({
         home: resolve(import.meta.dirname, "index.html"),
         catalog: resolve(import.meta.dirname, "produktet.html"),
         contact: resolve(import.meta.dirname, "kontakti.html"),
+        faq: resolve(import.meta.dirname, "pyetje.html"),
         admin: resolve(import.meta.dirname, "admin.html"),
       },
     },

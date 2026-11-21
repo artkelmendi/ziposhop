@@ -69,6 +69,8 @@ function Dashboard({ email }) {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [revision, setRevision] = useState(0);
+  const [retry, setRetry] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
   const [removing, setRemoving] = useState(null);
   const [deleting, setDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState("");
@@ -86,15 +88,27 @@ function Dashboard({ email }) {
     return () => {
       active = false;
     };
-  }, [revision]);
-  function refresh(text = "Ndryshimet u ruajtën.") {
+  }, [retry]);
+  async function refresh(text = "Ndryshimet u ruajtën.") {
+    setRefreshing(true);
+    let nextCatalog;
+    let refreshError = "";
+    try {
+      nextCatalog = await loadAdminCatalog();
+    } catch {
+      refreshError = "Ndryshimi u ruajt, por lista nuk u rifreskua. Provo përsëri.";
+    }
     transition(() => {
+      if (nextCatalog) setCatalog(nextCatalog);
+      setError(refreshError);
       setMessage(text);
       setEditing(null);
       setRevision((value) => value + 1);
+      setRefreshing(false);
     }, { scroll: true });
   }
   function navigate(next) {
+    if (refreshing) return;
     if (next === view && !editing && !panel.current?.inert) return;
     if (!confirmLeave()) return;
     transition(() => {
@@ -118,7 +132,7 @@ function Dashboard({ email }) {
         removing.id,
       );
       setRemoving(null);
-      refresh("U fshi nga katalogu.");
+      await refresh("U fshi nga katalogu.");
     } catch (error) {
       setDeleteError(friendlyError(error));
     } finally {
@@ -126,6 +140,7 @@ function Dashboard({ email }) {
     }
   }
   async function signOut() {
+    if (refreshing) return;
     if (!confirmLeave()) return;
     setSigningOut(true);
     const { error } = await supabase.auth.signOut();
@@ -153,6 +168,7 @@ function Dashboard({ email }) {
                 className={view === id ? styles.navActive : styles.navButton}
                 aria-current={view === id ? "page" : undefined}
                 onClick={() => navigate(id)}
+                disabled={refreshing}
               >
                 <Icon name={icon} />
                 {label}
@@ -176,7 +192,7 @@ function Dashboard({ email }) {
               <button
                 className={styles.signOut}
                 onClick={signOut}
-                disabled={signingOut}
+                disabled={signingOut || refreshing}
               >
                 <Icon name="logout" />
                 {signingOut ? "Duke dalë…" : "Dil"}
@@ -190,7 +206,7 @@ function Dashboard({ email }) {
                 <Notice error>{error}</Notice>
                 <button
                   className={styles.secondary}
-                  onClick={() => setRevision((value) => value + 1)}
+                  onClick={() => setRetry((value) => value + 1)}
                 >
                   Provo përsëri
                 </button>
@@ -234,7 +250,7 @@ function Dashboard({ email }) {
               />
             ) : (
               <HomeSettings
-                key={JSON.stringify(catalog.settings)}
+                key={revision}
                 {...catalog}
                 onSaved={() => refresh()}
               />

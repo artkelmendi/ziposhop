@@ -1,11 +1,12 @@
 import AppLink from "./AppLink";
 import Media from "./Media";
+import ProductPrice from "./ProductPrice";
 import { useCatalog } from "../data/CatalogContext";
 import { productUrl } from "../data/store";
 import styles from "./HomeHighlights.module.css";
 
 export default function FeaturedProduct({ productId }) {
-  const { products, settings, demo } = useCatalog();
+  const { products, settings } = useCatalog();
   productId ??= settings.featured_product_id;
   const product = products.find((item) => item.id === productId);
   if (!product) return null;
@@ -17,7 +18,6 @@ export default function FeaturedProduct({ productId }) {
     >
       <div className={styles.heading}>
         <h2 id="featured-title">Produkti më i kërkuar</h2>
-        {(demo || product.is_demo) && <p>Përzgjedhje demonstrimi</p>}
       </div>
       <div className={styles.feature}>
         <Media
@@ -27,6 +27,7 @@ export default function FeaturedProduct({ productId }) {
         />
         <div className={styles.featureCopy}>
           <h3>{product.name}</h3>
+          <ProductPrice value={product.price} className="detail-price" />
           <p>{product.description}</p>
           <dl className={styles.specs}>
             {product.specs.slice(1).map(([label, value]) => (

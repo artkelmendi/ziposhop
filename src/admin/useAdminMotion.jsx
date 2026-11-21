@@ -57,7 +57,9 @@ export function usePanelMotion(ready) {
   useEffect(() => {
     if (ready && !initialized.current) {
       initialized.current = true;
-      enter();
+      // Data can arrive during navigation. Keep that transition's destination
+      // and animation intact instead of replacing it with the initial reveal.
+      if (!pending.current && animation.current?.playState !== "running") enter();
     }
   }, [ready, enter]);
 

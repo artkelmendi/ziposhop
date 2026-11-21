@@ -7,6 +7,7 @@ import styles from "./Header.module.css";
 const links = [
   { to: "/index.html", label: "Ballina", page: "home" },
   { to: "/produktet.html", label: "Produktet", page: "catalog" },
+  { to: "/pyetje.html", label: "Pyetje të shpeshta", page: "faq" },
   { to: "/kontakti.html", label: "Kontakti", page: "contact" },
 ];
 export default function Header({ loading }) {
@@ -17,6 +18,8 @@ export default function Header({ loading }) {
   const current =
     location.pathname === "/kontakti.html"
       ? "contact"
+      : location.pathname === "/pyetje.html"
+        ? "faq"
       : location.pathname === "/produktet.html"
         ? "catalog"
         : "home";

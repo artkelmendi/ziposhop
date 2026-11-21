@@ -3,11 +3,12 @@ import AppLink from "../components/AppLink";
 import Media from "../components/Media";
 import ProductCard from "../components/ProductCard";
 import ProductLoading from "../components/ProductLoading";
+import ProductPrice from "../components/ProductPrice";
 import Icon from "../components/Icon";
 import { useCatalog } from "../data/CatalogContext";
 import { catalogUrl, store } from "../data/store";
 export default function ProductPage({ product }) {
-  const { products, categories, demo, loading, error, refresh } = useCatalog();
+  const { products, categories, loading, error, refresh } = useCatalog();
   const [choice, setChoice] = useState(0);
   if (!product && (loading || error)) return (
     <div className="wrap catalog-main">
@@ -81,14 +82,7 @@ export default function ProductPage({ product }) {
         <div className="detail-copy">
           <h1>{product.name}</h1>
           <p>{product.description}</p>
-          {product.price != null && (
-            <p className="detail-price">
-              {new Intl.NumberFormat("sq-XK", {
-                style: "currency",
-                currency: "EUR",
-              }).format(Number(product.price))}
-            </p>
-          )}
+          <ProductPrice value={product.price} className="detail-price" />
           {product.available === false && (
             <p className="availability-note">
               Për momentin i padisponueshëm. Pyet dyqanin për këtë model.
@@ -134,9 +128,7 @@ export default function ProductPage({ product }) {
             Pyet në WhatsApp
           </a>
           <p className="catalog-note">
-            {demo || product.is_demo
-              ? "Model ilustrues. Kontakto dyqanin për çmimin dhe disponueshmërinë."
-              : "Kontakto dyqanin për porosinë dhe detajet e produktit."}
+            Kontakto dyqanin për porosinë dhe detajet e produktit.
           </p>
         </div>
       </article>

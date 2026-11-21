@@ -1,4 +1,4 @@
-// The owner can replace this illustrative assortment with a live catalog later.
+// Initial catalog prices are temporary and editable in the administration panel.
 export const categories = [
   {
     id: "telefona",
@@ -46,6 +46,7 @@ export const categories = [
 export const products = [
   {
     id: "iphone-17",
+    price: 799,
     name: "iPhone 17",
     category: "telefona",
     image: "phone-17-lavender.webp",
@@ -59,6 +60,7 @@ export const products = [
   },
   {
     id: "iphone-air",
+    price: 899,
     name: "iPhone Air",
     category: "telefona",
     image: "phone-air-blue.webp",
@@ -72,6 +74,7 @@ export const products = [
   },
   {
     id: "kukirin-g2",
+    price: 449,
     name: "KuKirin G2",
     category: "trotineta",
     image: "scooter-g2.webp",
@@ -89,6 +92,7 @@ export const products = [
   },
   {
     id: "iphone-17-pro",
+    price: 1099,
     name: "iPhone 17 Pro",
     category: "telefona",
     image: "phone-17-pro-orange.webp",
@@ -102,6 +106,7 @@ export const products = [
   },
   {
     id: "ipad-air",
+    price: 599,
     name: "iPad Air 11″",
     category: "tableta",
     image: "tablet-air-blue.webp",
@@ -119,6 +124,7 @@ export const products = [
   },
   {
     id: "airpods-pro-3",
+    price: 249,
     name: "AirPods Pro 3",
     category: "aksesore",
     image: "audio-airpods-pro-3.webp",
@@ -132,6 +138,7 @@ export const products = [
   },
   {
     id: "niu-nqi-sport",
+    price: 1999,
     name: "NIU NQi Sport",
     category: "motore",
     image: "moto-niu.webp",
@@ -145,6 +152,7 @@ export const products = [
   },
   {
     id: "iphone-15-pro",
+    price: 649,
     name: "iPhone 15 Pro",
     category: "telefona",
     image: "phone-15-pro-titanium.webp",
@@ -162,6 +170,7 @@ export const products = [
   },
   {
     id: "watch-se-3",
+    price: 229,
     name: "Apple Watch SE 3",
     category: "aksesore",
     image: "watch-se-3.webp",

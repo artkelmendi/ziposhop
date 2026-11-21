@@ -24,7 +24,7 @@ export default function ProductEditor({
     price: product?.price ?? "",
     available: product?.available ?? true,
     published: product?.published ?? false,
-    is_demo: product?.is_demo ?? false,
+    is_demo: false,
   });
   const [images, setImages] = useState(() => productImages(product));
   const [specs, setSpecs] = useState(
@@ -92,7 +92,7 @@ export default function ProductEditor({
       };
       await saveRecord("products", record, product);
       markSaved();
-      onSaved();
+      await onSaved();
     } catch (error) {
       await removeUploads(uploaded);
       setError(friendlyError(error));
@@ -185,24 +185,6 @@ export default function ProductEditor({
                     placeholder="Çfarë duhet të dijë klienti për këtë produkt?"
                   />
                 </label>
-                {product?.is_demo && (
-                  <label className={styles.check}>
-                    <input
-                      type="checkbox"
-                      checked={form.is_demo}
-                      onChange={(event) =>
-                        update("is_demo", event.target.checked)
-                      }
-                    />
-                    <span>
-                      Model ilustrues
-                      <small>
-                        Hiqe shënimin kur zëvendëson shembullin me një produkt
-                        real.
-                      </small>
-                    </span>
-                  </label>
-                )}
               </section>
               <section className={styles.formSection}>
                 <h2>Fotot</h2>

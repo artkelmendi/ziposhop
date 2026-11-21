@@ -1,5 +1,6 @@
 import AppLink from "./AppLink";
 import Media from "./Media";
+import ProductPrice from "./ProductPrice";
 import { productUrl } from "../data/store";
 import { useCatalog } from "../data/CatalogContext";
 export default function ProductCard({
@@ -28,14 +29,7 @@ export default function ProductCard({
         {categories.find((category) => category.id === product.category)?.name}
       </span>
       <h3>{product.name}</h3>
-      {product.price != null && (
-        <p className="product-price">
-          {new Intl.NumberFormat("sq-XK", {
-            style: "currency",
-            currency: "EUR",
-          }).format(Number(product.price))}
-        </p>
-      )}
+      <ProductPrice value={product.price} />
     </AppLink>
   );
 }

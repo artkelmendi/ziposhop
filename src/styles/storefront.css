@@ -46,7 +46,7 @@ body {
   min-width: 0;
 }
 .product-price { margin-top: 6px; font-size: .95rem; font-weight: 550; }
-.detail-price { font-size: 1.5rem; font-weight: 550; color: var(--ink); }
+.detail-copy > .detail-price { font-size: 1.5rem; font-weight: 550; color: var(--ink); font-variant-numeric: tabular-nums; }
 .availability-note { font-size: .85rem; color: var(--muted); }
 button,
 input {

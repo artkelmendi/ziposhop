@@ -126,7 +126,7 @@ function CategoryForm({ category, onCancel, onSaved, onDelete }) {
         category.id ? category : null,
       );
       markSaved();
-      onSaved();
+      await onSaved();
     } catch (error) {
       await removeUploads(uploaded);
       setError(friendlyError(error));

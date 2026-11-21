@@ -49,6 +49,7 @@ export default function Footer() {
       <div className={"wrap " + styles.bottom}>
         <span>© {new Date().getFullYear()} ZIPO Mobil Shop</span>
         <AppLink to="/kontakti.html">Kontakti</AppLink>
+        <AppLink to="/pyetje.html">Pyetje të shpeshta</AppLink>
       </div>
     </footer>
   );

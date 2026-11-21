@@ -9,8 +9,9 @@ import { useCatalog, useCategory } from "./data/CatalogContext";
 import HomePage from "./pages/HomePage";
 import CatalogPage from "./pages/CatalogPage";
 import ContactPage from "./pages/ContactPage";
+import FaqPage from "./pages/FaqPage";
 
-const pages = { home: HomePage, catalog: CatalogPage, contact: ContactPage };
+const pages = { home: HomePage, catalog: CatalogPage, contact: ContactPage, faq: FaqPage };
 
 function PageEntry({ children, location, title }) {
   const introCovered = useIntroCovered();
@@ -51,6 +52,8 @@ export default function App() {
   const page =
     location.pathname === "/kontakti.html"
       ? "contact"
+      : location.pathname === "/pyetje.html"
+        ? "faq"
       : location.pathname === "/produktet.html"
         ? "catalog"
         : "home";
@@ -65,7 +68,7 @@ export default function App() {
       ? "ZIPO Mobil Shop — Teknologji në lëvizje"
       : page === "catalog"
         ? (category?.name || "Produktet") + " — ZIPO Mobil Shop"
-        : "Kontakti — ZIPO Mobil Shop";
+        : page === "faq" ? "Pyetje të shpeshta — ZIPO Mobil Shop" : "Kontakti — ZIPO Mobil Shop";
   useEffect(() => {
     setLeaving(false);
   }, [location]);

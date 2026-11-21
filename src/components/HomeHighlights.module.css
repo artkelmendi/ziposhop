@@ -55,6 +55,12 @@
   font-size: 1rem;
   margin-top: 14px;
 }
+.featureCopy :global(.detail-price) {
+  font-size: 1.5rem;
+  color: var(--ink);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
 .specs {
   display: flex;
   flex-wrap: wrap;

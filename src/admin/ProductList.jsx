@@ -94,7 +94,6 @@ export default function ProductList({
                             >
                               {product.name}
                             </button>
-                            {product.is_demo && <small>Shembull</small>}
                           </div>
                         </div>
                       </td>

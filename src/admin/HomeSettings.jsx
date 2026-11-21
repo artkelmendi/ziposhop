@@ -52,7 +52,7 @@ export default function HomeSettings({
       setBusy(false);
     } else {
       markSaved();
-      onSaved();
+      await onSaved();
       setBusy(false);
     }
   }
