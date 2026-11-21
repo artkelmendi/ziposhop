@@ -13,7 +13,7 @@ Scope: extend the existing home page directly after the featured product, before
 
 THESIS: One layered story introduces electronics, electric mobility and repair. The section earns its movement by separating these three areas clearly.
 
-OWN-WORLD: Preserve Instrument Sans, white and faint blue surfaces, black type, restrained 16px corners and the established product photography. All three panels use light colors, with no dark blue panel. Keep factual headings and short descriptions, as requested; no promotional metaphors.
+OWN-WORLD: Preserve Instrument Sans, the white storefront, black type, restrained 16px corners and the established product photography. Different light panel colors distinguish the areas: soft blue for electronics, peach for electric transport and lavender for repair. Secondary text follows each panel hue with readable contrast. No dark panel. Keep factual headings and short descriptions, as requested; no promotional metaphors.
 
 STORY: Three visible panels explain electronics, motorbikes/scooters and repairs, with useful catalog category or WhatsApp actions. Tabs offer direct navigation through the same story.
 
