@@ -20,6 +20,8 @@ Introduce the Pejë shop and let visitors explore phones, electric motorcycles, 
 
 The storefront uses Albanian for local shoppers. The nine initial products have temporary euro prices requested by the owner; these are stored in Supabase and editable in the admin. Public product pages do not display illustrative-model notices. The shop confirms availability directly. Its public profile lists Rr. Mbretëresha Teutë, Pejë and the WhatsApp number +383 44 856 416.
 
+Displayed euro prices always include two decimal places. Integer values display as 799.00, and entered cents such as 799.99 are preserved; formatting does not change the saved amount.
+
 ## Brand commitments
 
 A predominantly white storefront, clean product imagery sourced independently of Instagram, a prominent product hero and smooth scrolling transitions.

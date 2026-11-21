@@ -41,12 +41,12 @@ for (const width of [390, 768, 1440]) {
 test("product prices appear in cards, details and the featured product without demo notices", async ({ page }) => {
   await page.goto("/produktet.html?kategoria=telefona");
   await expect(page.locator("#product-grid .product-price")).toHaveCount(4);
-  await expect(page.locator('#product-grid a[href*="iphone-17-pro"] .product-price')).toContainText("1");
+  await expect(page.locator('#product-grid a[href*="iphone-17-pro"] .product-price')).toContainText(/1[\s.,]?099[.,]00/);
   await page.goto("/produktet.html?produkt=iphone-17-pro");
-  await expect(page.locator(".detail-price")).toHaveText(/€.*1[\s.,]?099|1[\s.,]?099.*€/);
+  await expect(page.locator(".detail-price")).toContainText(/1[\s.,]?099[.,]00/);
   await expect(page.getByText(/Model ilustrues|Përzgjedhje demonstrimi/)).toHaveCount(0);
   await page.goto("/");
-  await expect(page.locator("#produkti-i-kerkuar .detail-price")).toHaveText(/€.*449|449.*€/);
+  await expect(page.locator("#produkti-i-kerkuar .detail-price")).toContainText(/449[.,]00/);
   await expect(page.getByText(/Model ilustrues|Përzgjedhje demonstrimi/)).toHaveCount(0);
   const mobileToggle = page.getByRole("button", { name: "Hap menunë", exact: true });
   const mobile = await mobileToggle.isVisible();

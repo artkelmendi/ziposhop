@@ -1,6 +1,6 @@
 export const formatPrice = value => new Intl.NumberFormat("sq-XK", {
   style: "currency", currency: "EUR",
-  minimumFractionDigits: Number(value) % 1 ? 2 : 0,
+  minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 }).format(Number(value));
 
