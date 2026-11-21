@@ -1,7 +1,7 @@
 import { test, expect } from "./fixtures";
 
 test("category product cards enter once without restarting after page entry or scroll", async ({
-  page,
+  page, browserName, isMobile,
 }) => {
   await page.setViewportSize({ width: 440, height: 956 });
   await page.addInitScript(() => {
@@ -19,8 +19,18 @@ test("category product cards enter once without restarting after page entry or s
   await expect(page.locator("#product-grid > .product-card")).toHaveCount(4);
   await expect(page.locator("main")).not.toHaveClass("page-entering");
   await page.locator("#product-grid").scrollIntoViewIfNeeded();
-  await page.mouse.wheel(0, 600);
-  await page.mouse.wheel(0, -600);
+  if (browserName === "webkit" && isMobile) {
+    // Mobile WebKit has no wheel input; exercise its native page scroll instead.
+    for (const top of [600, -600]) {
+      await page.evaluate(top => new Promise(resolve => {
+        window.scrollBy({ top, behavior: "instant" });
+        requestAnimationFrame(resolve);
+      }), top);
+    }
+  } else {
+    await page.mouse.wheel(0, 600);
+    await page.mouse.wheel(0, -600);
+  }
   const cards = await page
     .locator("#product-grid > .product-card")
     .evaluateAll((elements) =>

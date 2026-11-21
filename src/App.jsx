@@ -55,9 +55,10 @@ export default function App() {
       : location.pathname === "/produktet.html"
         ? "catalog"
         : "home";
-  const productId = new URLSearchParams(location.search).get("produkt");
-  const category = categories.find(
-    (item) => item.id === new URLSearchParams(location.search).get("kategoria"),
+  const params = new URLSearchParams(location.search);
+  const productId = params.get("produkt");
+  const category = !params.has("q") && categories.find(
+    (item) => item.id === params.get("kategoria"),
   );
   const title = productId
     ? (products.find((product) => product.id === productId)?.name ||
@@ -99,7 +100,7 @@ export default function App() {
     page +
     "-" +
     (productId ||
-      new URLSearchParams(location.search).get("kategoria") ||
+      category?.id ||
       "directory") +
     (page === "home"
       ? "-" + (new URLSearchParams(location.search).get("hero") || "studio")

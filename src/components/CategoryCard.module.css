@@ -3,12 +3,12 @@
   isolation: isolate;
   display: flex;
   overflow: hidden;
-  background: #f3f4f1;
+  background: var(--panel);
   border-radius: 16px;
   min-width: 0;
 }
 .card:hover {
-  background: #eceee9;
+  background: var(--panel-hover);
 }
 @media (prefers-reduced-motion: no-preference) {
   :global(.page-entering) .feature {
@@ -73,7 +73,7 @@
   place-items: center;
   width: 100%;
   height: 100%;
-  color: #7e8875;
+  color: #78879b;
 }
 .noArtwork svg {
   width: 60px;
@@ -203,7 +203,7 @@
   min-height: 380px;
   flex-direction: row;
   align-items: center;
-  background: #eceeeb;
+  background: var(--panel-strong);
   gap: 25px;
   padding: 40px;
 }

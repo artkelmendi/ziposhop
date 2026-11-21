@@ -70,6 +70,14 @@ export default function Icon({ name }) {
         <path d="m16 16 5 5" />
       </>
     ),
+    chevronDown: <path d="m6 9 6 6 6-6" />,
+    sliders: (
+      <>
+        <path d="M3 7h6m4 0h8M3 17h10m4 0h4" />
+        <circle cx="11" cy="7" r="2" />
+        <circle cx="15" cy="17" r="2" />
+      </>
+    ),
     pin: (
       <>
         <path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" />

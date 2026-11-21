@@ -1,6 +1,6 @@
 .footer {
   flex-shrink: 0;
-  background: #20221f;
+  background: #20242b;
   color: #fff;
   padding: 52px 0 22px;
 }
@@ -12,14 +12,14 @@
 }
 .about p {
   max-width: 27ch;
-  color: #c6c9c0;
+  color: #c5ccd6;
   font-size: 1rem;
   line-height: 1.6;
   margin: 18px 0 16px;
 }
 .social {
   font-size: 0.9rem;
-  color: #c6c9c0;
+  color: #c5ccd6;
 }
 .footer h2 {
   font-size: 1rem;
@@ -41,25 +41,25 @@
 .links a,
 .contact a {
   font-size: 0.93rem;
-  color: #d9dcd3;
+  color: #d8dfe8;
   line-height: 1.45;
 }
 .contact address {
   font-style: normal;
   font-size: 0.93rem;
   line-height: 1.6;
-  color: #d9dcd3;
+  color: #d8dfe8;
   margin-bottom: 5px;
 }
 .bottom {
-  border-top: 1px solid #45483f;
+  border-top: 1px solid #444d5a;
   padding-top: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 15px;
   font-size: 0.83rem;
-  color: #c6c9c0;
+  color: #c5ccd6;
 }
 .footer a:hover {
   color: #fff;

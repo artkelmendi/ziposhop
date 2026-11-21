@@ -7,7 +7,7 @@
   margin-block: 26px 28px;
   padding: 30px 38px;
   border-radius: 16px;
-  background: #f0f2ed;
+  background: var(--panel-strong);
   overflow: hidden;
 }
 .copy {
@@ -22,7 +22,7 @@
 }
 .banner:global(.catalog-top) p {
   max-width: 54ch;
-  color: #565e50;
+  color: var(--tint-ink);
 }
 .banner .artwork {
   flex: 0 0 30%;

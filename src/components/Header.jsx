@@ -20,6 +20,10 @@ export default function Header({ loading }) {
       : location.pathname === "/produktet.html"
         ? "catalog"
         : "home";
+  const searchTarget = current === "catalog" &&
+    new URLSearchParams(location.search).has("q")
+    ? `/produktet.html${location.search}#kerko`
+    : "/produktet.html#kerko";
   useEffect(() => {
     setOpen(false);
   }, [location]);
@@ -72,7 +76,7 @@ export default function Header({ loading }) {
         </nav>
         <div className={styles.tools}>
           <AppLink
-            to="/produktet.html#kerko"
+            to={searchTarget}
             className={styles.iconButton}
             aria-label="Kërko në katalog"
           >

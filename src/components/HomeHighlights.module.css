@@ -24,7 +24,7 @@
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: clamp(25px, 5vw, 85px);
-  background: #eaf0e6;
+  background: var(--panel-strong);
   border-radius: 16px;
   padding: 32px clamp(28px, 4vw, 60px);
   min-height: 360px;
@@ -50,7 +50,7 @@
   font-weight: 550;
 }
 .featureCopy > p {
-  color: #4d5848;
+  color: var(--tint-ink);
   line-height: 1.6;
   font-size: 1rem;
   margin-top: 14px;
@@ -68,7 +68,7 @@
 }
 .specs dt {
   font-size: 0.82rem;
-  color: #4d5848;
+  color: var(--tint-ink);
   line-height: 1.4;
 }
 .specs dd {

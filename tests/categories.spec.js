@@ -30,17 +30,11 @@ for (const width of [440, 1440]) {
         "iPhone & telefona",
       );
       await expect(page.locator("#product-grid .product-card")).toHaveCount(4);
-      await page.locator("#catalog-search").fill("Air");
-      await expect(page.locator("#product-grid .product-card")).toHaveCount(1);
-      await page.locator("#catalog-search").fill("missing product");
-      await expect(
-        page.getByRole("heading", { name: "Asnjë produkt i gjetur." }),
-      ).toBeVisible();
-      await page.getByRole("button", { name: "Hiqe kërkimin" }).click();
-      await expect(page.locator("#product-grid .product-card")).toHaveCount(4);
+      await expect(page.locator("#catalog-search")).toHaveCount(0);
+      await page.getByRole("button", { name: /Filtro kategorinë/ }).click();
       await page
         .getByRole("navigation", { name: "Kategoritë", exact: true })
-        .getByRole("link", { name: "Trotineta elektrikë", exact: true })
+        .getByRole("link", { name: /Trotineta elektrikë/ })
         .click();
       await expect(page).toHaveURL(/kategoria=trotineta/);
       await expect(page.locator("main")).toHaveClass("page-entering");
@@ -57,10 +51,17 @@ for (const width of [440, 1440]) {
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(
         "iPhone & telefona",
       );
-      await page.getByRole("link", { name: "Ndrysho kategorinë" }).click();
+      await page.getByRole("button", { name: /Filtro kategorinë/ }).click();
+      await page.getByRole("navigation", { name: "Kategoritë", exact: true })
+        .getByRole("link", { name: "Të gjitha kategoritë", exact: true }).click();
       await expect(directory.getByRole("link")).toHaveCount(5);
       await page.locator("#catalog-search").fill("iPhone Air");
-      await expect(directory.getByRole("link")).toHaveCount(1);
+      await expect(page.locator("#product-grid .product-card")).toHaveCount(1);
+      await expect(page.locator("#product-grid h3")).toHaveText("iPhone Air");
+      await page.locator("#catalog-search").fill("missing product");
+      await expect(page.getByRole("heading", { name: "Asnjë produkt i gjetur." })).toBeVisible();
+      await page.getByRole("button", { name: "Hiqe kërkimin" }).click();
+      await expect(directory.getByRole("link")).toHaveCount(5);
     },
   );
 }

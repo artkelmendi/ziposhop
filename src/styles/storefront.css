@@ -7,11 +7,15 @@
 }
 :root {
   color-scheme: light;
-  --ink: #191a19;
-  --muted: #5e605e;
+  --ink: #191c21;
+  --muted: #596371;
   --paper: #fff;
-  --panel: #f4f4f2;
-  --line: #dcded9;
+  --panel: #f4f6f9;
+  --panel-strong: #f0f3f8;
+  --panel-hover: #e9eef5;
+  --tint-ink: #526176;
+  --focus: #315f94;
+  --line: #dce2e9;
   --orange: #d95020;
   --wrap: 90%;
   --max: 1512px;
@@ -73,19 +77,19 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 summary:focus-visible {
-  outline: 3px solid #a33e13;
+  outline: 3px solid var(--focus);
   outline-offset: 5px;
 }
 input {
-  caret-color: var(--orange);
+  caret-color: var(--focus);
 }
 ::selection {
-  background: #f4bba3;
+  background: #dce9f7;
   color: #1c1916;
 }
 html {
   scrollbar-gutter: stable;
-  scrollbar-color: #a8aaa5 #f4f4f2;
+  scrollbar-color: #a8b2c1 #f4f6f9;
 }
 h1,
 h2,
@@ -352,7 +356,7 @@ svg {
 }
 .hero-caption small {
   font-size: 0.78rem;
-  color: #565951;
+  color: #525e6e;
   margin-top: 3px;
 }
 .slide-controls {
@@ -390,7 +394,7 @@ svg {
   align-items: center;
   gap: 8px;
   font-size: 0.78rem;
-  color: #565951;
+  color: #525e6e;
   font-variant-numeric: tabular-nums;
 }
 .slide-position b {
@@ -450,14 +454,14 @@ svg {
   min-width: 0;
   border-radius: 14px;
   overflow: hidden;
-  background: #f4f4f2;
+  background: var(--panel);
   padding: 16px 12px 19px;
   min-height: 180px;
   aspect-ratio: 1.17;
   transition: background 0.3s;
 }
 .category-tile:hover {
-  background: #ebede8;
+  background: var(--panel-hover);
 }
 .category-tile .category-photo {
   flex: 1;
@@ -500,7 +504,7 @@ svg {
   letter-spacing: -0.025em;
 }
 .selection {
-  background: #f5f5f2;
+  background: var(--panel);
 }
 .product-grid {
   display: grid;
@@ -513,7 +517,7 @@ svg {
   min-width: 0;
 }
 .product-visual {
-  background: #f3f4f1;
+  background: var(--panel);
   border-radius: 14px;
   aspect-ratio: 1.24;
   display: grid;
@@ -565,11 +569,11 @@ svg {
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  color: #565951;
+  color: #525e6e;
   font-size: 0.88rem;
 }
 .breadcrumb span {
-  color: #979991;
+  color: #768396;
 }
 .catalog-top {
   padding-block: clamp(32px, 4vw, 65px) 26px;
@@ -593,17 +597,17 @@ svg {
   gap: 12px;
   max-width: 575px;
   border-radius: 100px;
-  border: 1px solid #c6c9c1;
+  border: 1px solid #c7cfdb;
   min-height: 48px;
   padding: 0 18px;
-  background: #fafbf9;
+  background: #fafbfd;
 }
 .catalog-search svg {
   width: 19px;
   height: 19px;
 }
 .catalog-search:focus-within {
-  outline: 2px solid #974221;
+  outline: 2px solid var(--focus);
   outline-offset: 1px;
 }
 .catalog-search input {
@@ -618,30 +622,7 @@ svg {
   outline: none;
 }
 .catalog-search input::placeholder {
-  color: #62655d;
-}
-.filter-list {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-block: 22px 28px;
-}
-.filter {
-  padding: 9px 16px;
-  min-height: 40px;
-  border: 1px solid var(--line);
-  border-radius: 40px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: background 0.2s;
-}
-.filter:hover {
-  background: var(--panel);
-}
-.filter[aria-pressed="true"] {
-  background: var(--ink);
-  color: white;
-  border-color: var(--ink);
+  color: #5e6877;
 }
 .catalog-status {
   font-size: 0.86rem;
@@ -738,7 +719,7 @@ svg {
 }
 .option[aria-pressed="true"] {
   border-color: var(--ink);
-  background: #f4f4f1;
+  background: var(--panel);
 }
 .swatch {
   width: 13px;
@@ -1006,12 +987,6 @@ svg {
   }
   .catalog-top {
     padding-top: 32px;
-  }
-  .filter {
-    padding: 8px 12px;
-  }
-  .filter-list {
-    gap: 6px;
   }
   .product-label {
     margin-top: 10px;
@@ -1353,7 +1328,7 @@ svg {
   text-decoration: underline;
 }
 .contact-map {
-  background: #f3f3ef;
+  background: var(--panel);
   overflow: hidden;
   border-radius: 15px;
   position: relative;
@@ -1483,7 +1458,6 @@ svg {
   .page-entering .detail-specs {
     animation: content-enter 800ms 240ms var(--ease) both;
   }
-  .page-entering .filter-list,
   .page-entering .result-count,
   .page-entering .contact-facts,
   .page-entering .detail-copy > .btn,

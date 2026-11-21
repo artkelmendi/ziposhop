@@ -2,7 +2,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: #f0f2ed;
+  background: var(--panel-strong);
   padding: 38px 5% 30px;
   text-align: center;
 }
@@ -24,7 +24,7 @@
 .intro p {
   font-size: 1rem;
   line-height: 1.5;
-  color: #555b51;
+  color: var(--tint-ink);
   margin: 18px auto 20px;
   max-width: 43ch;
 }
@@ -41,7 +41,7 @@
   width: 91%;
   height: 19%;
   left: 4.5%;
-  background: #dbe0d5;
+  background: #dfe6ef;
   border-radius: 50%;
   filter: blur(15px);
   z-index: -1;
@@ -124,7 +124,7 @@
   position: relative;
   display: inline-block;
   margin-top: 25px;
-  color: #4e5548;
+  color: var(--tint-ink);
   font-size: 0.88rem;
   text-decoration: underline;
   text-underline-offset: 4px;
