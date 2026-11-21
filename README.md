@@ -18,6 +18,7 @@ Install dependencies with `npm ci`, then run `npm run dev`. Open `http://127.0.0
 - `src/components/Hero.jsx`, `Collection.jsx`, `ProductCard.jsx`, `Brand.jsx` and `Footer.jsx` provide shared storefront components.
 - `src/components/CategoryCard.jsx` and its scoped stylesheet provide the shared product compositions for the home page and category directory.
 - `src/components/ScrollReveal.jsx` adds a single viewport entrance to home sections. It leaves content visible by default, disconnects after its first intersection, and respects reduced-motion preferences.
+- `src/components/ServicesSection.jsx` and its scoped stylesheet provide the layered sales, repair and delivery story below the featured product. Native sticky panels follow normal scrolling, with direct service navigation and a static layout for reduced motion or short viewports. Copy and WhatsApp messages live in the component; image sources and the custom parcel prompt are documented in [SERVICE-ASSETS.md](SERVICE-ASSETS.md). Open `/#sherbimet` to preview the section directly.
 - `src/components/BrandIntro.jsx` draws the ZIPO wordmark on the first visit in a tab session, then opens an aperture from the O into the loaded page. Page entrances pause behind it and resume at the reveal. The intro can be skipped, respects reduced motion, and can be replayed by opening `?intro=1`.
 - VisitShop.jsx provides the Pejë map and links to the contact page.
 - `src/pages/` contains the home, catalog, product detail and contact views.

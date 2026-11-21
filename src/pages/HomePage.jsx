@@ -3,6 +3,7 @@ import StudioHero from "../components/StudioHero";
 import { useSearchParams } from "react-router-dom";
 import Collection from "../components/Collection";
 import FeaturedProduct from "../components/FeaturedProduct";
+import ServicesSection from "../components/ServicesSection";
 import InstagramSection from "../components/InstagramSection";
 import VisitShop from "../components/VisitShop";
 import ScrollReveal from "../components/ScrollReveal";
@@ -48,6 +49,7 @@ export default function HomePage() {
       <ScrollReveal ready={!loading}>
         <FeaturedProduct />
       </ScrollReveal>
+      <ServicesSection />
       <VisitShop />
       <ScrollReveal>
         <InstagramSection />

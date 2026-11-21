@@ -36,6 +36,8 @@ Category results use a shallow, pale blue banner with the category title over fa
 
 Homepage scroll reveals start before content enters the viewport. Phone reveals use short, gentle movement without image scaling or clipping, and already-visible sections stay opaque after fast swipes or anchor jumps. Each section reveals once after its content has a measurable layout. The visit map also fades in when its image finishes loading.
 
+Below the featured product, a three-panel services section presents sales, display and battery replacement, and delivery, as confirmed by the owner. Native sticky panels layer while scrolling; a compact navigation follows the current service and allows direct selection. Keyboard focus brings covered actions into view. Reduced motion and viewports too short for a complete panel use a normal readable sequence. Catalog and WhatsApp actions lead to the existing flows. Delivery fees, service prices, timeframes and geographic coverage are confirmed directly, without invented promises.
+
 The Pyetje të shpeshta page contains six professional Albanian answers, including owner-confirmed product originality, used products and inventory beyond the website. A reusable single-open accordion animates expansion and collapse, supports keyboard interaction and respects reduced motion. Additional answers describe the existing WhatsApp inquiry flow, availability and shop location. No warranty, delivery or payment policy has been invented.
 
 ## Preview sources
