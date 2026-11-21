@@ -2,12 +2,26 @@ import { useState } from "react";
 import AppLink from "../components/AppLink";
 import Media from "../components/Media";
 import ProductCard from "../components/ProductCard";
+import ProductLoading from "../components/ProductLoading";
 import Icon from "../components/Icon";
 import { useCatalog } from "../data/CatalogContext";
 import { catalogUrl, store } from "../data/store";
 export default function ProductPage({ product }) {
-  const { products, categories, demo } = useCatalog();
+  const { products, categories, demo, loading, error, refresh } = useCatalog();
   const [choice, setChoice] = useState(0);
+  if (!product && (loading || error)) return (
+    <div className="wrap catalog-main">
+      <nav className="breadcrumb" aria-label="Vendndodhja">
+        <AppLink to="/index.html">Ballina</AppLink><span>/</span>
+        <AppLink to="/produktet.html">Produktet</AppLink>
+      </nav>
+      <div className="catalog-top"><h1>Produkti</h1></div>
+      {loading ? <ProductLoading detail /> : <div className="empty-state">
+        <p role="alert">{error}</p>
+        <button className="btn btn-dark" onClick={refresh}>Provo përsëri</button>
+      </div>}
+    </div>
+  );
   if (!product)
     return (
       <div className="wrap catalog-main">
@@ -61,6 +75,7 @@ export default function ProductPage({ product }) {
           src={image}
           alt={product.name + (option ? " — " + option[0] : "")}
           eager
+          skeleton
           id="detail-image"
         />
         <div className="detail-copy">
@@ -134,7 +149,7 @@ export default function ProductPage({ product }) {
         </div>
         <div className="product-grid">
           {related.map((item, i) => (
-            <ProductCard key={item.id} product={item} order={i} />
+            <ProductCard key={item.id} product={item} order={i} skeleton />
           ))}
         </div>
       </section>

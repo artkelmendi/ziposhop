@@ -6,9 +6,11 @@ export default function ScrollReveal({
   className = "",
   variant = "lift",
   delay = 0,
+  ready = true,
 }) {
   const element = useRef(null);
   useEffect(() => {
+    if (!ready) return;
     const node = element.current;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     if (reduced.matches || !window.IntersectionObserver || !node.animate)
@@ -55,7 +57,7 @@ export default function ScrollReveal({
       animation?.cancel();
       reduced.removeEventListener("change", stop);
     };
-  }, [variant, delay]);
+  }, [variant, delay, ready]);
   return (
     <div ref={element} className={className} data-scroll-reveal={variant}>
       {children}

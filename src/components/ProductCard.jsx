@@ -7,6 +7,7 @@ export default function ProductCard({
   duplicate = false,
   eager = false,
   order = 0,
+  skeleton = false,
 }) {
   const { categories } = useCatalog();
   return (
@@ -21,6 +22,7 @@ export default function ProductCard({
         className="product-visual"
         src={product.thumbnail || product.image}
         eager={eager}
+        skeleton={skeleton}
       />
       <span className="product-label">
         {categories.find((category) => category.id === product.category)?.name}

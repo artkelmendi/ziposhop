@@ -7,6 +7,7 @@ export default function Media({
   alt = "",
   className = "",
   eager = false,
+  skeleton = false,
   ...props
 }) {
   // Keying the frame resets loading and failure state for each product variant.
@@ -17,18 +18,19 @@ export default function Media({
       alt={alt}
       className={className}
       eager={eager}
+      skeleton={skeleton}
       {...props}
     />
   );
 }
-function MediaFrame({ src, alt, className, eager, style, ...props }) {
+function MediaFrame({ src, alt, className, eager, skeleton, style, ...props }) {
   const image = useRef(null);
   const [state, setState] = useState("loading");
   const [showSkeleton, setShowSkeleton] = useState(false);
   useEffect(() => {
     let active = true;
     const timer = setTimeout(() => {
-      if (active) setShowSkeleton(true);
+      if (active && skeleton) setShowSkeleton(true);
     }, 200);
     const element = image.current;
     async function loaded() {

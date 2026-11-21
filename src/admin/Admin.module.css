@@ -893,12 +893,6 @@
 .loading {
   animation: skeleton-threshold 200ms step-end both;
 }
-.skeletonTitle {
-  width: 220px;
-  height: 38px;
-  margin-bottom: 32px;
-  border-radius: 7px;
-}
 .skeletonRow {
   display: flex;
   align-items: center;

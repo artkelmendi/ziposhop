@@ -43,7 +43,6 @@ export function AdminSkeleton({ editor = false }) {
       aria-busy="true"
       aria-label="Duke ngarkuar administrimin"
     >
-      <Skeleton className={styles.skeletonTitle} />
       {Array.from({ length: editor ? 4 : 6 }, (_, i) => (
         <div className={styles.skeletonRow} key={i}>
           <Skeleton className={styles.skeletonImage} />

@@ -1223,8 +1223,7 @@ svg {
   padding-block: 6px;
 }
 .collection-track,
-.collection-group,
-.collection-placeholder {
+.collection-group {
   display: flex;
   align-items: flex-start;
   width: max-content;
@@ -1232,17 +1231,13 @@ svg {
 .collection-track {
   animation: collection-loop var(--loop-duration, 65s) linear infinite;
 }
-.collection-group,
-.collection-placeholder {
+.collection-group {
   gap: var(--rail-gap);
   padding-inline-end: var(--rail-gap);
 }
 .collection-group > .product-card {
   width: var(--rail-card);
   flex: none;
-}
-.collection-placeholder {
-  margin-inline-start: 0;
 }
 .collection-group .product-visual {
   aspect-ratio: 1.24;

@@ -11,7 +11,7 @@ import CategoryCard from "../components/CategoryCard";
 import Icon from "../components/Icon";
 import { useCatalog } from "../data/CatalogContext";
 export default function HomePage() {
-  const { categories } = useCatalog();
+  const { categories, loading, error, refresh } = useCatalog();
   const [params] = useSearchParams();
   const classic = params.get("hero") === "classic";
   return (
@@ -35,16 +35,17 @@ export default function HomePage() {
             <Icon name="grid" />
           </AppLink>
         </div>
-        <ScrollReveal className="category-grid">
+        {error && <div role="alert"><p>{error}</p><button className="btn btn-outline" onClick={refresh}>Provo përsëri</button></div>}
+        <ScrollReveal className="category-grid" ready={!loading}>
           {categories.map((cat, i) => (
             <CategoryCard key={cat.id} category={cat} compact order={i} />
           ))}
         </ScrollReveal>
       </section>
-      <ScrollReveal>
+      <ScrollReveal ready={!loading}>
         <Collection />
       </ScrollReveal>
-      <ScrollReveal>
+      <ScrollReveal ready={!loading}>
         <FeaturedProduct />
       </ScrollReveal>
       <VisitShop />

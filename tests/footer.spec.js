@@ -16,7 +16,8 @@ for (const width of [440, 1440]) {
         await expect(
           footer.getByRole("heading", { name: "Na gjen në Pejë" }),
         ).toBeVisible();
-        await expect(page.locator("main > .route-skeleton")).toHaveCount(0);
+        await expect(page.locator(".products-loading")).toHaveCount(0);
+        await expect(footer.getByRole("link", { name: "Administrimi", exact: true })).toHaveCount(0);
         const layout = await page.evaluate(() => {
           const footer = document
             .querySelector("footer")

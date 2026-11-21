@@ -1,23 +1,22 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { resolvePath, useLocation, useNavigate } from "react-router-dom";
 import { NavigationContext } from "./components/AppLink";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import PageSkeleton from "./components/PageSkeleton";
 import RouteError from "./components/RouteError";
 import { useIntroCovered } from "./components/BrandIntro";
-import { useCatalog } from "./data/CatalogContext";
+import { useCatalog, useCategory } from "./data/CatalogContext";
+import HomePage from "./pages/HomePage";
+import CatalogPage from "./pages/CatalogPage";
+import ContactPage from "./pages/ContactPage";
 
-const HomePage = lazy(() => import("./pages/HomePage"));
-const CatalogPage = lazy(() => import("./pages/CatalogPage"));
-const ContactPage = lazy(() => import("./pages/ContactPage"));
 const pages = { home: HomePage, catalog: CatalogPage, contact: ContactPage };
 
-function PageEntry({ children, location, title, loading }) {
+function PageEntry({ children, location, title }) {
   const introCovered = useIntroCovered();
   const [entering, setEntering] = useState(true);
   useEffect(() => {
-    if (introCovered || loading) return;
+    if (introCovered) return;
     const timer = setTimeout(() => setEntering(false), 1500);
     const frame = requestAnimationFrame(() => {
       if (location.hash && location.hash !== "#kerko")
@@ -28,7 +27,7 @@ function PageEntry({ children, location, title, loading }) {
       clearTimeout(timer);
       cancelAnimationFrame(frame);
     };
-  }, [introCovered, loading, location.hash]);
+  }, [introCovered, location.hash]);
   useEffect(() => {
     document.title = title;
   }, [title]);
@@ -44,7 +43,7 @@ function PageEntry({ children, location, title, loading }) {
 }
 
 export default function App() {
-  const { categories, products, loading, error, refresh } = useCatalog();
+  const { products, loading } = useCatalog();
   const location = useLocation();
   const navigate = useNavigate();
   const [leaving, setLeaving] = useState(false);
@@ -57,12 +56,11 @@ export default function App() {
         : "home";
   const params = new URLSearchParams(location.search);
   const productId = params.get("produkt");
-  const category = !params.has("q") && categories.find(
-    (item) => item.id === params.get("kategoria"),
-  );
+  const categoryId = !params.has("q") ? params.get("kategoria") : null;
+  const category = useCategory(categoryId);
   const title = productId
     ? (products.find((product) => product.id === productId)?.name ||
-        "Modeli nuk u gjet") + " — ZIPO Mobil Shop"
+        (loading ? "Produkti" : "Modeli nuk u gjet")) + " — ZIPO Mobil Shop"
     : page === "home"
       ? "ZIPO Mobil Shop — Teknologji në lëvizje"
       : page === "catalog"
@@ -94,13 +92,11 @@ export default function App() {
     timer.current = setTimeout(() => navigate(to), 180);
   }
   const Page = pages[page];
-  const contentLoading = loading && page !== "contact";
-  const contentError = error && page !== "contact";
   const routeKey =
     page +
     "-" +
     (productId ||
-      category?.id ||
+      categoryId ||
       "directory") +
     (page === "home"
       ? "-" + (new URLSearchParams(location.search).get("hero") || "studio")
@@ -116,30 +112,9 @@ export default function App() {
           key={routeKey}
           location={location}
           title={title}
-          loading={contentLoading}
         >
           <RouteError key={page}>
-            <Suspense
-              fallback={
-                <PageSkeleton page={page} directory={!productId && !category} />
-              }
-            >
-              {contentLoading ? (
-                <PageSkeleton page={page} directory={!productId && !category} />
-              ) : contentError ? (
-                <div className="wrap catalog-main">
-                  <div className="empty-state">
-                    <h1>Katalogu nuk u ngarkua</h1>
-                    <p role="alert">{error}</p>
-                    <button className="btn btn-dark" onClick={refresh}>
-                      Provo përsëri
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <Page />
-              )}
-            </Suspense>
+            <Page />
           </RouteError>
         </PageEntry>
       </div>

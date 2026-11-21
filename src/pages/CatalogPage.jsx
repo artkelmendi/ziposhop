@@ -5,8 +5,9 @@ import CategoryCard from "../components/CategoryCard";
 import CategoryHeader from "../components/CategoryHeader";
 import CategoryFilter from "../components/CategoryFilter";
 import ProductCard from "../components/ProductCard";
+import ProductLoading from "../components/ProductLoading";
 import Icon from "../components/Icon";
-import { useCatalog } from "../data/CatalogContext";
+import { useCatalog, useCategory } from "../data/CatalogContext";
 import ProductPage from "./ProductPage";
 import "./CatalogPage.css";
 
@@ -42,6 +43,7 @@ function CatalogSearch({ value, onChange }) {
 }
 
 function CatalogResults({ results, category, onClear }) {
+  const { loading, error, refresh } = useCatalog();
   const [params, setParams] = useSearchParams();
   const pageCount = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
   const requestedPage = Number(params.get("faqja") || 1);
@@ -59,13 +61,18 @@ function CatalogResults({ results, category, onClear }) {
     <div id="category-results">
       <div className="catalog-controls">
         <p className="catalog-status" role="status">
-          {results.length} {results.length === 1 ? "produkt" : "produkte"}
+          {loading ? "Duke ngarkuar produktet…" : `${results.length} ${results.length === 1 ? "produkt" : "produkte"}`}
         </p>
         <CategoryFilter category={category} />
       </div>
-      <div className="product-grid catalog-grid category-results" id="product-grid" key={currentPage}>
+      {loading ? <ProductLoading /> : error ? (
+        <div className="empty-state">
+          <p role="alert">{error}</p>
+          <button className="btn btn-dark" onClick={refresh}>Provo përsëri</button>
+        </div>
+      ) : <div className="product-grid catalog-grid category-results" id="product-grid" key={currentPage}>
         {visible.length ? visible.map((product, i) => (
-          <ProductCard key={product.id} product={product} order={Math.min(i, 6)} />
+          <ProductCard key={product.id} product={product} order={Math.min(i, 6)} skeleton />
         )) : (
           <div className="empty-state">
             <h2>{onClear ? "Asnjë produkt i gjetur." : "Produktet po vijnë së shpejti."}</h2>
@@ -73,7 +80,7 @@ function CatalogResults({ results, category, onClear }) {
             {onClear && <button className="btn btn-dark" onClick={onClear}>Hiqe kërkimin</button>}
           </div>
         )}
-      </div>
+      </div>}
       {pageCount > 1 && (
         <nav className="catalog-pagination" aria-label="Faqet e produkteve">
           <button className="btn btn-outline" disabled={currentPage === 1} onClick={() => changePage(currentPage - 1)}>
@@ -90,7 +97,7 @@ function CatalogResults({ results, category, onClear }) {
 }
 
 function CategoryDirectory() {
-  const { categories, products } = useCatalog();
+  const { categories, products, loading, error, refresh } = useCatalog();
   const [params, setParams] = useSearchParams();
   const query = params.get("q") || "";
   const searching = Boolean(normalize(query));
@@ -120,7 +127,12 @@ function CategoryDirectory() {
         <CatalogResults results={results} onClear={() => search("")} />
       ) : (
         <div className="category-directory-grid" aria-label="Kategoritë e produkteve">
-          {categories.length ? categories.map((category, i) => (
+          {loading ? <p role="status">Duke ngarkuar kategoritë…</p> : error ? (
+            <div className="empty-state">
+              <p role="alert">{error}</p>
+              <button className="btn btn-dark" onClick={refresh}>Provo përsëri</button>
+            </div>
+          ) : categories.length ? categories.map((category, i) => (
             <CategoryCard key={category.id} category={category} order={i} />
           )) : (
             <div className="empty-state">
@@ -154,12 +166,12 @@ function CategoryProducts({ category }) {
 }
 
 export default function CatalogPage() {
-  const { categories, products } = useCatalog();
+  const { products } = useCatalog();
   const [params] = useSearchParams();
+  const category = useCategory(!params.has("q") ? params.get("kategoria") : null);
   if (params.has("produkt")) {
     const id = params.get("produkt");
     return <ProductPage key={id} product={products.find(product => product.id === id)} />;
   }
-  const category = !params.has("q") && categories.find(cat => cat.id === params.get("kategoria"));
   return category ? <CategoryProducts category={category} /> : <CategoryDirectory />;
 }

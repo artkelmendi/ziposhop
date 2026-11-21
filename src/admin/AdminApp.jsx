@@ -23,7 +23,7 @@ export default function AdminApp() {
     return (
       <div className={styles.authLoading}>
         <AdminBrand />
-        <AdminSkeleton />
+        <p role="status" aria-busy="true" aria-label="Duke ngarkuar administrimin">Duke kontrolluar llogarinë…</p>
       </div>
     );
   if (!auth.session) return <LoginPage />;
@@ -197,7 +197,10 @@ function Dashboard({ email }) {
               </div>
             )}
             {!catalog ? (
-              !error && <AdminSkeleton />
+              !error && <>
+                <div className={styles.pageHeading}><h1>{navigation.find(item => item[0] === view)?.[2]}</h1></div>
+                {view === "products" ? <AdminSkeleton /> : <p role="status" aria-busy="true">Duke ngarkuar…</p>}
+              </>
             ) : view === "products" ? (
               editing ? (
                 <ProductEditor

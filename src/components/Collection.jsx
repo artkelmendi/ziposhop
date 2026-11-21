@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import AppLink from "./AppLink";
 import ProductCard from "./ProductCard";
-import Skeleton from "./Skeleton";
 import Icon from "./Icon";
 import { useCatalog } from "../data/CatalogContext";
 
@@ -87,7 +86,7 @@ export default function Collection() {
     resize();
     return () => observer.disconnect();
   }, [selection]);
-  if (selection?.length === 0) return null;
+  if (!selection?.length) return null;
   const cards = selection
     ? Array.from({ length: paused ? 1 : repetitions }, () => selection).flat()
     : [];
@@ -126,13 +125,7 @@ export default function Collection() {
           ref={viewport}
           aria-busy={!selection}
         >
-          {!selection ? (
-            <div className="collection-placeholder">
-              {Array.from({ length: 5 }, (_, i) => (
-                <Skeleton variant="card" key={i} />
-              ))}
-            </div>
-          ) : (
+          {selection && (
             <div
               className="collection-track"
               ref={track}

@@ -17,6 +17,14 @@ const CatalogContext = createContext({
 });
 export const useCatalog = () => useContext(CatalogContext);
 
+export function useCategory(id) {
+  const catalog = useCatalog();
+  return catalog.categories.find(category => category.id === id) ||
+    ((catalog.loading || catalog.error) && id
+      ? categories.find(category => category.id === id) || { id, name: "Produktet", description: "", artwork: [] }
+      : null);
+}
+
 export default function CatalogProvider({ children }) {
   const [state, setState] = useState(
     backendConfigured

@@ -11,13 +11,6 @@ export default function Skeleton({ variant = "media", className = "" }) {
           <span className="skeleton-title" />
         </>
       )}
-      {variant === "detail" && (
-        <>
-          <span className="skeleton-heading" />
-          <span className="skeleton-copy" />
-          <span className="skeleton-specs" />
-        </>
-      )}
     </span>
   );
 }

@@ -26,7 +26,7 @@ A predominantly white storefront, clean product imagery sourced independently of
 
 The established, self-hosted Instrument Sans typography is preserved during palette and control refinements.
 
-The header links to Produktet and Kontakti. Categories are explored from the home page and catalog. Headings use one consistent sans-serif family with plain punctuation. Each page has a visible entrance sequence, with delayed shimmer placeholders for media and data that take longer than 200 milliseconds to load.
+The header links to Produktet and Kontakti. Categories are explored from the home page and catalog. Headings use one consistent sans-serif family with plain punctuation. Each page has a visible entrance sequence. Page layouts and headings render immediately, without skeleton screens. Delayed skeletons are limited to catalog product cards, product detail photos and admin product rows; home, contact, category artwork and authentication have none. The public footer has no admin link.
 
 Produktet first opens a category directory. Selecting a category shows its products, with a maximum of 24 products per page. A compact animated disclosure replaces the category chip row. Category pages have no inline search; the header search opens the catalog's general search, which finds products across all categories. Search state and pagination are shareable through URL parameters. Home and catalog category artwork share one component and show representative families of devices. The displayed products remain illustrative pending the owner's inventory.
 

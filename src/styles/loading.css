@@ -17,8 +17,7 @@
   pointer-events: none;
 }
 .skeleton-media,
-.skeleton-card > span,
-.skeleton-detail > span {
+.skeleton-card > span {
   background-color: var(--skeleton-base);
   background-image: linear-gradient(
     102deg,
@@ -55,8 +54,7 @@
   color: var(--muted);
   font-size: 0.8rem;
 }
-.skeleton-card > span,
-.skeleton-detail > span {
+.skeleton-card > span {
   display: block;
   border-radius: 4px;
 }
@@ -75,90 +73,14 @@
   height: clamp(1.34rem, 1.77vw, 1.8rem);
   margin-top: 4px;
 }
-.skeleton-heading {
-  width: 85%;
-  height: 4.9rem;
-}
-.skeleton-copy {
-  width: 95%;
-  height: 3.3rem;
-  margin: 17px 0 25px;
-}
-.skeleton-specs {
-  width: 100%;
-  height: 10rem;
-}
-.collection-placeholder > .skeleton-card {
-  width: var(--rail-card);
-  flex: none;
-}
-.collection-placeholder,
-.route-skeleton {
+.products-loading {
   animation: skeleton-threshold 200ms step-end both;
 }
-.route-skeleton {
-  min-height: 65vh;
+.products-loading.detail-layout {
+  min-height: 400px;
 }
-.directory-skeleton-heading {
-  height: 180px;
-  max-width: 710px;
-  padding-top: 45px;
-  position: relative;
-}
-.directory-skeleton-heading > .skeleton {
-  width: 100%;
-  height: 90px;
-  border-radius: 10px;
-}
-.directory-skeleton-search {
-  height: 48px;
-  max-width: 575px;
-  position: relative;
-}
-.directory-skeleton-search > .skeleton {
-  width: 100%;
-  height: 100%;
-  border-radius: 30px;
-}
-.directory-skeleton-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
-  margin-top: 32px;
-}
-.directory-skeleton-grid > div {
-  height: 360px;
-  position: relative;
-}
-.directory-skeleton-grid > div:first-child {
-  grid-column: 1/-1;
-  height: 385px;
-}
-.directory-skeleton-grid .skeleton {
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-}
-@media (max-width: 520px) {
-  .directory-skeleton-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    margin-top: 25px;
-  }
-  .directory-skeleton-grid > div:first-child {
-    height: 385px;
-  }
-  .directory-skeleton-grid > div {
-    height: 330px;
-  }
-}
-.route-skeleton > .skeleton-detail {
-  max-width: 550px;
-  margin-block: 32px;
-}
-.route-skeleton .detail-photo > .skeleton {
-  width: 100%;
-  height: 100%;
+.products-loading > .detail-photo {
+  border-radius: 14px;
 }
 .skeleton-dismiss {
   animation: skeleton-dismiss 360ms ease-out forwards;
@@ -212,14 +134,6 @@
   height: 80%;
   width: 79%;
 }
-.hero-single > .skeleton {
-  inset: 10%;
-  border-radius: 14px;
-}
-.still-piece > .skeleton {
-  inset: 9%;
-  border-radius: 14px;
-}
 @media (max-width: 750px) {
   .hero-single > img {
     height: 79%;
@@ -242,13 +156,11 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .collection-placeholder,
-  .route-skeleton {
+  .products-loading {
     animation-duration: 200ms !important;
   }
   .skeleton-media,
-  .skeleton-card > span,
-  .skeleton-detail > span {
+  .skeleton-card > span {
     background-image: none;
   }
   .skeleton-dismiss {
