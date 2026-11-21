@@ -1,11 +1,7 @@
 # Home service visuals
 
-The new services section uses existing manufacturer product cutouts, one sourced repair photograph and a custom packaging concept. It does not depict the shop's own workbench, claim Apple authorization or define actual packaging.
+The services section uses existing manufacturer product cutouts and one sourced repair photograph. It does not depict the shop's own workbench or claim Apple authorization.
 
 - `public/assets/services/repair.webp` and `repair-mobile.webp`: [Apple Newsroom, April 11, 2024](https://www.apple.com/newsroom/2024/04/apple-to-expand-repair-options-with-support-for-used-genuine-parts/), image download named `Apple-Self-Service-Repair-iPhone.jpg`. Original 1960 × 1306; optimized to 1600px and 800px WebP variants.
-- `public/assets/services/parcel.webp`: conceptual ZIPO packaging, created with the built-in image-generation tool on November 21, 2026. Native transparent output optimized to 1100 × 1100 WebP, preserving alpha. The original remains in the Codex generated-images directory.
-- Existing `phone-17-pro-orange.webp`, `tablet-air-blue.webp` and `audio-airpods-pro-3.webp`: manufacturer sources recorded in PRODUCT.md; no visual changes were made to these files.
-
-## Exact parcel generation prompt
-
-Use case: product-mockup. Create one premium photorealistic studio product photograph of a compact e-commerce shipping parcel for ZIPO Mobil Shop, isolated with a genuinely transparent background. A single closed matte very light cool-gray rigid corrugated cardboard shipping carton, wider than tall, in a natural front three-quarter view from slightly above, with a restrained pale blue sealing paper band running across the lid and front. Large crisp black bold italic sans-serif wordmark reading exactly 'ZIPO' on the front, and very small uppercase text 'MOBIL SHOP' underneath. No other readable text, no shipping addresses, no barcode, no people, no phones, no props, no icons, no ribbons, no decorative scenery. Real cardboard edges, precise folds, beautiful soft diffuse product lighting, physically grounded subtle contact shadow underneath with clean transparent surroundings. Box fills around 78 percent of a square image with generous margins around all edges, no cropping. Apple-quality industrial product presentation, tactile and understated, sophisticated white and cool-blue palette. This is a conceptual packaging visual for a storefront's delivery service, not documentary evidence of real packaging.
+- Electronics: existing `phone-17-pro-orange.webp`, `tablet-air-blue.webp` and `audio-airpods-pro-3.webp`. Manufacturer sources are recorded in PRODUCT.md.
+- Electric mobility: existing `moto-niu.webp` and `scooter-g2.webp`, sourced from the [NIU NQi Sport](https://global.niu.com/product/nqi-sport) and [KuKirin G2](https://kukirinmobility.com/products/kukirin-g2-electric-scooter) pages. Native transparent product cutouts remain unchanged.

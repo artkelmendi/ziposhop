@@ -13,6 +13,7 @@ for (const width of [440, 1440]) {
       ]) {
         await page.goto(route);
         const footer = page.locator("footer");
+        await expect(footer).not.toContainText(/Le të flasim|për pajisjen tënde/i);
         await expect(
           footer.getByRole("heading", { name: "Na gjen në Pejë" }),
         ).toBeVisible();
@@ -54,4 +55,27 @@ for (const width of [440, 1440]) {
       });
     },
   );
+}
+
+for (const width of [320, 768, 1440]) {
+  test(`footer contact links, keyboard return and navigation work at ${width}px`, async ({ page, browserName }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/kontakti.html");
+    const footer = page.locator("footer");
+    await footer.scrollIntoViewIfNeeded();
+    await expect(footer.getByRole("link", { name: "Na shkruaj në WhatsApp" })).toHaveAttribute("href", "https://wa.me/38344856416");
+    await expect(footer.getByRole("link", { name: "+383 44 856 416", exact: true })).toHaveAttribute("href", "tel:+38344856416");
+    await expect(footer.getByRole("link", { name: /Instagram/ })).toHaveAttribute("href", "https://www.instagram.com/mobilshopzipo/");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await footer.screenshot({ path: `.impeccable/review/footer/${browserName}-${width}.png` });
+    const back = footer.getByRole("button", { name: "Kthehu lart" });
+    await back.focus();
+    await page.keyboard.press("Enter");
+    await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
+    await expect(page.locator("main")).toBeFocused();
+    await footer.getByRole("navigation", { name: "Informacion" }).getByRole("link", { name: "Pyetje të shpeshta" }).click();
+    await expect(page).toHaveURL(/pyetje\.html$/);
+    await expect(page.locator("h1")).toHaveText("Pyetje të shpeshta");
+  });
 }

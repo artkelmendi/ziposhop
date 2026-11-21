@@ -3,42 +3,52 @@ import AppLink from "./AppLink";
 import Icon from "./Icon";
 import Media from "./Media";
 import { imageUrl } from "../lib/backend";
-import { store } from "../data/store";
+import { catalogUrl, store } from "../data/store";
 import styles from "./ServicesSection.module.css";
 
 const services = [
   {
-    id: "produkte",
-    label: "Produkte",
-    title: ["Diçka e re.", "Pikërisht për ty."],
-    description: "Telefona, tableta, motorë e trotineta elektrikë dhe aksesorë. Eksploro koleksionin dhe zgjidh atë që të përshtatet.",
-    action: "Shfleto produktet",
+    id: "elektronike",
+    label: "Elektronikë",
+    title: ["Elektronikë"],
+    description: "Telefona, tableta, ora inteligjente dhe aksesorë.",
+    action: "Shiko produktet",
+    to: catalogUrl(),
+  },
+  {
+    id: "levizje",
+    label: "Transport elektrik",
+    title: ["Transport elektrik"],
+    description: "Motorë dhe trotineta elektrike për lëvizjet e përditshme.",
+    action: "Motorë elektrikë",
+    to: catalogUrl("motore"),
+    secondary: { label: "Trotineta elektrike", to: catalogUrl("trotineta") },
   },
   {
     id: "servis",
-    label: "Servis",
-    title: ["Ekran i ri.", "Energji e re."],
-    description: "Ndërrojmë ekrane dhe bateri, që ta përdorësh më gjatë telefonin tënd. Na trego modelin dhe çfarë nuk funksionon.",
-    action: "Pyet për servisin",
+    label: "Servisim",
+    title: ["Servisim"],
+    description: "Ndërrim ekrani dhe baterie për telefonin tuaj.",
+    action: "Na kontaktoni",
     message: "Përshëndetje ZIPO! Dua të pyes për servisimin e telefonit tim.",
-  },
-  {
-    id: "dergesa",
-    label: "Dërgesa",
-    title: ["ZIPO, edhe", "te dera jote."],
-    description: "Zgjidh produktin, na shkruaj dhe ne kujdesemi për dërgesën. Disponueshmërinë dhe detajet i konfirmojmë bashkë në WhatsApp.",
-    action: "Pyet për dërgesën",
-    message: "Përshëndetje ZIPO! Dua të pyes për një produkt dhe dërgesën.",
   },
 ];
 
 function ServiceArtwork({ id }) {
-  if (id === "produkte") {
+  if (id === "elektronike") {
     return (
       <div className={styles.productScene} aria-hidden="true">
         <Media src="tablet-air-blue.webp" className={styles.tablet} />
         <Media src="phone-17-pro-orange.webp" className={styles.phone} />
         <Media src="audio-airpods-pro-3.webp" className={styles.audio} />
+      </div>
+    );
+  }
+  if (id === "levizje") {
+    return (
+      <div className={styles.mobilityScene} aria-hidden="true">
+        <Media src="moto-niu.webp" className={styles.motor} />
+        <Media src="scooter-g2.webp" className={styles.scooter} />
       </div>
     );
   }
@@ -53,11 +63,7 @@ function ServiceArtwork({ id }) {
       />
     );
   }
-  return (
-    <div className={styles.parcelScene} aria-hidden="true">
-      <Media src="services/parcel.webp" className={styles.parcel} />
-    </div>
-  );
+  return null;
 }
 
 export default function ServicesSection() {
@@ -140,7 +146,7 @@ export default function ServicesSection() {
 
   return (
     <section className={`wrap ${styles.section}`} id="sherbimet" ref={root} aria-labelledby="services-title">
-      <h2 id="services-title">Më shumë se një dyqan.</h2>
+      <h2 id="services-title">Çfarë ofrojmë</h2>
       <div className={styles.dock}>
         <nav className={styles.tabs} aria-label="Shërbimet ZIPO" style={{ "--active": active }}>
           <span className={styles.indicator} aria-hidden="true" />
@@ -166,7 +172,7 @@ export default function ServicesSection() {
               aria-hidden="true"
             />
             <article
-              className={`${styles.panel} ${styles[service.id]}`}
+              className={[styles.panel, styles[service.id]].filter(Boolean).join(" ")}
               aria-labelledby={`service-${service.id}-title`}
               ref={node => { panels.current[index] = node; }}
               style={{ "--layer": index + 1 }}
@@ -181,7 +187,7 @@ export default function ServicesSection() {
                 <p>{service.description}</p>
                 {service.message ? (
                   <a
-                    className={`btn ${index === 2 ? "btn-light" : "btn-dark"} ${styles.action}`}
+                    className={`btn btn-dark ${styles.action}`}
                     href={`${store.whatsapp}?text=${encodeURIComponent(service.message)}`}
                     target="_blank"
                     rel="noopener"
@@ -189,9 +195,16 @@ export default function ServicesSection() {
                     {service.action}<Icon name="arrow" />
                   </a>
                 ) : (
-                  <AppLink className={`btn btn-dark ${styles.action}`} to="/produktet.html">
-                    {service.action}<Icon name="arrow" />
-                  </AppLink>
+                  <div className={styles.actions}>
+                    <AppLink className="btn btn-dark" to={service.to}>
+                      {service.action}<Icon name="arrow" />
+                    </AppLink>
+                    {service.secondary && (
+                      <AppLink className={styles.secondary} to={service.secondary.to}>
+                        {service.secondary.label}<Icon name="arrow" />
+                      </AppLink>
+                    )}
+                  </div>
                 )}
               </div>
               <div className={styles.art}><ServiceArtwork id={service.id} /></div>
