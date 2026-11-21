@@ -17,15 +17,15 @@ for (const width of [390, 1440]) {
       await page.goto(`/produktet.html?kategoria=${category.id}`);
       const banner = page.locator(".category-screen .catalog-top");
       await expect(banner.getByRole("heading", { level: 1 })).toHaveText(category.name);
+      await expect(banner.locator("p")).toHaveCount(0);
       await expect(page.locator("main")).not.toHaveClass("page-entering");
       await expect(banner.locator('[data-media-state="loading"]')).toHaveCount(0);
       const layout = await banner.evaluate(node => {
         const box = node.getBoundingClientRect();
         const heading = node.querySelector("h1").getBoundingClientRect();
-        const description = node.querySelector("p").getBoundingClientRect();
         return {
           painted: getComputedStyle(node).backgroundColor !== "rgba(0, 0, 0, 0)",
-          contained: heading.left >= box.left && heading.right <= box.right && description.bottom <= box.bottom,
+          contained: heading.left >= box.left && heading.right <= box.right && heading.top >= box.top && heading.bottom <= box.bottom,
           overflow: document.documentElement.scrollWidth > innerWidth,
           height: box.height,
         };
@@ -34,6 +34,10 @@ for (const width of [390, 1440]) {
       expect(layout.contained).toBe(true);
       expect(layout.overflow).toBe(false);
       expect(layout.height).toBeLessThan(280);
+      await expect(banner.locator("img")).toHaveCount(category.image || category.artwork.length ? 1 : 0);
+      if (category.image || category.artwork.length) {
+        await expect(banner.locator("[data-media-state]")).toHaveAttribute("data-media-state", "ready");
+      }
       await page.screenshot({ path: `.impeccable/review/category-${category.id}-${width}.png` });
     }
   });
