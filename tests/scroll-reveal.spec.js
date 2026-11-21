@@ -16,7 +16,11 @@ for (const width of [440, 1440]) {
     const featured = page
       .locator("[data-scroll-reveal]")
       .filter({ has: page.locator("#produkti-i-kerkuar") });
-    await featured.scrollIntoViewIfNeeded();
+    // Cross the pre-entry boundary before scrolling the section into view.
+    await featured.evaluate(element => scrollTo({
+      top: element.getBoundingClientRect().top + scrollY - innerHeight - 48,
+      behavior: "instant",
+    }));
     await expect
       .poll(() =>
         featured.evaluate(
@@ -25,6 +29,7 @@ for (const width of [440, 1440]) {
         ),
       )
       .toBe(1);
+    await featured.scrollIntoViewIfNeeded();
     await expect
       .poll(() =>
         featured.evaluate(

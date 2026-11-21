@@ -32,6 +32,8 @@ Produktet first opens a category directory. Selecting a category shows its produ
 
 Category results use a shallow, pale blue banner with the category title and description, plus representative artwork on larger screens. Shared surfaces carry a faint blue tint while white remains dominant. The admin login is minimal and in English. Admin sections and editors share brief, interruptible exit and entrance transitions; controls and save results provide quiet feedback, with a reduced-motion alternative.
 
+Homepage scroll reveals start before content enters the viewport. Phone reveals use short, gentle movement without image scaling or clipping, and already-visible sections stay opaque after fast swipes or anchor jumps. Each section reveals once after its content has a measurable layout. The visit map also fades in when its image finishes loading.
+
 The Pyetje të shpeshta page contains six professional Albanian answers, including owner-confirmed product originality, used products and inventory beyond the website. A reusable single-open accordion animates expansion and collapse, supports keyboard interaction and respects reduced motion. Additional answers describe the existing WhatsApp inquiry flow, availability and shop location. No warranty, delivery or payment policy has been invented.
 
 ## Preview sources

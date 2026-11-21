@@ -48,6 +48,11 @@
   height: 100%;
   object-fit: cover;
 }
+@media (prefers-reduced-motion: no-preference) {
+  .mapPhoto img {
+    transition: opacity 220ms ease;
+  }
+}
 .map small {
   display: block;
   font-size: 0.75rem;
