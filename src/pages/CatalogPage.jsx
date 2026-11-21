@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import AppLink from "../components/AppLink";
 import CategoryCard from "../components/CategoryCard";
+import CategoryHeader from "../components/CategoryHeader";
 import ProductCard from "../components/ProductCard";
 import Icon from "../components/Icon";
 import { useCatalog } from "../data/CatalogContext";
@@ -155,10 +156,7 @@ function CategoryProducts({ category }) {
         <span>/</span>
         {category.name}
       </nav>
-      <div className="catalog-top">
-        <h1>{category.name}</h1>
-        <p>{category.description}</p>
-      </div>
+      <CategoryHeader category={category} />
       <div className="category-toolbar">
         <CatalogSearch value={query} onChange={search} />
         <AppLink className="section-link" to="/produktet.html">

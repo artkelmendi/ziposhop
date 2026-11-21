@@ -46,19 +46,19 @@ test("email/password login handles errors, delayed authorization and logout", as
   await adminBackend(page, { slow: true });
   await page.goto("/admin.html");
   await expect(page.locator("[data-brand-intro]")).toHaveCount(0);
-  await page.getByLabel("Emaili", { exact: true }).fill("ziposhop@gmail.com");
-  await page.getByLabel("Fjalëkalimi", { exact: true }).fill("wrong-password");
-  await page.getByRole("button", { name: "Shfaq fjalëkalimin" }).click();
-  await expect(page.getByLabel("Fjalëkalimi", { exact: true })).toHaveAttribute(
+  await page.getByLabel("Email", { exact: true }).fill("ziposhop@gmail.com");
+  await page.getByLabel("Password", { exact: true }).fill("wrong-password");
+  await page.getByRole("button", { name: "Show password" }).click();
+  await expect(page.getByLabel("Password", { exact: true })).toHaveAttribute(
     "type",
     "text",
   );
-  await page.getByRole("button", { name: "Hyr", exact: true }).click();
-  await expect(page.getByRole("alert")).toContainText("nuk është i saktë");
+  await page.getByRole("button", { name: "Login", exact: true }).click();
+  await expect(page.getByRole("alert")).toContainText("Incorrect email or password");
   await page
-    .getByLabel("Fjalëkalimi", { exact: true })
+    .getByLabel("Password", { exact: true })
     .fill("test-password-only");
-  await page.getByRole("button", { name: "Hyr", exact: true }).click();
+  await page.getByRole("button", { name: "Login", exact: true }).click();
   await expect(page.getByLabel("Duke ngarkuar administrimin")).toHaveAttribute(
     "aria-busy",
     "true",
@@ -68,7 +68,7 @@ test("email/password login handles errors, delayed authorization and logout", as
   ).toBeVisible();
   await page.getByRole("button", { name: "Dil", exact: true }).click();
   await expect(
-    page.getByRole("heading", { name: "Hyr në administrim" }),
+    page.getByRole("heading", { name: "Login" }),
   ).toBeVisible();
 });
 
@@ -204,6 +204,9 @@ test("new categories and homepage selections persist after reloading", async ({
   await expect(
     page.getByRole("combobox", { name: "Produkti", exact: true }),
   ).toHaveValue("iphone-air");
+  // Saving an unchanged selection must leave the editor usable as well.
+  await page.getByRole("button", { name: "Ruaj ballinën" }).click();
+  await expect(page.getByRole("button", { name: "Ruaj ballinën" })).toBeEnabled();
   await page.reload();
   await page
     .getByRole("navigation", { name: "Administrimi" })

@@ -28,6 +28,8 @@ The header links to Produktet and Kontakti. Categories are explored from the hom
 
 Produktet first opens a category directory. Selecting a category shows its products, with category-specific search and a maximum of 24 products per page. Home and catalog category artwork share one component and show representative families of devices. The displayed products remain illustrative pending the owner's inventory.
 
+Category results use a shallow, pale banner with the category title and description, plus representative artwork on larger screens. The admin login is minimal and in English. Admin sections and editors share brief, interruptible exit and entrance transitions; controls and save results provide quiet feedback, with a reduced-motion alternative.
+
 ## Preview sources
 
 The address and contact details are transcribed from the [shop listing](https://100dyqane.com/dyqan/mobilshopzipo). The product illustrations come from the manufacturers. Image use for the final public storefront should follow the owner's supplier agreements.

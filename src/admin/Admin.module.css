@@ -33,58 +33,20 @@
 }
 .loginMain {
   flex: 1;
-  width: min(1120px, 90%);
+  width: min(380px, 88%);
   margin: auto;
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  align-items: center;
-  gap: 12%;
-  padding: 76px 0;
-}
-.loginStory h1 {
-  font-size: 3.5rem;
-  font-weight: 550;
-  line-height: 1.04;
-  letter-spacing: -0.035em;
-}
-.loginStory > p {
-  margin-top: 23px;
-  color: #5e605e;
-  line-height: 1.7;
-}
-.loginProducts {
   display: flex;
-  align-items: end;
-  gap: 22px;
-  height: 210px;
-  margin-top: 38px;
-  max-width: 390px;
-}
-.loginProducts img {
-  object-fit: contain;
-  width: 34%;
-  height: 100%;
-}
-.loginProducts img:nth-child(2) {
-  width: 29%;
-  height: 57%;
-}
-.loginProducts img:nth-child(3) {
-  width: 23%;
-  height: 76%;
+  align-items: center;
+  padding: 64px 0 120px;
 }
 .loginForm {
   width: 100%;
   max-width: 420px;
 }
-.loginForm h2 {
-  font-size: 1.8rem;
+.loginForm h1 {
+  font-size: 2.25rem;
   font-weight: 550;
   letter-spacing: -0.025em;
-}
-.loginForm > p {
-  color: #5e605e;
-  margin-top: 10px;
 }
 .loginForm form {
   margin-top: 34px;
@@ -97,21 +59,6 @@
 .loginForm .textButton {
   display: block;
   margin: 16px auto 0;
-}
-.loginForm .loginFootnote {
-  font-size: 0.78rem;
-  margin-top: 32px;
-  color: #646660;
-}
-.loginFooter {
-  width: 90%;
-  margin: 0 auto;
-  padding: 22px 0;
-  border-top: 1px solid #e8e9e5;
-  display: flex;
-  justify-content: space-between;
-  color: #62655f;
-  font-size: 0.75rem;
 }
 .fieldset {
   min-width: 0;
@@ -971,9 +918,33 @@
   border-radius: 4px;
 }
 @media (prefers-reduced-motion: no-preference) {
-  .loginForm,
-  .view {
-    animation: admin-enter 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  .loginForm {
+    animation: admin-enter 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .sidebar,
+  .topbar {
+    animation: admin-feedback 280ms ease-out both;
+  }
+  .notice,
+  .error,
+  .imageTile {
+    animation: admin-feedback 180ms ease-out;
+  }
+  .primary,
+  .secondary,
+  .danger,
+  .iconButton {
+    transition: background 150ms ease, color 150ms ease, scale 120ms ease;
+  }
+  .primary:active:not(:disabled),
+  .secondary:active:not(:disabled),
+  .danger:active:not(:disabled),
+  .iconButton:active:not(:disabled) {
+    scale: 0.98;
+  }
+  @keyframes admin-feedback {
+    from { opacity: 0.25; }
+    to { opacity: 1; }
   }
   @keyframes admin-enter {
     from {
@@ -1011,16 +982,6 @@
   }
 }
 @media (max-width: 850px) {
-  .loginMain {
-    gap: 8%;
-  }
-  .loginStory h1 {
-    font-size: 2.65rem;
-  }
-  .loginProducts {
-    height: 170px;
-    gap: 12px;
-  }
   .app {
     display: block;
   }
@@ -1089,21 +1050,10 @@
     gap: 7px;
   }
   .loginMain {
-    display: block;
-    padding: 45px 0 60px;
-    max-width: 420px;
+    padding: 48px 0 76px;
   }
-  .loginStory {
-    display: none;
-  }
-  .loginForm {
-    max-width: none;
-  }
-  .loginForm h2 {
-    font-size: 1.7rem;
-  }
-  .loginForm > p {
-    font-size: 0.875rem;
+  .loginForm h1 {
+    font-size: 2rem;
   }
   .loginForm form {
     margin-top: 30px;

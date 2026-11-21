@@ -112,9 +112,9 @@ export async function adminBackend(
 
 export async function login(page) {
   await page.goto("/admin.html");
-  await page.getByLabel("Emaili", { exact: true }).fill("ziposhop@gmail.com");
+  await page.getByLabel("Email", { exact: true }).fill("ziposhop@gmail.com");
   await page
-    .getByLabel("Fjalëkalimi", { exact: true })
+    .getByLabel("Password", { exact: true })
     .fill("test-password-only");
-  await page.getByRole("button", { name: "Hyr", exact: true }).click();
+  await page.getByRole("button", { name: "Login", exact: true }).click();
 }

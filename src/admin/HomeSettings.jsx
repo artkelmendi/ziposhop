@@ -53,6 +53,7 @@ export default function HomeSettings({
     } else {
       markSaved();
       onSaved();
+      setBusy(false);
     }
   }
   return (

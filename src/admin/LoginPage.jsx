@@ -2,7 +2,6 @@ import { useState } from "react";
 import { supabase } from "./client";
 import { AdminBrand, Notice } from "./ui";
 import Icon from "../components/Icon";
-import { imageUrl } from "../lib/backend";
 import styles from "./Admin.module.css";
 
 export default function LoginPage({ passwordSetup = false, onPasswordSet }) {
@@ -19,7 +18,7 @@ export default function LoginPage({ passwordSetup = false, onPasswordSet }) {
     setMessage("");
     if (!supabase) return;
     if (passwordSetup && password !== confirm) {
-      setError("Fjalëkalimet nuk përputhen.");
+      setError("Passwords do not match.");
       return;
     }
     setBusy(true);
@@ -33,10 +32,10 @@ export default function LoginPage({ passwordSetup = false, onPasswordSet }) {
       if (result.error) {
         setError(
           passwordSetup
-            ? "Fjalëkalimi nuk u ruajt. Përdor të paktën 10 karaktere dhe provo përsëri."
+            ? "Password could not be saved. Use at least 10 characters and try again."
             : result.error.status === 429
-              ? "Shumë përpjekje. Prit pak dhe provo përsëri."
-              : "Emaili ose fjalëkalimi nuk është i saktë.",
+              ? "Too many attempts. Please wait a moment and try again."
+              : "Incorrect email or password. Please try again.",
         );
       } else if (passwordSetup) {
         setPassword("");
@@ -44,14 +43,14 @@ export default function LoginPage({ passwordSetup = false, onPasswordSet }) {
         onPasswordSet();
       }
     } catch {
-      setError("Lidhja u ndërpre. Provo përsëri.");
+      setError("Connection lost. Please try again.");
     } finally {
       setBusy(false);
     }
   }
   async function reset() {
     if (!supabase || !email.trim()) {
-      setError("Shkruaj emailin më sipër për të rivendosur fjalëkalimin.");
+      setError("Enter your email above to reset your password.");
       return;
     }
     setBusy(true);
@@ -67,66 +66,41 @@ export default function LoginPage({ passwordSetup = false, onPasswordSet }) {
           ).href,
         },
       );
-      if (error) setError("Kërkesa nuk u dërgua. Provo përsëri më vonë.");
+      if (error) setError("Request could not be sent. Please try again later.");
       else
         setMessage(
-          "Nëse emaili ka një llogari, do të marrë udhëzimet për rivendosjen.",
+          "If an account exists for this email, you will receive reset instructions.",
         );
     } catch {
-      setError("Lidhja u ndërpre. Provo përsëri.");
+      setError("Connection lost. Please try again.");
     } finally {
       setBusy(false);
     }
   }
   return (
-    <div className={styles.loginPage}>
+    <div className={styles.loginPage} lang="en">
       <header className={styles.loginHeader}>
         <AdminBrand />
         <a
           className={styles.storeLink}
           href={import.meta.env.BASE_URL + "index.html"}
         >
-          Shiko dyqanin <Icon name="arrow" />
+          Back to shop <Icon name="arrow" />
         </a>
       </header>
       <main className={styles.loginMain}>
-        <div className={styles.loginStory}>
-          <h1>
-            Dyqani yt,
-            <br />
-            nën kontroll.
-          </h1>
-          <p>
-            Produktet, kategoritë dhe përzgjedhjet e ZIPO.
-            <br />
-            Të gjitha në një vend.
-          </p>
-          <div className={styles.loginProducts} aria-hidden="true">
-            <img src={imageUrl("phone-17-pro-orange.webp")} alt="" />
-            <img src={imageUrl("audio-airpods-pro-3.webp")} alt="" />
-            <img src={imageUrl("watch-se-3.webp")} alt="" />
-          </div>
-        </div>
         <section className={styles.loginForm} aria-labelledby="login-title">
-          <h2 id="login-title">
-            {passwordSetup ? "Vendos fjalëkalimin" : "Hyr në administrim"}
-          </h2>
-          <p>
-            {passwordSetup
-              ? "Zgjidh një fjalëkalim për llogarinë tënde ZIPO."
-              : "Mirë se erdhe. Vazhdo me llogarinë tënde."}
-          </p>
+          <h1 id="login-title">{passwordSetup ? "Set password" : "Login"}</h1>
           {!supabase && (
             <Notice error>
-              Administrimi nuk është lidhur ende me databazën. Konfigurimi duhet
-              përfunduar përpara hyrjes.
+              Login is unavailable. Please finish the database setup.
             </Notice>
           )}
           <form onSubmit={submit}>
             <fieldset disabled={busy || !supabase} className={styles.fieldset}>
               {!passwordSetup && (
                 <label className={styles.field}>
-                  Emaili
+                  Email
                   <input
                     required
                     type="email"
@@ -134,12 +108,12 @@ export default function LoginPage({ passwordSetup = false, onPasswordSet }) {
                     name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="emri@dyqani.com"
+                    placeholder="you@example.com"
                   />
                 </label>
               )}
               <label className={styles.field}>
-                {passwordSetup ? "Fjalëkalimi i ri" : "Fjalëkalimi"}
+                {passwordSetup ? "New password" : "Password"}
                 <span className={styles.passwordField}>
                   <input
                     required
@@ -155,7 +129,7 @@ export default function LoginPage({ passwordSetup = false, onPasswordSet }) {
                   <button
                     type="button"
                     aria-label={
-                      visible ? "Fshih fjalëkalimin" : "Shfaq fjalëkalimin"
+                      visible ? "Hide password" : "Show password"
                     }
                     aria-pressed={visible}
                     onClick={() => setVisible((value) => !value)}
@@ -167,10 +141,10 @@ export default function LoginPage({ passwordSetup = false, onPasswordSet }) {
               {passwordSetup && (
                 <>
                   <small className={styles.hint}>
-                    Përdor të paktën 10 karaktere.
+                    Use at least 10 characters.
                   </small>
                   <label className={styles.field}>
-                    Përsërite fjalëkalimin
+                    Confirm password
                     <input
                       required
                       minLength={10}
@@ -186,10 +160,10 @@ export default function LoginPage({ passwordSetup = false, onPasswordSet }) {
               <Notice>{message}</Notice>
               <button className={styles.primary} type="submit">
                 {busy
-                  ? "Duke vazhduar…"
+                  ? "Please wait…"
                   : passwordSetup
-                    ? "Ruaj fjalëkalimin"
-                    : "Hyr"}
+                    ? "Save password"
+                    : "Login"}
                 <Icon name="arrow" />
               </button>
               {!passwordSetup &&
@@ -199,20 +173,13 @@ export default function LoginPage({ passwordSetup = false, onPasswordSet }) {
                     className={styles.textButton}
                     onClick={reset}
                   >
-                    Ke harruar fjalëkalimin?
+                    Forgot password?
                   </button>
                 )}
             </fieldset>
           </form>
-          <p className={styles.loginFootnote}>
-            Qasje vetëm për administratorët e ZIPO.
-          </p>
         </section>
       </main>
-      <footer className={styles.loginFooter}>
-        <span>ZIPO Mobil Shop</span>
-        <span>Pejë, Kosovë</span>
-      </footer>
     </div>
   );
 }

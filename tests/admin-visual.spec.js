@@ -12,7 +12,7 @@ for (const [name, width] of [
     await adminBackend(page);
     await page.goto("/admin.html");
     await expect(
-      page.getByRole("heading", { name: "Hyr në administrim" }),
+      page.getByRole("heading", { name: "Login" }),
     ).toBeVisible();
     await page.screenshot({
       path: `.impeccable/review/login-${name}.png`,

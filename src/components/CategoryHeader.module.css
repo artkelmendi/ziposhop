@@ -1,0 +1,51 @@
+.banner:global(.catalog-top) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  min-height: 208px;
+  margin-block: 26px 28px;
+  padding: 30px 38px;
+  border-radius: 16px;
+  background: #f0f2ed;
+  overflow: hidden;
+}
+.copy {
+  flex: 1;
+  min-width: 0;
+  max-width: 65%;
+}
+.banner:global(.catalog-top) h1 {
+  font-size: clamp(2.3rem, 4.2vw, 3.6rem);
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+.banner:global(.catalog-top) p {
+  max-width: 54ch;
+  color: #565e50;
+}
+.banner .artwork {
+  flex: 0 0 30%;
+  height: 164px;
+  max-width: 330px;
+}
+@media (max-width: 700px) {
+  .banner:global(.catalog-top) {
+    min-height: 160px;
+    padding: 26px 24px;
+    margin-block: 22px 24px;
+  }
+  .copy {
+    max-width: none;
+  }
+  .banner:global(.catalog-top) h1 {
+    font-size: clamp(2rem, 7.3vw, 2.8rem);
+  }
+  .banner:global(.catalog-top) p {
+    font-size: 0.9375rem;
+    margin-top: 12px;
+  }
+  .banner .artwork {
+    display: none;
+  }
+}

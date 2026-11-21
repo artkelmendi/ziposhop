@@ -14,6 +14,7 @@ import HomeSettings from "./HomeSettings";
 import { AdminBrand, AdminSkeleton, DeleteDialog, Notice } from "./ui";
 import Icon from "../components/Icon";
 import { UnsavedChangesProvider, useUnsavedChanges } from "./useUnsavedChanges";
+import { AdminMotionContext, usePanelMotion } from "./useAdminMotion";
 import styles from "./Admin.module.css";
 
 export default function AdminApp() {
@@ -64,6 +65,7 @@ function Dashboard({ email }) {
   const [view, setView] = useState("products");
   const [editing, setEditing] = useState(null);
   const [catalog, setCatalog] = useState(null);
+  const { panel, transition } = usePanelMotion(Boolean(catalog));
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [revision, setRevision] = useState(0);
@@ -86,16 +88,26 @@ function Dashboard({ email }) {
     };
   }, [revision]);
   function refresh(text = "Ndryshimet u ruajtën.") {
-    setMessage(text);
-    setEditing(null);
-    setRevision((value) => value + 1);
+    transition(() => {
+      setMessage(text);
+      setEditing(null);
+      setRevision((value) => value + 1);
+    }, { scroll: true });
   }
   function navigate(next) {
+    if (next === view && !editing && !panel.current?.inert) return;
     if (!confirmLeave()) return;
-    setView(next);
-    setEditing(null);
-    setMessage("");
-    window.scrollTo({ top: 0, behavior: "instant" });
+    transition(() => {
+      setView(next);
+      setEditing(null);
+      setMessage("");
+    }, { scroll: true });
+  }
+  function edit(product) {
+    transition(() => {
+      setMessage("");
+      setEditing(product);
+    }, { scroll: true });
   }
   async function remove() {
     setDeleting(true);
@@ -128,115 +140,114 @@ function Dashboard({ email }) {
     ["home", "home", "Ballina"],
   ];
   return (
-    <div className={styles.app}>
-      <aside className={styles.sidebar}>
-        <div className={styles.sidebarBrand}>
-          <AdminBrand />
-        </div>
-        <nav className={styles.navigation} aria-label="Administrimi">
-          {navigation.map(([id, icon, label]) => (
-            <button
-              key={id}
-              className={view === id ? styles.navActive : styles.navButton}
-              aria-current={view === id ? "page" : undefined}
-              onClick={() => navigate(id)}
-            >
-              <Icon name={icon} />
-              {label}
-            </button>
-          ))}
-        </nav>
-        <a
-          className={styles.sidebarStore}
-          href={import.meta.env.BASE_URL + "index.html"}
-          target="_blank"
-          rel="noopener"
-        >
-          Shiko dyqanin <Icon name="arrow" />
-        </a>
-      </aside>
-      <div className={styles.workspace}>
-        <header className={styles.topbar}>
-          <span>Administrimi i dyqanit</span>
-          <div>
-            <span className={styles.email}>{email}</span>
-            <button
-              className={styles.signOut}
-              onClick={signOut}
-              disabled={signingOut}
-            >
-              <Icon name="logout" />
-              {signingOut ? "Duke dalë…" : "Dil"}
-            </button>
+    <AdminMotionContext.Provider value={transition}>
+      <div className={styles.app}>
+        <aside className={styles.sidebar}>
+          <div className={styles.sidebarBrand}>
+            <AdminBrand />
           </div>
-        </header>
-        <main className={styles.content} id="admin-content">
-          <Notice>{message}</Notice>
-          {error && (
-            <div className={styles.errorBox}>
-              <Notice error>{error}</Notice>
+          <nav className={styles.navigation} aria-label="Administrimi">
+            {navigation.map(([id, icon, label]) => (
               <button
-                className={styles.secondary}
-                onClick={() => setRevision((value) => value + 1)}
+                key={id}
+                className={view === id ? styles.navActive : styles.navButton}
+                aria-current={view === id ? "page" : undefined}
+                onClick={() => navigate(id)}
               >
-                Provo përsëri
+                <Icon name={icon} />
+                {label}
+              </button>
+            ))}
+          </nav>
+          <a
+            className={styles.sidebarStore}
+            href={import.meta.env.BASE_URL + "index.html"}
+            target="_blank"
+            rel="noopener"
+          >
+            Shiko dyqanin <Icon name="arrow" />
+          </a>
+        </aside>
+        <div className={styles.workspace}>
+          <header className={styles.topbar}>
+            <span>Administrimi i dyqanit</span>
+            <div>
+              <span className={styles.email}>{email}</span>
+              <button
+                className={styles.signOut}
+                onClick={signOut}
+                disabled={signingOut}
+              >
+                <Icon name="logout" />
+                {signingOut ? "Duke dalë…" : "Dil"}
               </button>
             </div>
-          )}
-          {!catalog ? (
-            !error && <AdminSkeleton />
-          ) : view === "products" ? (
-            editing ? (
-              <ProductEditor
-                key={editing.id || "new"}
-                product={editing.id ? editing : null}
-                categories={catalog.categories}
+          </header>
+          <main ref={panel} className={styles.content} id="admin-content">
+            <Notice>{message}</Notice>
+            {error && (
+              <div className={styles.errorBox}>
+                <Notice error>{error}</Notice>
+                <button
+                  className={styles.secondary}
+                  onClick={() => setRevision((value) => value + 1)}
+                >
+                  Provo përsëri
+                </button>
+              </div>
+            )}
+            {!catalog ? (
+              !error && <AdminSkeleton />
+            ) : view === "products" ? (
+              editing ? (
+                <ProductEditor
+                  key={editing.id || "new"}
+                  product={editing.id ? editing : null}
+                  categories={catalog.categories}
+                  onSaved={() => refresh()}
+                  onCancel={() => transition(() => setEditing(null), { scroll: true })}
+                  onDelete={(product) => {
+                    setDeleteError("");
+                    setRemoving(product);
+                  }}
+                />
+              ) : (
+                <ProductList
+                  products={catalog.products}
+                  categories={catalog.categories}
+                  onEdit={edit}
+                  onCreate={() => edit({})}
+                />
+              )
+            ) : view === "categories" ? (
+              <CategoryManager
+                key={revision}
+                {...catalog}
                 onSaved={() => refresh()}
-                onCancel={() => setEditing(null)}
-                onDelete={(product) => {
+                onDelete={(category) => {
                   setDeleteError("");
-                  setRemoving(product);
+                  setRemoving(category);
                 }}
               />
             ) : (
-              <ProductList
-                products={catalog.products}
-                categories={catalog.categories}
-                onEdit={setEditing}
-                onCreate={() => {
-                  setMessage("");
-                  setEditing({});
-                }}
+              <HomeSettings
+                key={JSON.stringify(catalog.settings)}
+                {...catalog}
+                onSaved={() => refresh()}
               />
-            )
-          ) : view === "categories" ? (
-            <CategoryManager
-              key={revision}
-              {...catalog}
-              onSaved={() => refresh()}
-              onDelete={(category) => {
-                setDeleteError("");
-                setRemoving(category);
-              }}
-            />
-          ) : (
-            <HomeSettings
-              key={JSON.stringify(catalog.settings)}
-              {...catalog}
-              onSaved={() => refresh()}
-            />
-          )}
-        </main>
+            )}
+          </main>
+        </div>
+        {removing && (
+          <DeleteDialog
+            name={removing.name}
+            busy={deleting}
+            error={deleteError}
+            onCancel={() => setRemoving(null)}
+            onConfirm={remove}
+          />
+        )}
       </div>
-      {removing && (
-        <DeleteDialog
-          name={removing.name}
-          busy={deleting}
-          error={deleteError}
-          onCancel={() => setRemoving(null)}
-          onConfirm={remove}
-        />
-      )}
-    </div>
+    </AdminMotionContext.Provider>
   );
 }

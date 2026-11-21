@@ -6,6 +6,7 @@ import { Notice, Photo } from "./ui";
 import Icon from "../components/Icon";
 import styles from "./Admin.module.css";
 import { useDirtyForm } from "./useUnsavedChanges";
+import { useAdminMotion } from "./useAdminMotion";
 
 export default function CategoryManager({
   categories,
@@ -14,6 +15,8 @@ export default function CategoryManager({
   onDelete,
 }) {
   const [editing, setEditing] = useState(null);
+  const transition = useAdminMotion();
+  const edit = (category) => transition(() => setEditing(category), { scroll: true });
   return (
     <section className={styles.view}>
       <div className={styles.pageHeading}>
@@ -22,7 +25,7 @@ export default function CategoryManager({
           <p>Organizo produktet dhe pamjen e katalogut.</p>
         </div>
         {!editing && (
-          <button className={styles.primary} onClick={() => setEditing({})}>
+          <button className={styles.primary} onClick={() => edit({})}>
             <Icon name="plus" /> Shto kategori
           </button>
         )}
@@ -31,11 +34,8 @@ export default function CategoryManager({
         <CategoryForm
           key={editing.id || "new"}
           category={editing}
-          onCancel={() => setEditing(null)}
-          onSaved={() => {
-            setEditing(null);
-            onSaved();
-          }}
+          onCancel={() => edit(null)}
+          onSaved={onSaved}
           onDelete={onDelete}
         />
       ) : (
@@ -59,7 +59,7 @@ export default function CategoryManager({
               <button
                 className={styles.secondary}
                 aria-label={`Ndrysho kategorinë ${category.name}`}
-                onClick={() => setEditing(category)}
+                onClick={() => edit(category)}
               >
                 Ndrysho <Icon name="edit" />
               </button>
@@ -69,7 +69,7 @@ export default function CategoryManager({
             <div className={styles.empty}>
               <h2>Shto kategorinë e parë</h2>
               <p>Çdo produkt do t’i përkasë një kategorie.</p>
-              <button className={styles.primary} onClick={() => setEditing({})}>
+              <button className={styles.primary} onClick={() => edit({})}>
                 Shto kategori
               </button>
             </div>
