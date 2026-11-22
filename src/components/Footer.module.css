@@ -2,50 +2,50 @@
   flex-shrink: 0;
   background: #edf2f8;
   color: var(--ink);
-  padding: 56px 0 22px;
+  padding: 32px 0 18px;
 }
 .outro {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   align-items: center;
-  gap: 50px;
-  padding-bottom: 44px;
+  gap: 32px;
+  padding-bottom: 24px;
 }
-.signature :global(.brand) { gap: 24px; }
-.signature :global(.wordmark) { font-size: clamp(4.5rem, 8vw, 6rem); }
-.signature :global(.brand-sub) { font-size: 0.95rem; line-height: 1.3; }
-.conversation { display: inline-flex; align-items: center; gap: 22px; font-weight: 550; }
+.signature :global(.brand) { gap: 16px; }
+.signature :global(.wordmark) { font-size: clamp(3rem, 5vw, 4rem); }
+.signature :global(.brand-sub) { font-size: 0.8rem; line-height: 1.3; }
+.conversation { display: inline-flex; align-items: center; min-height: 44px; gap: 14px; font-weight: 550; }
 .conversation > span:first-child { border-bottom: 1px solid #8396ad; padding-bottom: 5px; }
-.arrow { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--ink); color: white; }
-.arrow svg { width: 20px; height: 20px; transform: rotate(-35deg); transition: transform 220ms var(--ease); }
+.arrow { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--ink); color: white; }
+.arrow svg { width: 18px; height: 18px; transform: rotate(-35deg); transition: transform 220ms var(--ease); }
 .conversation:hover .arrow svg { transform: translate(2px, -2px) rotate(-35deg); }
 .content {
   display: grid;
   grid-template-columns: 1.55fr 1fr 1fr;
-  gap: clamp(24px, 4vw, 64px);
+  gap: clamp(20px, 3vw, 44px);
   border-top: 1px solid #cfd9e6;
-  padding-block: 34px;
+  padding-block: 22px;
 }
-.content h2 { font-size: 0.94rem; font-weight: 600; margin-bottom: 16px; letter-spacing: -0.015em; }
+.content h2 { font-size: 0.94rem; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.015em; }
 .content > * { min-width: 0; }
-.categories { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px 22px; }
+.categories { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 18px; }
 .categories a { overflow-wrap: anywhere; min-height: 28px; padding-block: 2px; }
 .content a, .contact address { font-size: 0.9rem; color: var(--tint-ink); line-height: 1.55; }
-.contact address { font-style: normal; margin-bottom: 14px; }
+.contact address { font-style: normal; margin-bottom: 10px; }
 .contact > a { display: inline-flex; align-items: center; gap: 12px; min-height: 28px; }
 .contact svg { width: 16px; height: 16px; }
 .direct { display: flex; flex-direction: column; align-items: flex-start; }
 .direct .phone { font-size: 1.05rem; color: var(--ink); font-weight: 550; white-space: nowrap; }
-.social { display: inline-flex; align-items: center; gap: 12px; margin-top: 18px; }
+.social { display: inline-flex; align-items: center; gap: 10px; margin-top: 12px; }
 .social svg { width: 22px; height: 22px; }
 .social small { display: block; font-size: 0.78rem; }
 .bottom {
   border-top: 1px solid #cfd9e6;
-  padding-top: 18px;
+  padding-top: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 14px;
   font-size: 0.8rem;
   color: var(--tint-ink);
 }
@@ -57,32 +57,31 @@
 .content a:hover, .bottom a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 5px; }
 .signature :global(.brand):hover { opacity: 0.7; }
 @media (max-width: 1000px) {
-  .outro { gap: 30px; }
+  .outro { gap: 24px; }
   .signature :global(.brand) { gap: 16px; }
   .signature :global(.brand-sub) { font-size: 0.78rem; }
 }
 @media (max-width: 750px) {
-  .footer { padding-top: 38px; }
-  .outro { grid-template-columns: 1fr; gap: 28px; padding-bottom: 28px; }
-  .signature :global(.wordmark) { font-size: 5rem; }
-  .signature :global(.brand-sub) { font-size: 0.85rem; }
-  .conversation { font-size: 0.94rem; gap: 18px; }
-  .content { grid-template-columns: 1fr 1fr; gap: 24px; padding-block: 28px; }
+  .footer { padding-top: 26px; }
+  .outro { grid-template-columns: 1fr; gap: 14px; padding-bottom: 18px; }
+  .signature :global(.wordmark) { font-size: 3rem; }
+  .signature :global(.brand-sub) { font-size: 0.75rem; }
+  .conversation { font-size: 0.94rem; }
+  .content { grid-template-columns: 1fr 1fr; gap: 18px; padding-block: 18px; }
   .links { grid-row: span 2; }
-  .categories { grid-template-columns: 1fr; gap: 12px; }
-  .content h2 { margin-bottom: 12px; }
+  .categories { grid-template-columns: 1fr; gap: 6px; }
   .direct .phone { font-size: 0.9rem; }
-  .social { margin-top: 12px; }
+  .social { margin-top: 10px; }
   .social svg { width: 18px; height: 18px; }
-  .bottom { display: grid; grid-template-columns: 1fr auto; gap: 14px; }
+  .bottom { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
   .bottom > span { grid-column: 1 / -1; }
   .bottom nav { gap: 10px 16px; }
   .backToTop { gap: 6px; }
 }
 @media (max-width: 355px) {
-  .signature :global(.wordmark) { font-size: 4.3rem; }
-  .signature :global(.brand-sub) { font-size: 0.7rem; }
-  .content { gap: 22px 14px; }
+  .signature :global(.wordmark) { font-size: 2.6rem; }
+  .signature :global(.brand-sub) { font-size: 0.75rem; }
+  .content { gap: 18px 14px; }
   .content a, .contact address { font-size: 0.82rem; }
   .direct .phone { font-size: 0.8rem; }
   .bottom { font-size: 0.75rem; }

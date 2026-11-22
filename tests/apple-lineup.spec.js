@@ -12,7 +12,8 @@ test("Apple additions have local photos and resolve from the hero to real admin 
   await page.addInitScript(() => sessionStorage.setItem("zipo:intro-seen", "1"));
   await page.goto("/");
   const hero = page.getByRole("region", { name: "Zbulo koleksionin ZIPO" });
-  await expect(hero.locator('img[src*="phone-18-pro-max"]')).toHaveCount(2);
+  await expect(hero.locator('img[src*="phone-18-pro-max"]')).toHaveCount(1);
+  await expect(hero.getByRole("link", { name: "Shiko iPhone Air", exact: true })).toHaveAttribute("href", /produkt=iphone-air$/);
   await expect(hero.locator('[data-media-state="error"]')).toHaveCount(0);
   const max = hero.getByRole("link", { name: "Shiko iPhone 18 Pro Max — Burgundy", exact: true });
   await expect(max).toHaveAttribute("href", /produkt=iphone-18-pro-max-admin-created$/);

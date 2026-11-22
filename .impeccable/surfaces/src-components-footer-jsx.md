@@ -17,7 +17,7 @@ OWN-WORLD: Keep the existing wordmark and Instrument Sans. A pale cool-blue surf
 
 STORY: The shopper recognizes the brand, can contact the shop through WhatsApp, browse categories, find the Pejë location or reach the phone/Instagram links. An accessible return-to-top control restores main-content focus.
 
-FIRST VIEWPORT: An enlarged existing ZIPO wordmark on the left balances a simple WhatsApp link and arrow on the right. The requested “Le të flasim për pajisjen tënde” heading is removed. Category links and compact shop/contact groups sit below a horizontal rule. Mobile stacks the signature and WhatsApp link, then uses two compact information columns. Copyright, contact/FAQ links and return-to-top finish the page.
+FIRST VIEWPORT: A moderately sized existing ZIPO wordmark on the left balances a simple WhatsApp link and arrow on the right. The requested “Le të flasim për pajisjen tënde” heading is removed. The owner asked for a more compact footer on November 22, 2026: reduce the logo and vertical padding while keeping information text readable. Category links and compact shop/contact groups sit below a horizontal rule. Mobile stacks the signature and WhatsApp link with close spacing, then uses two compact information columns. Copyright, contact/FAQ links and return-to-top finish the page.
 
 FORM: Extend the approved white-and-blue storefront; seed: none (pinned), from “I also dont like the footer, can u make something more interesting for it?” and the earlier request to keep “white-ish color to be dominant on the website and clean”. The latest explicit copy constraint is “from footer delete the le te flasim per paisjen tende.”
 

@@ -36,10 +36,9 @@ const displayProducts = [
     position: "phone",
   },
   {
-    id: "iphone-18-pro-max",
-    name: "iPhone 18 Pro Max",
-    finish: "Glacier",
-    image: "phone-18-pro-max-glacier.webp",
+    id: "iphone-air",
+    name: "iPhone Air",
+    image: "phone-air-blue.webp",
     category: "telefona",
     position: "air",
   },
