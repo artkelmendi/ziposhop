@@ -9,9 +9,10 @@ import {
 } from "react";
 import Icon from "./Icon";
 import styles from "./BrandIntro.module.css";
+import { displayPreferencesAllowed, introKey } from "../lib/privacy";
 
 const IntroCovered = createContext(false);
-const storageKey = "zipo:intro-seen";
+let seenInVisit = false;
 
 export function useIntroCovered() {
   return useContext(IntroCovered);
@@ -21,8 +22,10 @@ function shouldPlay() {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
   if (new URLSearchParams(window.location.search).get("intro") === "1")
     return true;
+  if (seenInVisit) return false;
+  if (!displayPreferencesAllowed()) return true;
   try {
-    return sessionStorage.getItem(storageKey) !== "1";
+    return sessionStorage.getItem(introKey) !== "1";
   } catch {
     return true;
   }
@@ -80,8 +83,9 @@ function IntroOverlay({ phase, onPhaseChange }) {
   }, [onPhaseChange]);
 
   useEffect(() => {
+    seenInVisit = true;
     try {
-      sessionStorage.setItem(storageKey, "1");
+      if (displayPreferencesAllowed()) sessionStorage.setItem(introKey, "1");
     } catch {
       // Storage may be unavailable in private browser contexts.
     }

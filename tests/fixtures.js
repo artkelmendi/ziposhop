@@ -33,7 +33,12 @@ export function fixtureCatalog() {
 }
 
 export const test = base.extend({
-  page: async ({ page }, use) => {
+  privacyChoice: [true, { option: true }],
+  page: async ({ page, privacyChoice }, use) => {
+    if (privacyChoice) await page.addInitScript(() => {
+      const savedAt = Date.now();
+      localStorage.setItem("zipo:privacy-choice", JSON.stringify({ version: 1, preferences: true, savedAt, expiresAt: savedAt + 180 * 86400000 }));
+    });
     const catalog = fixtureCatalog();
     await page.route("https://zipo-test.supabase.co/**", async (route) => {
       const path = new URL(route.request().url()).pathname;

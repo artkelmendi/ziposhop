@@ -34,7 +34,7 @@ for (const width of [440, 1440]) {
     await page.reload();
     await expect(page.locator(".category-directory-grid a")).toHaveCount(5);
     await expect(intro).toHaveCount(0);
-    await page.goto("/index.html?intro=1");
+    await page.goto("/?intro=1");
     await expect(intro).toHaveCount(1);
     await page.getByRole("button", { name: "Kalo hyrjen" }).click();
     await expect(intro).toHaveCount(0);

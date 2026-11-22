@@ -4,11 +4,11 @@ test("the mobile menu has identical rows on every route", async ({ page }) => {
   await page.setViewportSize({ width: 440, height: 956 });
   for (const route of [
     "/",
-    "/produktet.html",
-    "/produktet.html?kategoria=telefona",
-    "/produktet.html?produkt=iphone-15-pro",
-    "/kontakti.html",
-    "/pyetje.html",
+    "/produktet/",
+    "/produktet/?kategoria=telefona",
+    "/produktet/?produkt=iphone-15-pro",
+    "/kontakti/",
+    "/pyetje/",
   ]) {
     await page.goto(route);
     await page.getByRole("button", { name: "Hap menunë" }).click();
@@ -47,14 +47,14 @@ test("the header persists and the dropdown resets on route and breakpoint change
   page,
 }) => {
   await page.setViewportSize({ width: 440, height: 956 });
-  await page.goto("/produktet.html");
+  await page.goto("/produktet/");
   await page
     .locator("header")
     .evaluate((header) => (header.dataset.testInstance = "original"));
   await page.getByRole("button", { name: "Hap menunë" }).click();
   const menu = page.getByRole("navigation", { name: "Navigimi në telefon" });
   await menu.getByRole("link", { name: "Kontakti", exact: true }).click();
-  await expect(page).toHaveURL(/kontakti\.html$/);
+  await expect(page).toHaveURL(/kontakti\/$/);
   await expect(page.locator("header")).toHaveAttribute(
     "data-test-instance",
     "original",
@@ -77,7 +77,7 @@ test("slow product media uses a skeleton and recovers when a variant loads", asy
     await new Promise((resolve) => setTimeout(resolve, 700));
     await route.continue();
   });
-  await page.goto("/produktet.html?produkt=iphone-15-pro");
+  await page.goto("/produktet/?produkt=iphone-15-pro");
   await page.getByRole("button", { name: "Titan blu" }).click();
   const photo = page.locator(".detail-photo");
   await expect(photo).toHaveAttribute("aria-busy", "true");

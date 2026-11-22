@@ -27,7 +27,7 @@ export default function HomePage() {
           <h2 id="categories-title">Eksploro kategoritë</h2>
           <AppLink
             className="section-link"
-            to="/produktet.html"
+            to="/produktet/"
             aria-label="Të gjitha produktet"
           >
             <span>

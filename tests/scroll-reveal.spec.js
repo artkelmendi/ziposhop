@@ -81,7 +81,7 @@ for (const width of [440, 1440]) {
     await page
       .getByRole("link", { name: "Si të na gjesh", exact: true })
       .click();
-    await expect(page).toHaveURL(/kontakti\.html$/);
+    await expect(page).toHaveURL(/kontakti\/$/);
   });
 }
 test("reduced motion leaves home sections visible without scroll animation", async ({

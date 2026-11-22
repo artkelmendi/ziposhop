@@ -105,7 +105,7 @@ export default function CategoryFilter({ category }) {
         inert={!open}
       >
         <AppLink
-          to="/produktet.html"
+          to="/produktet/"
           className={styles.all}
           onClick={() => setOpen(false)}
         >

@@ -177,7 +177,7 @@ function Dashboard({ email }) {
           </nav>
           <a
             className={styles.sidebarStore}
-            href={import.meta.env.BASE_URL + "index.html"}
+            href={import.meta.env.BASE_URL}
             target="_blank"
             rel="noopener"
           >

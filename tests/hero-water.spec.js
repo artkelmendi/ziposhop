@@ -83,7 +83,7 @@ test("reduced motion keeps the water static and the hero usable", async ({ page 
   await page.waitForTimeout(200);
   expect(await page.evaluate(() => window.waterFrames)).toBe(count);
   await hero.getByRole("link", { name: "Zbulo produktet" }).click();
-  await expect(page).toHaveURL(/produktet\.html$/);
+  await expect(page).toHaveURL(/produktet\/$/);
   await expect(page.locator("main canvas")).toHaveCount(0);
 });
 
@@ -100,5 +100,5 @@ test("the hero stays usable when WebGL is unavailable", async ({ page }) => {
   await expect(hero.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(hero.locator("img")).toHaveCount(7);
   await hero.getByRole("link", { name: "Zbulo produktet" }).click();
-  await expect(page).toHaveURL(/produktet\.html$/);
+  await expect(page).toHaveURL(/produktet\/$/);
 });

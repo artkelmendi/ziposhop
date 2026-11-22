@@ -1,6 +1,6 @@
 # ZIPO administration
 
-The owner signs in with email and password at `admin.html`. Products, categories and homepage settings are saved in Supabase. Customer inquiries go to WhatsApp; no customer accounts or checkout are introduced.
+The owner signs in with email and password at `/admin/`. The legacy `admin.html` link still works and normalizes to the clean URL, including existing password-recovery links. Products, categories and homepage settings are saved in Supabase. Customer inquiries go to WhatsApp; no customer accounts or checkout are introduced.
 
 ## Connection and deployment
 

@@ -115,7 +115,7 @@ function CategoryDirectory() {
   return (
     <div className="wrap catalog-main category-directory">
       <nav className="breadcrumb" aria-label="Vendndodhja">
-        <AppLink to="/index.html">Ballina</AppLink>
+        <AppLink to="/">Ballina</AppLink>
         <span>/</span>Produktet
       </nav>
       <div className="catalog-top">
@@ -153,9 +153,9 @@ function CategoryProducts({ category }) {
   return (
     <div className="wrap catalog-main category-screen">
       <nav className="breadcrumb" aria-label="Vendndodhja">
-        <AppLink to="/index.html">Ballina</AppLink>
+        <AppLink to="/">Ballina</AppLink>
         <span>/</span>
-        <AppLink to="/produktet.html">Produktet</AppLink>
+        <AppLink to="/produktet/">Produktet</AppLink>
         <span>/</span>{category.name}
       </nav>
       <CategoryHeader category={category} />

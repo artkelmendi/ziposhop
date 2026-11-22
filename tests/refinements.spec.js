@@ -14,7 +14,7 @@ for (const width of [390, 1440]) {
     });
     await page.route("**/rest/v1/categories?**", route => route.fulfill({ json: catalog.categories }));
     for (const category of catalog.categories) {
-      await page.goto(`/produktet.html?kategoria=${category.id}`);
+      await page.goto(`/produktet/?kategoria=${category.id}`);
       const banner = page.locator(".category-screen .catalog-top");
       await expect(banner.getByRole("heading", { level: 1 })).toHaveText(category.name);
       await expect(banner.locator("p")).toHaveCount(0);

@@ -7,8 +7,8 @@ for (const width of [440, 1440]) {
       await page.setViewportSize({ width, height: 1200 });
       await page.emulateMedia({ reducedMotion: "reduce" });
       for (const route of [
-        "/produktet.html?produkt=unknown",
-        "/produktet.html?kategoria=motore",
+        "/produktet/?produkt=unknown",
+        "/produktet/?kategoria=motore",
         "/",
       ]) {
         await page.goto(route);
@@ -61,7 +61,7 @@ for (const width of [320, 768, 1440]) {
   test(`footer contact links, keyboard return and navigation work at ${width}px`, async ({ page, browserName }) => {
     await page.setViewportSize({ width, height: 1000 });
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto("/kontakti.html");
+    await page.goto("/kontakti/");
     const footer = page.locator("footer");
     await footer.scrollIntoViewIfNeeded();
     await expect(footer.getByRole("link", { name: "Na shkruaj në WhatsApp" })).toHaveAttribute("href", "https://wa.me/38344856416");
@@ -75,7 +75,7 @@ for (const width of [320, 768, 1440]) {
     await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
     await expect(page.locator("main")).toBeFocused();
     await footer.getByRole("navigation", { name: "Informacion" }).getByRole("link", { name: "Pyetje të shpeshta" }).click();
-    await expect(page).toHaveURL(/pyetje\.html$/);
+    await expect(page).toHaveURL(/pyetje\/$/);
     await expect(page.locator("h1")).toHaveText("Pyetje të shpeshta");
   });
 }

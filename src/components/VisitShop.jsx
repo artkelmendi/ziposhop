@@ -23,7 +23,7 @@ export default function VisitShop() {
           {store.city}
         </address>
         <div className={styles.visitActions}>
-          <AppLink className="btn btn-dark" to="/kontakti.html">
+          <AppLink className="btn btn-dark" to="/kontakti/">
             Si të na gjesh
           </AppLink>
           <a

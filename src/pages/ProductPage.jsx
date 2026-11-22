@@ -13,8 +13,8 @@ export default function ProductPage({ product }) {
   if (!product && (loading || error)) return (
     <div className="wrap catalog-main">
       <nav className="breadcrumb" aria-label="Vendndodhja">
-        <AppLink to="/index.html">Ballina</AppLink><span>/</span>
-        <AppLink to="/produktet.html">Produktet</AppLink>
+        <AppLink to="/">Ballina</AppLink><span>/</span>
+        <AppLink to="/produktet/">Produktet</AppLink>
       </nav>
       <div className="catalog-top"><h1>Produkti</h1></div>
       {loading ? <ProductLoading detail /> : <div className="empty-state">
@@ -29,7 +29,7 @@ export default function ProductPage({ product }) {
         <div className="empty-state">
           <h1>Modeli nuk u gjet.</h1>
           <p>Shfleto modelet e tjera në katalog.</p>
-          <AppLink className="btn btn-dark" to="/produktet.html">
+          <AppLink className="btn btn-dark" to="/produktet/">
             Hap katalogun
           </AppLink>
         </div>
@@ -59,9 +59,9 @@ export default function ProductPage({ product }) {
   return (
     <div className="wrap catalog-main" id="detail-view">
       <nav className="breadcrumb" aria-label="Vendndodhja">
-        <AppLink to="/index.html">Ballina</AppLink>
+        <AppLink to="/">Ballina</AppLink>
         <span>/</span>
-        <AppLink to="/produktet.html">Produktet</AppLink>
+        <AppLink to="/produktet/">Produktet</AppLink>
         <span>/</span>
         <AppLink to={catalogUrl(product.category)}>
           {
@@ -135,7 +135,7 @@ export default function ProductPage({ product }) {
       <section className="related">
         <div className="section-heading">
           <h2>Shiko edhe</h2>
-          <AppLink className="section-link" to="/produktet.html">
+          <AppLink className="section-link" to="/produktet/">
             Të gjitha produktet
           </AppLink>
         </div>

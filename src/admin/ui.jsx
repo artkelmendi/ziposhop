@@ -10,7 +10,7 @@ export function AdminBrand() {
   return (
     <a
       className="brand"
-      href={import.meta.env.BASE_URL + "index.html"}
+      href={import.meta.env.BASE_URL}
       aria-label="ZIPO Mobil Shop — Ballina"
       onClick={(event) => {
         if (!confirmLeave()) event.preventDefault();

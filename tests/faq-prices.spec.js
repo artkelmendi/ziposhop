@@ -5,7 +5,7 @@ import { adminBackend, login } from "./admin-backend";
 for (const width of [390, 768, 1440]) {
   test(`FAQ answers animate open and closed and fit ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });
-    await page.goto("/pyetje.html");
+    await page.goto("/pyetje/");
     await expect(page.locator("h1")).toHaveText("Pyetje të shpeshta");
     await expect(page.locator("main")).not.toHaveClass("page-entering");
     await expect(page.locator(".skeleton")).toHaveCount(0);
@@ -39,10 +39,10 @@ for (const width of [390, 768, 1440]) {
 }
 
 test("product prices appear in cards, details and the featured product without demo notices", async ({ page }) => {
-  await page.goto("/produktet.html?kategoria=telefona");
+  await page.goto("/produktet/?kategoria=telefona");
   await expect(page.locator("#product-grid .product-price")).toHaveCount(4);
   await expect(page.locator('#product-grid a[href*="iphone-17-pro"] .product-price')).toContainText(/1[\s.,]?099[.,]00/);
-  await page.goto("/produktet.html?produkt=iphone-17-pro");
+  await page.goto("/produktet/?produkt=iphone-17-pro");
   await expect(page.locator(".detail-price")).toContainText(/1[\s.,]?099[.,]00/);
   await expect(page.getByText(/Model ilustrues|Përzgjedhje demonstrimi/)).toHaveCount(0);
   await page.goto("/");
@@ -53,7 +53,7 @@ test("product prices appear in cards, details and the featured product without d
   if (mobile) await mobileToggle.click();
   await page.getByRole("navigation", { name: mobile ? "Navigimi në telefon" : "Navigimi kryesor" })
     .getByRole("link", { name: "Pyetje të shpeshta", exact: true }).click();
-  await expect(page).toHaveURL(/pyetje\.html$/);
+  await expect(page).toHaveURL(/pyetje\/$/);
 });
 
 test("data arriving during admin navigation preserves the requested section", async ({ page }) => {

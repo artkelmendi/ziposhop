@@ -2,7 +2,7 @@
 
 The storefront runs on React, Vite and React Router. The home, catalog, product detail and contact views share one application layout and header.
 
-The owner dashboard is at `admin.html`. It uses Supabase Auth, Postgres with row-level security, and image storage. See [ADMIN.md](ADMIN.md) for account setup, environment variables, owner workflows and access controls. Published catalog changes feed the storefront without a deployment.
+The owner dashboard is at `/admin/`. It uses Supabase Auth, Postgres with row-level security, and image storage. See [ADMIN.md](ADMIN.md) for account setup, environment variables, owner workflows and access controls. Published catalog changes feed the storefront without a deployment.
 
 ## Run locally
 
@@ -20,7 +20,9 @@ Install dependencies with `npm ci`, then run `npm run dev`. Open `http://127.0.0
 - `src/components/ScrollReveal.jsx` adds a single viewport entrance to home sections. It leaves content visible by default, disconnects after its first intersection, and respects reduced-motion preferences.
 - `src/components/ServicesSection.jsx` and its scoped stylesheet provide the layered electronics, electric mobility and repair section below the featured product. Native sticky panels follow normal scrolling, with direct panel navigation and a static layout for reduced motion or short viewports. Copy, category links and the repair WhatsApp message live in the component; image sources are documented in [SERVICE-ASSETS.md](SERVICE-ASSETS.md). Open `/#sherbimet` to preview it directly.
 - `src/components/Footer.jsx` and its scoped stylesheet provide the shared pale-blue closing section, enlarged brand, WhatsApp invitation, live category links, shop contact details and accessible return-to-top action. Open `/#footer` to preview it.
-- `src/components/BrandIntro.jsx` draws the ZIPO wordmark on the first visit in a tab session, then opens an aperture from the O into the loaded page. Page entrances pause behind it and resume at the reveal. The intro can be skipped, respects reduced motion, and can be replayed by opening `?intro=1`.
+- `src/components/BrandIntro.jsx` draws the ZIPO wordmark, then opens an aperture from the O into the loaded page. Optional display consent remembers it across reloads in the same tab; otherwise it remembers only in application memory. The intro can be skipped, respects reduced motion, and can be replayed by opening `?intro=1`.
+- `src/components/PrivacyConsent.jsx` provides the Albanian notice, equally available accept/refuse controls and footer settings. `/privatesia/` explains actual storage, hosting and third-party links. See [PRIVACY.md](PRIVACY.md).
+- `src/lib/categoryImages.js` preloads the selected category's responsive banner on intent and direct entry. Dedicated monochrome WebPs are 640, 1280 and 1920 pixels wide; the decoded banner fades in without delaying its heading or adding a skeleton. Regenerate with `python scripts/optimize-category-banners.py` (Pillow required only for regeneration).
 - VisitShop.jsx provides the Pejë map and links to the contact page.
 - `src/pages/` contains the home, catalog, product detail and contact views.
 - `src/data/catalog.js` contains the illustrative product records and categories. `src/data/store.js` contains the shop details and URL helpers.
@@ -35,9 +37,9 @@ Install dependencies with `npm ci`, then run `npm run dev`. Open `http://127.0.0
 
 ## Navigation and production output
 
-The existing `/index.html`, `/produktet.html` and `/kontakti.html` URLs remain entry points. Category, search and product links use query parameters. React Router handles navigation and browser history after startup.
+Public navigation uses `/`, `/produktet/`, `/kontakti/`, `/pyetje/` and `/privatesia/`. The dashboard uses `/admin/`. Vite's `clean-page-urls` plugin writes a real `index.html` into each directory, so GitHub Pages serves direct links and refreshes with HTTP 200. Existing `.html` bookmarks remain entry points and normalize with `replaceState`, retaining query strings and hashes. `src/lib/routes.js` centralizes path normalization. Category, search and product links use query parameters. React Router handles transitions and browser history after startup.
 
-The default home page uses the unified product display in `StudioHero.jsx`. The previous hero remains available at `/index.html?hero=classic` through the original `Hero.jsx`. The Git tag `design/home-classic-2026-11-19` preserves the full source state before this alternative.
+The default home page uses the unified product display in `StudioHero.jsx`. The previous hero remains available at `/?hero=classic` through the original `Hero.jsx`. The Git tag `design/home-classic-2026-11-19` preserves the full source state before this alternative.
 
 Produktet opens the category directory. Selecting a category opens its products using `?kategoria=telefona` and equivalent category IDs. Search applies within that category, and product lists paginate at 24 items using `faqja`. Category changes have their own route entry so their headings and products animate on navigation and browser back.
 
@@ -50,7 +52,7 @@ The production hosts serve `dist/`. The GitHub Pages deployment is configured be
 The public storefront is hosted at https://artkelmendi.github.io/ziposhop/.
 Pushing to `main` on `artkelmendi/ziposhop` runs `.github/workflows/deploy.yml`, builds with `--base=/ziposhop/`, and publishes `dist/` through GitHub Pages.
 The router, product images and collection request use Vite's base URL, so local development and root-hosted builds still work without extra configuration.
-The existing HTML entry points support direct links and refreshes on GitHub Pages.
+The directory entry points support clean direct links and refreshes on GitHub Pages. Legacy HTML entry points remain available for bookmarks and the existing Supabase password-recovery redirect allowlist; the browser normalizes their visible address after startup.
 
 ## Verification
 

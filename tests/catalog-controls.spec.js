@@ -11,7 +11,7 @@ for (const width of [390, 1440]) {
         }
       });
     });
-    await page.goto("/produktet.html?kategoria=telefona");
+    await page.goto("/produktet/?kategoria=telefona");
     await expect(page.locator("main")).not.toHaveClass("page-entering");
     const button = page.getByRole("button", { name: /Filtro kategorinë/ });
     const filter = page.getByRole("navigation", { name: "Kategoritë", exact: true });
@@ -55,7 +55,7 @@ for (const width of [390, 1440]) {
 }
 
 test("header search finds products across categories and keeps shareable results", async ({ page }) => {
-  await page.goto("/produktet.html?kategoria=telefona");
+  await page.goto("/produktet/?kategoria=telefona");
   await page.getByRole("link", { name: "Kërko në katalog", exact: true }).click();
   const search = page.getByRole("searchbox", { name: "Kërko produkte" });
   await expect(search).toBeFocused();
@@ -80,7 +80,7 @@ test("header search finds products across categories and keeps shareable results
 
 test("category filter stays inside short viewports and closes on resize", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 568 });
-  await page.goto("/produktet.html?kategoria=telefona");
+  await page.goto("/produktet/?kategoria=telefona");
   await expect(page.locator("main")).not.toHaveClass("page-entering");
   const button = page.getByRole("button", { name: /Filtro kategorinë/ });
   await button.click();
@@ -102,7 +102,7 @@ test("global product search paginates larger inventories and category selection 
     category: index % 2 ? "telefona" : "aksesore",
   }));
   await page.route("**/rest/v1/products?**", route => route.fulfill({ json: catalog.products }));
-  await page.goto("/produktet.html?q=kerkimi");
+  await page.goto("/produktet/?q=kerkimi");
   await expect(page.locator("#product-grid .product-card")).toHaveCount(24);
   const pagination = page.getByRole("navigation", { name: "Faqet e produkteve" });
   await pagination.getByRole("button", { name: "Tjetra", exact: true }).click();
@@ -113,7 +113,7 @@ test("global product search paginates larger inventories and category selection 
   await page.getByRole("button", { name: /Filtro kategorinë/ }).click();
   await page.getByRole("navigation", { name: "Kategoritë", exact: true })
     .getByRole("link", { name: /Aksesorë/ }).click();
-  await expect(page).toHaveURL(/produktet\.html\?kategoria=aksesore$/);
+  await expect(page).toHaveURL(/produktet\/\?kategoria=aksesore$/);
   await expect(page.getByRole("search")).toHaveCount(0);
   await expect(page.locator(".catalog-status")).toHaveText("40 produkte");
   await expect(page.locator("#product-grid .product-card")).toHaveCount(24);

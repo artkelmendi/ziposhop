@@ -15,7 +15,7 @@ test("category product cards enter once without restarting after page entry or s
       }
     });
   });
-  await page.goto("/produktet.html?kategoria=telefona");
+  await page.goto("/produktet/?kategoria=telefona");
   await expect(page.locator("#product-grid > .product-card")).toHaveCount(4);
   await expect(page.locator("main")).not.toHaveClass("page-entering");
   await page.locator("#product-grid").scrollIntoViewIfNeeded();

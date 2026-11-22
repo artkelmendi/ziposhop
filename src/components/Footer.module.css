@@ -49,8 +49,9 @@
   font-size: 0.8rem;
   color: var(--tint-ink);
 }
-.bottom nav { display: flex; flex-wrap: wrap; gap: 14px 24px; }
-.bottom nav a { display: inline-flex; align-items: center; min-height: 32px; }
+.bottom nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.bottom nav a, .bottom nav button { display: inline-flex; align-items: center; min-height: 32px; font: inherit; padding: 0; }
+.bottom nav button:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 5px; }
 .backToTop { display: inline-flex; align-items: center; gap: 12px; min-height: 36px; padding: 0; font-size: inherit; }
 .backToTop svg { width: 16px; height: 16px; transform: rotate(-90deg); transition: translate 200ms var(--ease); }
 .backToTop:hover svg { translate: 0 -3px; }

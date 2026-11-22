@@ -4,29 +4,23 @@ import AppLink from "./AppLink";
 import Brand from "./Brand";
 import Icon from "./Icon";
 import styles from "./Header.module.css";
+import { pageForPath } from "../lib/routes";
 const links = [
-  { to: "/index.html", label: "Ballina", page: "home" },
-  { to: "/produktet.html", label: "Produktet", page: "catalog" },
-  { to: "/pyetje.html", label: "Pyetje të shpeshta", page: "faq" },
-  { to: "/kontakti.html", label: "Kontakti", page: "contact" },
+  { to: "/", label: "Ballina", page: "home" },
+  { to: "/produktet/", label: "Produktet", page: "catalog" },
+  { to: "/pyetje/", label: "Pyetje të shpeshta", page: "faq" },
+  { to: "/kontakti/", label: "Kontakti", page: "contact" },
 ];
 export default function Header({ loading }) {
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const header = useRef(null);
   const toggle = useRef(null);
-  const current =
-    location.pathname === "/kontakti.html"
-      ? "contact"
-      : location.pathname === "/pyetje.html"
-        ? "faq"
-      : location.pathname === "/produktet.html"
-        ? "catalog"
-        : "home";
+  const current = pageForPath(location.pathname);
   const searchTarget = current === "catalog" &&
     new URLSearchParams(location.search).has("q")
-    ? `/produktet.html${location.search}#kerko`
-    : "/produktet.html#kerko";
+    ? `/produktet/${location.search}#kerko`
+    : "/produktet/#kerko";
   useEffect(() => {
     setOpen(false);
   }, [location]);
@@ -86,7 +80,7 @@ export default function Header({ loading }) {
             <Icon name="search" />
           </AppLink>
           <span className={styles.divider} />
-          <AppLink to="/kontakti.html" className={styles.location}>
+          <AppLink to="/kontakti/" className={styles.location}>
             <Icon name="pin" /> Pejë, Kosovë
           </AppLink>
           <button

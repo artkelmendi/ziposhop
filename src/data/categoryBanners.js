@@ -1,8 +1,8 @@
 // Dedicated banner photography; product and category-card images stay separate.
 export const categoryBanners = {
-  telefona: { image: "category-telefona-18-pro.webp", width: 2160 },
-  motore: { image: "category-motore.webp", width: 3000 },
-  trotineta: { image: "category-trotineta.webp", width: 2106 },
-  tableta: { image: "category-tableta.webp", width: 3200 },
-  aksesore: { image: "category-aksesore.webp", width: 2160 },
+  telefona: { image: "banner-telefona-1280.webp", stem: "banner-telefona", widths: [640, 1280, 1920] },
+  motore: { image: "banner-motore-1280.webp", stem: "banner-motore", widths: [640, 1280, 1920] },
+  trotineta: { image: "banner-trotineta-1280.webp", stem: "banner-trotineta", widths: [640, 1280, 1920] },
+  tableta: { image: "banner-tableta-1280.webp", stem: "banner-tableta", widths: [640, 1280, 1920] },
+  aksesore: { image: "banner-aksesore-1280.webp", stem: "banner-aksesore", widths: [640, 1280, 1920] },
 };

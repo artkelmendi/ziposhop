@@ -9,7 +9,7 @@ export default function FaqPage() {
   return (
     <div className={`wrap catalog-main ${styles.page}`}>
       <nav className="breadcrumb" aria-label="Vendndodhja">
-        <AppLink to="/index.html">Ballina</AppLink><span>/</span>Pyetje të shpeshta
+        <AppLink to="/">Ballina</AppLink><span>/</span>Pyetje të shpeshta
       </nav>
       <div className="catalog-top">
         <h1>Pyetje të shpeshta</h1>
@@ -21,7 +21,7 @@ export default function FaqPage() {
           <a className="btn btn-dark" href={store.whatsapp} target="_blank" rel="noopener">
             <Icon name="message" /> Na shkruani në WhatsApp
           </a>
-          <AppLink className="section-link" to="/kontakti.html">Na vizitoni në Pejë <Icon name="arrow" /></AppLink>
+          <AppLink className="section-link" to="/kontakti/">Na vizitoni në Pejë <Icon name="arrow" /></AppLink>
         </div>
         <Accordion items={questions} />
       </div>

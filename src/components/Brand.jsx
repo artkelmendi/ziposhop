@@ -3,7 +3,7 @@ export default function Brand() {
   return (
     <AppLink
       className="brand"
-      to="/index.html"
+      to="/"
       aria-label="ZIPO Mobil Shop — Ballina"
     >
       <span className="wordmark">ZIPO</span>

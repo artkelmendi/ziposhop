@@ -26,3 +26,5 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 ## Quality bar
 
 Keep the footer at the end on short and long pages. Preserve live category links, shop contact facts and no admin link. Verify layout and action containment at 320, 390/440, 768 and 1440px, category/contact/FAQ routes, keyboard return-to-top and reduced motion. Use one quiet existing reveal for the closing invitation and brief arrow feedback. Introduce no images or animation dependency.
+
+Privacy refinement: keep a compact privacy-page link and cookie-settings button in the bottom information row. The button reopens the same nonmodal consent notice and restores keyboard focus after a choice. Both controls wrap within the footer at narrow widths; no new promotional block is added.

@@ -83,7 +83,7 @@ export default function LoginPage({ passwordSetup = false, onPasswordSet }) {
         <AdminBrand />
         <a
           className={styles.storeLink}
-          href={import.meta.env.BASE_URL + "index.html"}
+          href={import.meta.env.BASE_URL}
         >
           Back to shop <Icon name="arrow" />
         </a>

@@ -56,8 +56,8 @@ for (const [width, height] of [[390, 844], [440, 956], [768, 1000], [1440, 1000]
     await page.keyboard.press("Tab");
     await section.getByRole("link", { name: "Motorë elektrikë", exact: true }).focus();
     await expect(nav.getByRole("link", { name: "Transport elektrik", exact: true })).toHaveAttribute("aria-current", "step");
-    await expect(section.getByRole("link", { name: "Motorë elektrikë", exact: true })).toHaveAttribute("href", "/produktet.html?kategoria=motore");
-    await expect(section.getByRole("link", { name: "Trotineta elektrike", exact: true })).toHaveAttribute("href", "/produktet.html?kategoria=trotineta");
+    await expect(section.getByRole("link", { name: "Motorë elektrikë", exact: true })).toHaveAttribute("href", "/produktet/?kategoria=motore");
+    await expect(section.getByRole("link", { name: "Trotineta elektrike", exact: true })).toHaveAttribute("href", "/produktet/?kategoria=trotineta");
     await nav.getByRole("link", { name: "Elektronikë", exact: true }).click();
     await expect(nav.getByRole("link", { name: "Elektronikë", exact: true })).toHaveAttribute("aria-current", "step");
     await jumpToService(section, "levizje", 0.5);
@@ -79,7 +79,7 @@ for (const [width, height] of [[390, 844], [440, 956], [768, 1000], [1440, 1000]
     }
     if (width === 1440) {
       await section.getByRole("link", { name: "Shiko produktet", exact: true }).click();
-      await expect(page).toHaveURL(/produktet\.html$/);
+      await expect(page).toHaveURL(/produktet\/$/);
       await expect(page.locator("h1")).toHaveText("Katalogu i produkteve");
     }
   });

@@ -6,7 +6,7 @@ export default function ContactPage() {
   return (
     <div className="wrap contact-page">
       <nav className="breadcrumb" aria-label="Vendndodhja">
-        <AppLink to="/index.html">Ballina</AppLink>
+        <AppLink to="/">Ballina</AppLink>
         <span>/</span>Kontakti
       </nav>
       <div className="contact-layout">

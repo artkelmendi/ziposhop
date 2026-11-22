@@ -20,13 +20,13 @@ test("Apple additions have local photos and resolve from the hero to real admin 
   await max.click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("iPhone 18 Pro Max");
   await expect(page.locator(".detail-price")).toContainText(/1[\s,.]?499[,.]00/);
-  await page.goto("/produktet.html?kategoria=telefona");
+  await page.goto("/produktet/?kategoria=telefona");
   for (const name of ["iPhone 18 Pro", "iPhone 18 Pro Max", "iPhone Duo", "iPhone 17e"]) {
     await expect(page.locator("#product-grid").getByRole("heading", { name, exact: true })).toBeVisible();
   }
-  await page.goto("/produktet.html?kategoria=tableta");
+  await page.goto("/produktet/?kategoria=tableta");
   await expect(page.locator("#product-grid .product-card")).toHaveCount(7);
-  await page.goto("/produktet.html?kategoria=aksesore");
+  await page.goto("/produktet/?kategoria=aksesore");
   for (const name of ["Apple Watch Series 12", "Apple Watch Ultra 4", "AirPods 5", "AirPods Max 2"]) {
     await expect(page.locator("#product-grid").getByRole("heading", { name, exact: true })).toBeVisible();
   }

@@ -10,8 +10,12 @@ import HomePage from "./pages/HomePage";
 import CatalogPage from "./pages/CatalogPage";
 import ContactPage from "./pages/ContactPage";
 import FaqPage from "./pages/FaqPage";
+import PrivacyPage from "./pages/PrivacyPage";
+import PrivacyConsent from "./components/PrivacyConsent";
+import { pageForPath } from "./lib/routes";
+import { preloadCategoryImage } from "./lib/categoryImages";
 
-const pages = { home: HomePage, catalog: CatalogPage, contact: ContactPage, faq: FaqPage };
+const pages = { home: HomePage, catalog: CatalogPage, contact: ContactPage, faq: FaqPage, privacy: PrivacyPage };
 
 function PageEntry({ children, location, title }) {
   const introCovered = useIntroCovered();
@@ -49,14 +53,7 @@ export default function App() {
   const navigate = useNavigate();
   const [leaving, setLeaving] = useState(false);
   const timer = useRef(null);
-  const page =
-    location.pathname === "/kontakti.html"
-      ? "contact"
-      : location.pathname === "/pyetje.html"
-        ? "faq"
-      : location.pathname === "/produktet.html"
-        ? "catalog"
-        : "home";
+  const page = pageForPath(location.pathname);
   const params = new URLSearchParams(location.search);
   const productId = params.get("produkt");
   const categoryId = !params.has("q") ? params.get("kategoria") : null;
@@ -68,13 +65,15 @@ export default function App() {
       ? "ZIPO Mobil Shop — Teknologji në lëvizje"
       : page === "catalog"
         ? (category?.name || "Produktet") + " — ZIPO Mobil Shop"
-        : page === "faq" ? "Pyetje të shpeshta — ZIPO Mobil Shop" : "Kontakti — ZIPO Mobil Shop";
+        : page === "faq" ? "Pyetje të shpeshta — ZIPO Mobil Shop"
+          : page === "privacy" ? "Privatësia dhe cookies — ZIPO Mobil Shop" : "Kontakti — ZIPO Mobil Shop";
   useEffect(() => {
     setLeaving(false);
   }, [location]);
   useEffect(() => () => clearTimeout(timer.current), []);
   function transition(to) {
     clearTimeout(timer.current);
+    preloadCategoryImage(to);
     const destination = resolvePath(to, location.pathname);
     if (
       destination.pathname === location.pathname &&
@@ -122,6 +121,7 @@ export default function App() {
         </PageEntry>
       </div>
       <Footer />
+      <PrivacyConsent />
     </NavigationContext.Provider>
   );
 }

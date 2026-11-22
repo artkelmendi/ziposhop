@@ -42,7 +42,7 @@ for (const width of [440, 1440]) {
       }
       await page.screenshot({ path: "test-results/studio-" + width + ".png" });
       await hero.getByRole("link", { name: "Zbulo produktet" }).click();
-      await expect(page).toHaveURL(/produktet\.html$/);
+      await expect(page).toHaveURL(/produktet\/$/);
       await expect(page.locator(".category-directory-grid")).toBeVisible();
       await page.goto("/?hero=classic");
       await expect(page.locator(".still-piece")).toHaveCount(5);

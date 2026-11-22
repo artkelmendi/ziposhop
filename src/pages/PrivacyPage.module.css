@@ -1,0 +1,16 @@
+.page { padding-bottom: 70px; }
+.copy { max-width: 70ch; padding-top: 28px; }
+.copy h1 { font-size: clamp(2.1rem, 4vw, 3.5rem); line-height: 1.1; letter-spacing: -0.035em; text-wrap: balance; }
+.lead { margin-top: 20px; font-size: 1.1rem; }
+.copy section { margin-top: 40px; }
+.copy h2 { margin-bottom: 14px; font-size: 1.35rem; font-weight: 600; letter-spacing: -0.025em; }
+.copy p, .storage dd { color: var(--tint-ink); line-height: 1.75; }
+.copy p + p { margin-top: 16px; }
+.copy p a { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.copy button { margin-top: 22px; }
+.storage { margin: 24px 0; }
+.storage > div { padding-block: 18px; border-block-start: 1px solid var(--line); }
+.storage > div:last-child { border-block-end: 1px solid var(--line); }
+.storage dt { font-weight: 550; margin-bottom: 6px; }
+.storage dd { margin: 0; }
+@media (max-width: 520px) { .copy { padding-top: 16px; } .copy section { margin-top: 30px; } }

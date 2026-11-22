@@ -115,7 +115,7 @@ export default function Hero() {
             <AppLink className="btn btn-dark" to={slide.href}>
               {slide.cta}
             </AppLink>
-            <AppLink className="hero-secondary" to="/index.html#kategorite">
+            <AppLink className="hero-secondary" to="/#kategorite">
               Shiko kategoritë
             </AppLink>
           </div>

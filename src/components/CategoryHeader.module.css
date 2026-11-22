@@ -38,6 +38,11 @@
   object-fit: cover;
   object-position: center 35%;
   filter: grayscale(1);
+  opacity: 0;
+  transition: opacity 650ms var(--ease);
+}
+.photo:global([data-media-state="ready"]) img {
+  opacity: 1;
 }
 .banner[data-category="telefona"] .photo img {
   object-position: center 20%;
@@ -53,6 +58,9 @@
 }
 .photo:global([data-media-state="error"]) {
   display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .photo img { transition-duration: 120ms; }
 }
 @media (max-width: 700px) {
   .banner:global(.catalog-top) {

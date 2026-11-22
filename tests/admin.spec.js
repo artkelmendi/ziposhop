@@ -220,7 +220,7 @@ test("new categories and homepage selections persist after reloading", async ({
   await expect(
     page.getByRole("combobox", { name: "Produkti", exact: true }),
   ).toHaveValue("iphone-air");
-  await page.goto("/produktet.html");
+  await page.goto("/produktet/");
   await expect(
     page
       .locator(".category-directory-grid")

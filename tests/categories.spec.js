@@ -5,7 +5,7 @@ for (const width of [440, 1440]) {
     "category-first catalog and animated switching at " + width + "px",
     async ({ page }) => {
       await page.setViewportSize({ width, height: 1000 });
-      await page.goto("/produktet.html");
+      await page.goto("/produktet/");
       const directory = page.locator(".category-directory-grid");
       await expect(directory.getByRole("link")).toHaveCount(5);
       await expect(page.locator("#product-grid")).toHaveCount(0);

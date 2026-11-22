@@ -5,9 +5,11 @@ import ScrollReveal from "./ScrollReveal";
 import { store } from "../data/store";
 import { useCatalog } from "../data/CatalogContext";
 import { catalogUrl } from "../data/store";
+import { usePrivacy } from "./PrivacyConsent";
 import styles from "./Footer.module.css";
 export default function Footer() {
   const { categories } = useCatalog();
+  const { showSettings } = usePrivacy();
   function backToTop() {
     document.getElementById("kryesore")?.focus({ preventScroll: true });
     window.scrollTo({
@@ -29,7 +31,7 @@ export default function Footer() {
         <nav className={styles.links} aria-label="Eksploro dyqanin">
           <h2>Eksploro</h2>
           <div className={styles.categories}>
-            <AppLink to="/produktet.html">Të gjitha kategoritë</AppLink>
+            <AppLink to="/produktet/">Të gjitha kategoritë</AppLink>
             {categories.map((category) => (
               <AppLink key={category.id} to={catalogUrl(category.id)}>
                 {category.name}
@@ -59,8 +61,10 @@ export default function Footer() {
       <div className={"wrap " + styles.bottom}>
         <span>© {new Date().getFullYear()} ZIPO Mobil Shop</span>
         <nav aria-label="Informacion">
-          <AppLink to="/kontakti.html">Kontakti</AppLink>
-          <AppLink to="/pyetje.html">Pyetje të shpeshta</AppLink>
+          <AppLink to="/kontakti/">Kontakti</AppLink>
+          <AppLink to="/pyetje/">Pyetje të shpeshta</AppLink>
+          <AppLink to="/privatesia/">Privatësia</AppLink>
+          <button type="button" onClick={showSettings}>Cilësimet e cookies</button>
         </nav>
         <button className={styles.backToTop} type="button" onClick={backToTop}>
           Kthehu lart<Icon name="arrow" />

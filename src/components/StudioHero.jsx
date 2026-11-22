@@ -104,7 +104,7 @@ export default function StudioHero() {
           );
         })}
       </div>
-      <AppLink className={styles.browse} to="/index.html#kategorite">
+      <AppLink className={styles.browse} to="/#kategorite">
         Eksploro kategoritë
       </AppLink>
     </section>

@@ -1,10 +1,10 @@
 import Media from "./Media";
 import { categoryBanners } from "../data/categoryBanners";
-import { imageUrl } from "../lib/backend";
+import { bannerSources, bannerSizes } from "../lib/categoryImages";
 import styles from "./CategoryHeader.module.css";
 
 export default function CategoryHeader({ category }) {
-  const banner = categoryBanners[category.id];
+  const banner = Object.hasOwn(categoryBanners, category.id) ? categoryBanners[category.id] : null;
   const image = banner?.image || category.image || category.artwork?.[0];
   return (
     <div className={`catalog-top ${styles.banner}`} data-category={category.id}>
@@ -12,18 +12,11 @@ export default function CategoryHeader({ category }) {
         <div className={styles.backdrop} aria-hidden="true">
           <Media
             src={image}
-            srcSet={
-              banner
-                ? `${imageUrl(image.replace(".webp", "-mobile.webp"))} 960w, ${imageUrl(image)} ${banner.width}w`
-                : undefined
-            }
-            sizes={
-              banner
-                ? "(max-width: 700px) 100vw, (max-width: 1440px) 92vw, 1320px"
-                : undefined
-            }
+            srcSet={banner ? bannerSources(banner) : undefined}
+            sizes={banner ? bannerSizes : undefined}
             className={styles.photo}
             eager
+            fetchPriority="high"
           />
         </div>
       )}

@@ -31,7 +31,7 @@ test("category titles stay mounted while only products show loading placeholders
   await page.emulateMedia({ reducedMotion: "reduce" });
   const release = await holdCatalog(page);
   try {
-    await page.goto("/produktet.html?kategoria=telefona");
+    await page.goto("/produktet/?kategoria=telefona");
     await expect(page.locator("h1")).toHaveText("iPhone & telefona");
     await page.locator("h1").evaluate(node => { window.catalogTitle = node; });
     await expect(page.locator(".products-loading")).toHaveAttribute("aria-busy", "true");
@@ -57,7 +57,7 @@ test("slow home imagery and bootstrap HTML have no skeleton screens", async ({ p
     await expect(page.locator('[data-media-state="loading"]').first()).toHaveAttribute("aria-busy", "true");
     await expect(page.locator("main")).not.toHaveClass("page-entering");
     await expect(page.locator(".skeleton")).toHaveCount(0);
-    for (const path of ["/index.html", "/produktet.html", "/kontakti.html", "/admin.html"]) {
+    for (const path of ["/", "/produktet/", "/kontakti/", "/admin.html"]) {
       const response = await page.request.get(path);
       expect(await response.text()).not.toContain("boot-block");
     }

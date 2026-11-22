@@ -99,7 +99,7 @@ export default function Collection() {
       <div className="wrap">
         <div className="section-heading">
           <h2 id="selection-title">Nga koleksioni</h2>
-          <AppLink className="section-link" to="/produktet.html">
+          <AppLink className="section-link" to="/produktet/">
             Hap katalogun <Icon name="grid" />
           </AppLink>
         </div>
