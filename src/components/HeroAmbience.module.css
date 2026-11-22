@@ -1,0 +1,23 @@
+.ambience {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.52;
+  contain: paint;
+  background:
+    radial-gradient(ellipse at 0% 0%, #b6d8fa, transparent 44%),
+    radial-gradient(ellipse at 100% 100%, #bbddfa, transparent 44%);
+}
+.ambience[data-renderer="webgl"] {
+  background: none;
+}
+.texture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.ambience[data-renderer="fallback"] .texture {
+  visibility: hidden;
+}

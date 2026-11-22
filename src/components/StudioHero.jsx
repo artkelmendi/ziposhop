@@ -1,3 +1,4 @@
+import HeroAmbience from "./HeroAmbience";
 import AppLink from "./AppLink";
 import Media from "./Media";
 import { catalogUrl, productUrl } from "../data/store";
@@ -60,6 +61,7 @@ export default function StudioHero() {
   const { products, categories, demo } = useCatalog();
   return (
     <section className={styles.hero} aria-label="Zbulo koleksionin ZIPO">
+      <HeroAmbience />
       <div className={styles.intro}>
         <h1 className={styles.title}>
           <span>Për çdo ditë</span>

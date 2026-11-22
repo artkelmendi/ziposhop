@@ -2,7 +2,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: var(--panel-strong);
+  background: #fbfcff;
   padding: 38px 5% 30px;
   text-align: center;
 }
@@ -27,6 +27,9 @@
   color: var(--tint-ink);
   margin: 18px auto 20px;
   max-width: 43ch;
+}
+.intro > a:hover {
+  background: var(--aqua-ink);
 }
 .stage {
   position: relative;
@@ -128,6 +131,7 @@
   font-size: 0.88rem;
   text-decoration: underline;
   text-underline-offset: 4px;
+  text-decoration-color: #7ba2b1;
 }
 @media (prefers-reduced-motion: no-preference) {
   .title span {

@@ -17,6 +17,9 @@
   --focus: #315f94;
   --line: #dce2e9;
   --orange: #d95020;
+  --aqua: #e1eff3;
+  --aqua-surface: #f2f8fa;
+  --aqua-ink: #315563;
   --wrap: 90%;
   --max: 1512px;
   --ease: cubic-bezier(0.2, 0.78, 0.25, 1);

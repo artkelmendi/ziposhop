@@ -4,3 +4,8 @@ dist/
 test-results/
 playwright-report/
 .impeccable/review/
+.impeccable/live/accept-receipts/
+.impeccable/live/annotations/
+.impeccable/live/locks/
+.impeccable/live/sessions/
+.impeccable/live/roots.json
