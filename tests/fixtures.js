@@ -1,5 +1,5 @@
 import { test as base, expect } from "@playwright/test";
-import { categories, products } from "../src/data/catalog";
+import { categories, initialProducts as products } from "../src/data/catalog";
 
 export function fixtureCatalog() {
   return {

@@ -1,15 +1,17 @@
+import { appleProducts } from "./apple2026.js";
+
 // Initial catalog prices are temporary and editable in the administration panel.
 export const categories = [
   {
     id: "telefona",
     name: "iPhone & telefona",
-    image: "phone-17-pro-orange.webp",
+    image: "phone-18-pro-max-burgundy.webp",
     description:
       "Nga iPhone Air te modelet Pro. Gjej telefonin tënd të ardhshëm.",
     artwork: [
       "phone-15-pro-blue.webp",
       "phone-17-lavender.webp",
-      "phone-17-pro-orange.webp",
+      "phone-18-pro-max-burgundy.webp",
       "phone-air-blue.webp",
     ],
   },
@@ -43,7 +45,7 @@ export const categories = [
   },
 ];
 
-export const products = [
+export const initialProducts = [
   {
     id: "iphone-17",
     price: 799,
@@ -183,3 +185,5 @@ export const products = [
     ],
   },
 ];
+
+export const products = [...initialProducts, ...appleProducts];

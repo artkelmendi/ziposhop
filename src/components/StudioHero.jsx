@@ -21,23 +21,25 @@ const displayProducts = [
     position: "scooter",
   },
   {
-    id: "ipad-air",
-    name: "iPad Air",
+    id: "ipad-air-m4-11",
+    name: "iPad Air 11″ M4",
     image: "tablet-air-blue.webp",
     category: "tableta",
     position: "tablet",
   },
   {
-    id: "iphone-17-pro",
-    name: "iPhone 17 Pro",
-    image: "phone-17-pro-orange.webp",
+    id: "iphone-18-pro-max",
+    name: "iPhone 18 Pro Max",
+    finish: "Burgundy",
+    image: "phone-18-pro-max-burgundy.webp",
     category: "telefona",
     position: "phone",
   },
   {
-    id: "iphone-air",
-    name: "iPhone Air",
-    image: "phone-air-blue.webp",
+    id: "iphone-18-pro-max",
+    name: "iPhone 18 Pro Max",
+    finish: "Glacier",
+    image: "phone-18-pro-max-glacier.webp",
     category: "telefona",
     position: "air",
   },
@@ -74,33 +76,34 @@ export default function StudioHero() {
       </div>
       <div className={styles.stage}>
         <div className={styles.ground} aria-hidden="true" />
-        {displayProducts.map((product, i) => (
-          <AppLink
-            key={product.id}
-            to={
-              products.some((item) => item.id === product.id)
-                ? productUrl(product.id)
-                : categories.some(
-                      (category) => category.id === product.category,
-                    )
-                  ? catalogUrl(product.category)
-                  : catalogUrl()
-            }
-            className={[styles.product, styles[product.position]].join(" ")}
-            style={{ "--order": i }}
-            aria-label={
-              products.some((item) => item.id === product.id) || demo
-                ? "Shiko " + product.name
-                : "Shfleto " +
-                  (categories.find(
-                    (category) => category.id === product.category,
-                  )?.name || "produktet")
-            }
-            data-category={product.category}
-          >
-            <Media className={styles.photo} src={product.image} eager />
-          </AppLink>
-        ))}
+        {displayProducts.map((product, i) => {
+          const record = products.find(
+            (item) => item.id === product.id || item.name === product.name,
+          );
+          const category = categories.find((item) => item.id === product.category);
+          return (
+            <AppLink
+              key={product.position}
+              to={
+                record
+                  ? productUrl(record.id)
+                  : category
+                    ? catalogUrl(product.category)
+                    : catalogUrl()
+              }
+              className={[styles.product, styles[product.position]].join(" ")}
+              style={{ "--order": i }}
+              aria-label={
+                record || demo
+                  ? "Shiko " + product.name + (product.finish ? " — " + product.finish : "")
+                  : "Shfleto " + (category?.name || "produktet")
+              }
+              data-category={product.category}
+            >
+              <Media className={styles.photo} src={product.image} eager />
+            </AppLink>
+          );
+        })}
       </div>
       <AppLink className={styles.browse} to="/index.html#kategorite">
         Eksploro kategoritë

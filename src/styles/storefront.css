@@ -1213,11 +1213,6 @@ svg {
 .selection {
   overflow: clip;
 }
-.collection-actions {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
 .collection-window {
   --rail-gap: clamp(14px, 1.65vw, 28px);
   --rail-card: clamp(190px, 21vw, 340px);
@@ -1251,28 +1246,25 @@ svg {
     transform: translate3d(-50%, 0, 0);
   }
 }
-.is-paused .collection-track {
+.has-reduced-motion .collection-track {
   animation: none;
   margin-inline: 0;
 }
-.is-paused .collection-window {
+.has-reduced-motion .collection-window {
   overflow-x: auto;
   padding-inline: max(5vw, calc((100vw - var(--max)) / 2));
 }
-.is-paused .collection-repeat,
-.is-paused [data-filler] {
+.has-reduced-motion .collection-repeat,
+.has-reduced-motion [data-filler] {
   display: none;
 }
 @media (max-width: 520px) {
   .collection-window {
     --rail-card: clamp(172px, 54vw, 235px);
   }
-  .collection-actions {
-    gap: 9px;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .selection:not(.is-paused) .collection-track {
+  .selection:not(.has-reduced-motion) .collection-track {
     animation-duration: var(--loop-duration, 65s) !important;
   }
   .hero.is-changing .still-life {

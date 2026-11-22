@@ -39,7 +39,7 @@ function ServiceArtwork({ id }) {
     return (
       <div className={styles.productScene} aria-hidden="true">
         <Media src="tablet-air-blue.webp" className={styles.tablet} />
-        <Media src="phone-17-pro-orange.webp" className={styles.phone} />
+        <Media src="phone-18-pro-max-burgundy.webp" className={styles.phone} />
         <Media src="audio-airpods-pro-3.webp" className={styles.audio} />
       </div>
     );

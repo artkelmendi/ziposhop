@@ -28,7 +28,6 @@ export default function HeroAmbience() {
     function draw(now = performance.now()) {
       frame = 0;
       if (active) frame = requestAnimationFrame(draw);
-      if (active && lastFrame && now - lastFrame < 1000 / 60 - 1) return;
       const delta = lastFrame ? Math.min((now - lastFrame) / 1000, 0.1) : 0;
       lastFrame = now;
       if (active) elapsed += delta;

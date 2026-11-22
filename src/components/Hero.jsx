@@ -16,11 +16,13 @@ const slides = [
     category: "Pesë kategori",
   },
   {
-    title: ["iPhone", "17 Pro"],
-    type: "17",
-    product: "iphone-17-pro",
+    title: ["iPhone", "18 Pro Max"],
+    type: "18",
+    product: "iphone-18-pro-max",
+    productName: "iPhone 18 Pro Max",
+    image: "phone-18-pro-max-burgundy.webp",
     description:
-      "Një vështrim nga afër në Cosmic Orange. Eksploro iPhone dhe modelet e tjera në katalog.",
+      "Shiko iPhone 18 Pro Max në Burgundy. Eksploro iPhone dhe modelet e tjera në katalog.",
     cta: "Eksploro telefonat",
     href: catalogUrl("telefona"),
     category: "Telefon",
@@ -40,7 +42,7 @@ const stills = [
   ["moto", "moto-niu.webp"],
   ["scooter", "scooter-g2.webp"],
   ["tablet", "tablet-air-blue.webp"],
-  ["phone", "phone-17-pro-orange.webp"],
+  ["phone", "phone-18-pro-max-burgundy.webp"],
   ["audio", "audio-airpods-pro-3.webp"],
 ];
 export default function Hero() {
@@ -48,7 +50,7 @@ export default function Hero() {
   const [index, setIndex] = useState(0);
   const touch = useRef(null);
   const slide = slides[index];
-  const product = products.find((item) => item.id === slide.product);
+  const product = products.find((item) => item.id === slide.product || item.name === slide.productName);
   const step = (amount) =>
     setIndex((current) => (current + amount + slides.length) % slides.length);
   return (
@@ -79,7 +81,7 @@ export default function Hero() {
         <div className="hero-visual" aria-hidden="true">
           <span className="hero-type">{slide.type}</span>
           <div className="hero-shadow" />
-          {!product ? (
+          {!product && !slide.image ? (
             <div className="still-life">
               {stills.map(([name, image], i) => (
                 <Media
@@ -93,9 +95,9 @@ export default function Hero() {
             </div>
           ) : (
             <Media
-              key={product.id}
+              key={product?.id || slide.product}
               className="hero-single"
-              src={product.image}
+              src={product?.image || slide.image}
               eager
             />
           )}

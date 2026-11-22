@@ -2,7 +2,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: #fbfcff;
+  background: linear-gradient(to bottom, #fbfcff 70%, #fff 100%);
   padding: 38px 5% 30px;
   text-align: center;
 }
@@ -33,6 +33,7 @@
 }
 .stage {
   position: relative;
+  z-index: 1;
   isolation: isolate;
   width: min(100%, 1160px);
   height: 380px;
@@ -100,8 +101,8 @@
   rotate: 3deg;
 }
 .air {
-  left: 56%;
-  width: 11%;
+  left: 55%;
+  width: 16%;
   height: 47%;
   bottom: 1%;
   z-index: 4;
@@ -125,6 +126,7 @@
 }
 .browse {
   position: relative;
+  z-index: 1;
   display: inline-block;
   margin-top: 25px;
   color: var(--tint-ink);
@@ -235,10 +237,10 @@
     bottom: 1%;
   }
   .air {
-    left: 60%;
-    width: 15%;
-    height: 40%;
-    bottom: 3%;
+    left: 61%;
+    width: 20%;
+    height: 43%;
+    bottom: 4%;
   }
   .watch {
     left: 21%;

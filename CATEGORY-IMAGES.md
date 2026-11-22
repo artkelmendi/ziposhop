@@ -4,7 +4,7 @@ Dedicated category-result backdrops, sourced November 21, 2026. These do not rep
 
 | Category | Source | Original | Local file |
 | --- | --- | --- | --- |
-| iPhone & telefona | [Apple iPhone 17 Pro newsroom](https://www.apple.com/newsroom/2025/09/apple-unveils-iphone-17-pro-and-iphone-17-pro-max/), camera close-up image download | 3840 × 2160 | `public/assets/category-telefona.webp` |
+| iPhone & telefona | [Apple iPhone 18 Pro newsroom](https://www.apple.com/newsroom/2026/09/apple-debuts-iphone-18-pro-and-iphone-18-pro-max/), original 2-up photograph download, refreshed November 22, 2026 | 2160 × 3024 | `public/assets/category-telefona-18-pro.webp` |
 | Motorë elektrikë | [NIU NQi Sport](https://global.niu.com/product/nqi-sport), front studio photograph | 8000 × 4500 | `public/assets/category-motore.webp` |
 | Trotineta elektrikë | [NIU KQi300](https://global.niu.com/product/KQi-300), handlebar detail | 2106 × 723 | `public/assets/category-trotineta.webp` |
 | Tableta | [Apple iPad Air newsroom](https://www.apple.com/newsroom/2025/03/apple-introduces-ipad-air-with-powerful-m3-chip-and-new-magic-keyboard/), hero image download | 3840 × 2160 | `public/assets/category-tableta.webp` |

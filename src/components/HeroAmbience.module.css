@@ -1,14 +1,14 @@
 .ambience {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  opacity: 0.52;
-  contain: paint;
   background:
-    radial-gradient(ellipse at 0% 0%, #b6d8fa, transparent 44%),
-    radial-gradient(ellipse at 100% 100%, #bbddfa, transparent 44%);
+    linear-gradient(to top, #fff, #fff0 30%),
+    radial-gradient(ellipse at 0% 0%, #d8e9fc, transparent 44%),
+    radial-gradient(ellipse at 100% 100%, #dbeafa, transparent 44%),
+    #fbfcff;
 }
 .ambience[data-renderer="webgl"] {
   background: none;

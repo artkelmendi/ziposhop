@@ -22,6 +22,8 @@ Product media is public so shoppers can view it. Draft photos also have public, 
 
 ## Owner workflow
 
+The November 22 Apple lineup update is prepared but has not yet been applied to the live database. See `APPLE-PRODUCTS.md` and `supabase/migrations/202611220001_apple_lineup.sql`. Applying it requires authenticated administrator access; a GitHub Pages deployment only updates frontend files. Its inserts preserve existing records and homepage selections.
+
 - **Produktet:** add/edit names, descriptions, euro prices, availability, publication, up to six photos and 20 specification rows. Save a draft with “Shfaq në dyqan” off. Publishing requires a photo.
 - **Kategoritë:** add/edit the name, description, order, active state and up to four images. Existing category identifiers remain stable, keeping links intact. A category with products cannot be deleted until its products are moved or removed.
 - **Ballina:** choose the featured product and up to 12 products for the moving collection. These controls only offer published products in active categories. Selecting no featured product or no collection products hides that section.

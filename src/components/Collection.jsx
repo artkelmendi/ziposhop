@@ -7,7 +7,7 @@ import { useCatalog } from "../data/CatalogContext";
 export default function Collection() {
   const { products, settings, demo } = useCatalog();
   const [selection, setSelection] = useState(null);
-  const [paused, setPaused] = useState(
+  const [reducedMotion, setReducedMotion] = useState(
     () => matchMedia("(prefers-reduced-motion:reduce)").matches,
   );
   const [repetitions, setRepetitions] = useState(1);
@@ -62,7 +62,7 @@ export default function Collection() {
   }, [products, settings, demo]);
   useEffect(() => {
     const reduced = matchMedia("(prefers-reduced-motion:reduce)");
-    const change = () => setPaused(reduced.matches);
+    const change = () => setReducedMotion(reduced.matches);
     reduced.addEventListener("change", change);
     return () => reduced.removeEventListener("change", change);
   }, []);
@@ -88,36 +88,20 @@ export default function Collection() {
   }, [selection]);
   if (!selection?.length) return null;
   const cards = selection
-    ? Array.from({ length: paused ? 1 : repetitions }, () => selection).flat()
+    ? Array.from({ length: reducedMotion ? 1 : repetitions }, () => selection).flat()
     : [];
   return (
     <section
-      className={"selection" + (paused ? " is-paused" : "")}
+      className={"selection" + (reducedMotion ? " has-reduced-motion" : "")}
       id="perzgjedhja"
       aria-labelledby="selection-title"
     >
       <div className="wrap">
         <div className="section-heading">
           <h2 id="selection-title">Nga koleksioni</h2>
-          <div className="collection-actions">
-            {selection && (
-              <button
-                className="round-control"
-                id="collection-motion"
-                aria-label={paused ? "Vazhdo lëvizjen" : "Ndalo lëvizjen"}
-                aria-pressed={paused}
-                onClick={() => {
-                  setPaused((value) => !value);
-                  viewport.current.scrollLeft = 0;
-                }}
-              >
-                <Icon name={paused ? "play" : "pause"} />
-              </button>
-            )}
-            <AppLink className="section-link" to="/produktet.html">
-              Hap katalogun <Icon name="grid" />
-            </AppLink>
-          </div>
+          <AppLink className="section-link" to="/produktet.html">
+            Hap katalogun <Icon name="grid" />
+          </AppLink>
         </div>
         <div
           className="collection-window"
@@ -141,7 +125,7 @@ export default function Collection() {
                   aria-hidden={copy ? true : undefined}
                   onFocus={(event) => {
                     if (copy || !event.target.matches(":focus-visible")) return;
-                    if (paused) {
+                    if (reducedMotion) {
                       event.target.scrollIntoView({
                         block: "nearest",
                         inline: "nearest",
