@@ -13,7 +13,7 @@ async function enterHome(page, width, height, reducedMotion = "no-preference") {
 async function jumpToService(section, id, fraction = 0) {
   await section.locator(`#zipo-${id}`).evaluate((marker, fraction) => {
     const section = document.querySelector("#sherbimet");
-    const pin = parseFloat(getComputedStyle(section).getPropertyValue("--panel-top"));
+    const pin = parseFloat(getComputedStyle(marker).scrollMarginTop);
     const height = marker.nextElementSibling.offsetHeight;
     scrollTo({ top: marker.getBoundingClientRect().top + scrollY - pin - height * fraction, behavior: "instant" });
   }, fraction);

@@ -22,13 +22,16 @@
   --aqua-ink: #315563;
   --wrap: 90%;
   --max: 1512px;
+  --header-row-height: 76px;
+  --category-nav-height: 44px;
+  --site-header-height: calc(var(--header-row-height) + var(--category-nav-height));
   --ease: cubic-bezier(0.2, 0.78, 0.25, 1);
   font-family: "Instrument Sans", Arial, sans-serif;
   color: var(--ink);
   background: var(--paper);
   font-synthesis: none;
   scroll-behavior: smooth;
-  scroll-padding-top: 98px;
+  scroll-padding-top: calc(var(--site-header-height) + 22px);
 }
 * {
   box-sizing: border-box;
@@ -765,7 +768,8 @@ svg {
 @media (max-width: 750px) {
   :root {
     --wrap: 90%;
-    scroll-padding-top: 80px;
+    --header-row-height: 64px;
+    scroll-padding-top: calc(var(--site-header-height) + 16px);
   }
   .wordmark {
     font-size: 1.85rem;

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import AppLink from "./AppLink";
 import Brand from "./Brand";
+import CategoryNav from "./CategoryNav";
 import Icon from "./Icon";
 import styles from "./Header.module.css";
 import { pageForPath } from "../lib/routes";
@@ -96,6 +97,7 @@ export default function Header({ loading }) {
           </button>
         </div>
       </div>
+      <CategoryNav onNavigate={() => setOpen(false)} />
       <nav
         id="mobile-nav"
         className={styles.mobileNav}

@@ -1,6 +1,6 @@
 .section {
-  --dock-top: 76px;
-  --panel-top: 154px;
+  --dock-top: var(--site-header-height);
+  --panel-top: calc(var(--site-header-height) + 78px);
   padding-top: 80px;
 }
 .section > h2 {
@@ -125,7 +125,7 @@
   .copy p { font-size: 0.95rem; }
 }
 @media (max-width: 750px) {
-  .section { --dock-top: 64px; --panel-top: 140px; padding-top: 48px; }
+  .section { --panel-top: calc(var(--site-header-height) + 76px); padding-top: 48px; }
   .section > h2 { font-size: 1.85rem; margin-bottom: 16px; }
   .tabs { width: 100%; }
   .tabs a { font-size: 0.84rem; line-height: 1.15; padding-inline: 6px; text-align: center; }

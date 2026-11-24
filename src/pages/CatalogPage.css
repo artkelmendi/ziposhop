@@ -22,7 +22,7 @@
   flex-shrink: 0;
 }
 #category-results {
-  scroll-margin-top: 100px;
+  scroll-margin-top: 16px;
 }
 .catalog-pagination {
   display: flex;

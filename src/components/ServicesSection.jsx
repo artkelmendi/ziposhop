@@ -86,7 +86,7 @@ export default function ServicesSection() {
       frame = 0;
       if (document.hidden) return;
       if (measure) {
-        pinTop = parseFloat(getComputedStyle(section).getPropertyValue("--panel-top"));
+        pinTop = parseFloat(getComputedStyle(markers.current[0]).scrollMarginTop);
         heights = panels.current.map(panel => panel.offsetHeight);
         stacked = !reduced.matches && heights.every(height => height + pinTop + 24 <= innerHeight);
         section.dataset.stacked = String(stacked);
@@ -136,7 +136,7 @@ export default function ServicesSection() {
   }, []);
 
   function showService(index, immediate = false) {
-    const pinTop = parseFloat(getComputedStyle(root.current).getPropertyValue("--panel-top"));
+    const pinTop = parseFloat(getComputedStyle(markers.current[index]).scrollMarginTop);
     const top = markers.current[index].getBoundingClientRect().top + scrollY - pinTop;
     window.scrollTo({
       top: Math.max(0, top),
