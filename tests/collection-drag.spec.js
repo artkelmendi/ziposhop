@@ -103,3 +103,22 @@ test("keyboard focus exposes any primary product and still opens its clean URL",
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(new URL(href, "http://127.0.0.1:4174").href);
 });
+
+test("reduced-motion dragging also ignores vertical drift before moving horizontally", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  const rail = page.locator(".collection-window");
+  await rail.scrollIntoViewIfNeeded();
+  await expect(rail).toHaveAttribute("data-motion", "manual");
+  const box = await rail.boundingBox();
+  const scrollY = await page.evaluate(() => window.scrollY);
+  await page.mouse.move(240, box.y + 100);
+  await page.mouse.down();
+  await page.mouse.move(242, box.y + 140, { steps: 5 });
+  await expect(rail).toHaveAttribute("data-motion", "dragging");
+  await page.mouse.move(140, box.y + 160, { steps: 5 });
+  expect(await rail.evaluate(node => node.scrollLeft)).toBeGreaterThan(90);
+  expect(await page.evaluate(() => window.scrollY)).toBe(scrollY);
+  await page.mouse.up();
+  await expect(rail).toHaveAttribute("data-motion", "manual");
+});

@@ -1223,7 +1223,8 @@ svg {
   overflow: hidden;
   margin-inline: calc((100% - 100vw) / 2);
   padding-block: 6px;
-  touch-action: pan-y pinch-zoom;
+  touch-action: pinch-zoom;
+  overscroll-behavior: contain;
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
@@ -1261,7 +1262,7 @@ svg {
 .has-reduced-motion .collection-window {
   overflow-x: auto;
   padding-inline: max(5vw, calc((100vw - var(--max)) / 2));
-  touch-action: auto;
+  touch-action: pinch-zoom;
   user-select: auto;
   -webkit-user-select: auto;
   cursor: auto;

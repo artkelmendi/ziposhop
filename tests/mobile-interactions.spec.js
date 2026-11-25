@@ -81,9 +81,9 @@ for (const direction of ["left", "right"]) {
   });
 }
 
-test("a new swipe interrupts momentum and vertical gestures leave page scrolling available", async ({ page }) => {
+test("a new swipe interrupts momentum and vertical drift stays inside the strip", async ({ page }) => {
   const rail = await collection(page);
-  await expect(rail).toHaveCSS("touch-action", "pan-y pinch-zoom");
+  await expect(rail).toHaveCSS("touch-action", "pinch-zoom");
   await flick(page, rail, "left");
   await flick(page, rail, "right");
   expect(await collectionSpeed(rail.locator(".collection-track"))).toBeLessThan(-30);
@@ -92,12 +92,13 @@ test("a new swipe interrupts momentum and vertical gestures leave page scrolling
   await page.mouse.move(box.width / 2, box.y + 120);
   await page.mouse.down();
   await page.mouse.move(box.width / 2 + 2, box.y + 180, { steps: 5 });
+  await expect(rail).toHaveAttribute("data-motion", "dragging");
   await page.mouse.up();
   await expect(rail).toHaveAttribute("data-motion", "auto");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.locator("#perzgjedhja")).toHaveClass(/has-reduced-motion/);
   await expect(rail).toHaveCSS("overflow-x", "auto");
-  await expect(rail).toHaveCSS("touch-action", "auto");
+  await expect(rail).toHaveCSS("touch-action", "pinch-zoom");
   expect(await rail.locator(".collection-track").evaluate(node => node.getAnimations().length)).toBe(0);
   await rail.evaluate(node => node.scrollLeft = 250);
   await page.emulateMedia({ reducedMotion: "no-preference" });

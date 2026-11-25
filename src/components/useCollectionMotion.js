@@ -12,24 +12,31 @@ export default function useCollectionMotion({ viewport, track, group, reducedMot
     const rail = viewport.current;
     const strip = track.current;
     const firstGroup = group.current;
-    if (!ready || !rail || !strip || !firstGroup || reducedMotion) return;
+    if (!ready || !rail || !strip || !firstGroup) return;
 
     let distance = rail.scrollLeft || position.current;
     let width = 0;
     let stride = 0;
+    let scrollLimit = 0;
     let velocity = DEFAULT_SPEED;
     let gesture = null;
     let frame = 0;
     let previousTime = 0;
     let visible = false;
     let suppressUntil = 0;
-    rail.scrollLeft = 0;
+    if (!reducedMotion) rail.scrollLeft = 0;
 
     function state(value) {
       if (rail.dataset.motion !== value) rail.dataset.motion = value;
     }
     function paint() {
       if (!width) return;
+      if (reducedMotion) {
+        distance = Math.max(0, Math.min(scrollLimit, distance));
+        rail.scrollLeft = distance;
+        position.current = distance;
+        return;
+      }
       const phase = ((distance % width) + width) % width;
       strip.style.transform = `translate3d(${-phase}px, 0, 0)`;
       position.current = distance;
@@ -54,6 +61,10 @@ export default function useCollectionMotion({ viewport, track, group, reducedMot
       frame = requestAnimationFrame(tick);
     }
     function play() {
+      if (reducedMotion) {
+        state("manual");
+        return;
+      }
       if (!visible || document.hidden) {
         state("inactive");
         strip.style.willChange = "auto";
@@ -90,6 +101,7 @@ export default function useCollectionMotion({ viewport, track, group, reducedMot
       }
       width = nextWidth;
       stride = nextStride;
+      scrollLimit = Math.max(0, rail.scrollWidth - rail.clientWidth);
       paint();
     }
     focus.current = element => {
@@ -105,6 +117,7 @@ export default function useCollectionMotion({ viewport, track, group, reducedMot
       stop();
       velocity = DEFAULT_SPEED;
       suppressUntil = 0;
+      if (reducedMotion) distance = rail.scrollLeft;
       gesture = { id: event.pointerId, x: event.clientX, y: event.clientY, origin: distance, dragging: false, samples: [{ x: event.clientX, time: event.timeStamp }] };
       state("held");
     }
@@ -114,7 +127,6 @@ export default function useCollectionMotion({ viewport, track, group, reducedMot
       const dy = event.clientY - gesture.y;
       if (!gesture.dragging) {
         if (Math.max(Math.abs(dx), Math.abs(dy)) < 4) return;
-        if (Math.abs(dy) > Math.abs(dx)) { interrupt(); return; }
         gesture.dragging = true;
         state("dragging");
         rail.setPointerCapture(event.pointerId);
@@ -188,6 +200,7 @@ export default function useCollectionMotion({ viewport, track, group, reducedMot
       gesture = null;
       releaseCapture(current);
       stop();
+      if (reducedMotion) position.current = rail.scrollLeft;
       strip.style.removeProperty("transform");
       strip.style.removeProperty("will-change");
       focus.current = null;

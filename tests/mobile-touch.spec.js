@@ -3,7 +3,7 @@ import { collectionPosition, collectionSpeed } from "./collection-motion";
 
 test.use({ viewport: { width: 428, height: 926 }, hasTouch: true, isMobile: true });
 
-test("real phone swipes transfer velocity, preserve vertical scrolling and keep taps working", async ({ page, context, browserName }) => {
+test("real phone swipes transfer velocity, block vertical drift and keep taps working", async ({ page, context, browserName }) => {
   test.skip(browserName !== "chromium", "Real touch-path verification uses Chromium's input protocol; pointer behavior is covered in both engines.");
   await page.addInitScript(() => sessionStorage.setItem("zipo:intro-seen", "1"));
   await page.goto("/");
@@ -74,7 +74,7 @@ test("real phone swipes transfer velocity, preserve vertical scrolling and keep 
   const before = await page.evaluate(() => scrollY);
   box = await rail.boundingBox();
   await swipe([220, box.y + 180], [224, Math.max(130, box.y + 30)]);
-  await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(before + 40);
+  expect(Math.abs(await page.evaluate(() => scrollY) - before)).toBeLessThan(1);
   await expect(rail).not.toHaveAttribute("data-motion", "dragging");
   await rail.scrollIntoViewIfNeeded();
   await expect(rail).toHaveAttribute("data-motion", "auto");
