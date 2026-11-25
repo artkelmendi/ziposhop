@@ -12,11 +12,10 @@ export default function Collection() {
     () => matchMedia("(prefers-reduced-motion:reduce)").matches,
   );
   const [repetitions, setRepetitions] = useState(1);
-  const [duration, setDuration] = useState(65);
   const viewport = useRef(null);
   const group = useRef(null);
   const track = useRef(null);
-  const resetMotion = useCollectionMotion({ viewport, track, group, duration, reducedMotion, selection, repetitions });
+  const focusProduct = useCollectionMotion({ viewport, track, group, reducedMotion, ready: !!selection?.length });
   useEffect(() => {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
@@ -48,12 +47,17 @@ export default function Collection() {
       }
       clearTimeout(timeout);
       if (!active) return;
-      const shuffled = pool.slice(0, 12);
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      setSelection(shuffled);
+      const next = pool.slice(0, 12);
+      setSelection(previous => {
+        const byId = new Map(next.map(product => [product.id, product]));
+        if (previous?.length === next.length && previous.every(product => byId.has(product.id)))
+          return previous.map(product => byId.get(product.id));
+        for (let i = next.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [next[i], next[j]] = [next[j], next[i]];
+        }
+        return next;
+      });
     }
     load();
     return () => {
@@ -81,7 +85,6 @@ export default function Collection() {
         Math.ceil(viewport.current.clientWidth / (stride * selection.length)),
       );
       setRepetitions(count);
-      setDuration((stride * selection.length * count) / 34);
     }
     const observer = new ResizeObserver(resize);
     observer.observe(viewport.current);
@@ -115,7 +118,6 @@ export default function Collection() {
             <div
               className="collection-track"
               ref={track}
-              style={{ "--loop-duration": duration + "s" }}
             >
               {[0, 1].map((copy) => (
                 <div
@@ -134,20 +136,7 @@ export default function Collection() {
                       });
                       return;
                     }
-                    resetMotion();
-                    const animation = track.current.getAnimations()[0];
-                    if (animation)
-                      animation.currentTime =
-                        (Math.max(
-                          0,
-                          event.target.offsetLeft -
-                            group.current.offsetLeft -
-                            12,
-                        ) /
-                          group.current.offsetWidth) *
-                        duration *
-                        1000;
-                    viewport.current.scrollLeft = 0;
+                    focusProduct(event.target);
                   }}
                 >
                   {cards.map((product, i) => (

@@ -1,120 +1,146 @@
 import { useCallback, useEffect, useRef } from "react";
 
-const MAX_VELOCITY = 1400; // pixels/second; keeps fast flicks readable.
-const MOMENTUM_DURATION = 2200;
+const DEFAULT_SPEED = 34; // pixels/second, leftward.
+const MAX_RELEASE_SPEED = 2400;
+const DECAY = 0.36; // seconds; applies equally at 60 Hz and 120 Hz.
 
-// Keep the normal loop on the compositor. JS runs only during a drag or its decay.
-export default function useCollectionMotion({ viewport, track, group, duration, reducedMotion, selection, repetitions }) {
-  const reset = useRef(null);
+// One position drives autoplay, dragging and momentum. No animation seeks or snaps.
+export default function useCollectionMotion({ viewport, track, group, reducedMotion, ready }) {
+  const position = useRef(0);
+  const focus = useRef(null);
   useEffect(() => {
     const rail = viewport.current;
-    const animation = track.current?.getAnimations()[0];
-    if (!selection?.length || reducedMotion || !rail || !animation) return;
-    const cycle = duration * 1000;
-    const pixelsPerMs = group.current.getBoundingClientRect().width / cycle;
-    if (!pixelsPerMs) return;
-    rail.scrollLeft = 0;
+    const strip = track.current;
+    const firstGroup = group.current;
+    if (!ready || !rail || !strip || !firstGroup || reducedMotion) return;
+
+    let distance = rail.scrollLeft || position.current;
+    let width = 0;
+    let stride = 0;
+    let velocity = DEFAULT_SPEED;
     let gesture = null;
     let frame = 0;
+    let previousTime = 0;
     let visible = false;
     let suppressUntil = 0;
+    rail.scrollLeft = 0;
 
-    const rate = value => animation.updatePlaybackRate(value);
-    // A positive spare cycle also lets a rightward flick cross the loop's origin.
-    const wrap = time => ((time % cycle) + cycle) % cycle + cycle;
-    function normalize() {
-      const time = Number(animation.currentTime) || 0;
-      if (time < cycle / 2 || time > cycle * 3) animation.currentTime = wrap(time);
+    function state(value) {
+      if (rail.dataset.motion !== value) rail.dataset.motion = value;
     }
-    function stopMomentum() {
+    function paint() {
+      if (!width) return;
+      const phase = ((distance % width) + width) % width;
+      strip.style.transform = `translate3d(${-phase}px, 0, 0)`;
+      position.current = distance;
+    }
+    function stop() {
       cancelAnimationFrame(frame);
       frame = 0;
-      rate(1);
     }
-    function playWhenVisible() {
-      if (visible && !document.hidden) {
-        rail.dataset.motion = "auto";
-        animation.play();
-      } else {
-        rail.dataset.motion = "inactive";
-        animation.pause();
+    function tick(now) {
+      frame = 0;
+      if (!visible || document.hidden || gesture) return;
+      const dt = Math.min(64, Math.max(0, now - previousTime)) / 1000;
+      previousTime = now;
+      const decay = Math.exp(-dt / DECAY);
+      distance += DEFAULT_SPEED * dt + (velocity - DEFAULT_SPEED) * DECAY * (1 - decay);
+      velocity = DEFAULT_SPEED + (velocity - DEFAULT_SPEED) * decay;
+      if (Math.abs(velocity - DEFAULT_SPEED) < 0.5) {
+        velocity = DEFAULT_SPEED;
+        state("auto");
+      }
+      paint();
+      frame = requestAnimationFrame(tick);
+    }
+    function play() {
+      if (!visible || document.hidden) {
+        state("inactive");
+        strip.style.willChange = "auto";
+        return;
+      }
+      strip.style.willChange = "transform";
+      if (gesture) return;
+      state(velocity === DEFAULT_SPEED ? "auto" : "settling");
+      if (!frame) {
+        previousTime = performance.now();
+        frame = requestAnimationFrame(tick);
       }
     }
     function releaseCapture(current) {
       if (current && rail.hasPointerCapture(current.id)) rail.releasePointerCapture(current.id);
     }
-    function resetMotion() {
+    function interrupt() {
       const current = gesture;
       gesture = null;
+      if (current?.dragging) suppressUntil = performance.now() + 350;
       releaseCapture(current);
-      stopMomentum();
-      playWhenVisible();
+      stop();
+      velocity = DEFAULT_SPEED;
+      play();
     }
-    reset.current = resetMotion;
-
-    function momentum(velocity) {
-      stopMomentum();
-      normalize();
-      const from = -Math.max(-MAX_VELOCITY, Math.min(MAX_VELOCITY, velocity)) / (pixelsPerMs * 1000);
-      const start = performance.now();
-      rate(from);
-      animation.play();
-      rail.dataset.motion = "settling";
-      function settle(now) {
-        if (!visible || document.hidden) { resetMotion(); return; }
-        normalize();
-        const elapsed = now - start;
-        if (elapsed >= MOMENTUM_DURATION) {
-          rate(1);
-          frame = 0;
-          rail.dataset.motion = "auto";
-          return;
-        }
-        rate(1 + (from - 1) * Math.exp(-elapsed / 280));
-        frame = requestAnimationFrame(settle);
+    function measure() {
+      const nextWidth = firstGroup.getBoundingClientRect().width;
+      const card = firstGroup.firstElementChild;
+      if (!nextWidth || !card) return;
+      const nextStride = card.getBoundingClientRect().width + parseFloat(getComputedStyle(firstGroup).columnGap);
+      if (stride && Math.abs(nextStride - stride) > 0.1) {
+        distance *= nextStride / stride;
+        interrupt();
       }
-      frame = requestAnimationFrame(settle);
+      width = nextWidth;
+      stride = nextStride;
+      paint();
     }
+    focus.current = element => {
+      interrupt();
+      distance = Math.max(0, element.getBoundingClientRect().left - firstGroup.getBoundingClientRect().left - 12);
+      rail.scrollLeft = 0;
+      paint();
+    };
 
     function down(event) {
-      if (event.isPrimary === false) { if (gesture) resetMotion(); return; }
+      if (event.isPrimary === false) { if (gesture) interrupt(); return; }
       if (event.button !== 0 || gesture) return;
+      stop();
+      velocity = DEFAULT_SPEED;
       suppressUntil = 0;
-      gesture = { id: event.pointerId, x: event.clientX, y: event.clientY, dragging: false, samples: [{ x: event.clientX, time: event.timeStamp }] };
+      gesture = { id: event.pointerId, x: event.clientX, y: event.clientY, origin: distance, dragging: false, samples: [{ x: event.clientX, time: event.timeStamp }] };
+      state("held");
     }
     function move(event) {
       if (!gesture || event.pointerId !== gesture.id) return;
       const dx = event.clientX - gesture.x;
       const dy = event.clientY - gesture.y;
       if (!gesture.dragging) {
-        if (Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx)) { gesture = null; return; }
-        if (Math.abs(dx) < 8 || Math.abs(dx) <= Math.abs(dy) * 1.15) return;
-        stopMomentum();
-        animation.pause();
-        gesture.origin = Number(animation.currentTime) || 0;
+        if (Math.max(Math.abs(dx), Math.abs(dy)) < 4) return;
+        if (Math.abs(dy) > Math.abs(dx)) { interrupt(); return; }
         gesture.dragging = true;
-        rail.dataset.motion = "dragging";
+        state("dragging");
         rail.setPointerCapture(event.pointerId);
       }
       event.preventDefault();
-      animation.currentTime = wrap(gesture.origin - dx / pixelsPerMs);
+      distance = gesture.origin - dx;
+      paint();
       gesture.samples.push({ x: event.clientX, time: event.timeStamp });
-      gesture.samples = gesture.samples.filter(sample => event.timeStamp - sample.time <= 120).slice(-12);
+      gesture.samples = gesture.samples.filter(sample => event.timeStamp - sample.time <= 120).slice(-16);
     }
     function finish(event, cancelled = false) {
       if (!gesture || event.pointerId !== gesture.id) return;
       const current = gesture;
       gesture = null;
       releaseCapture(current);
-      if (!current.dragging) return;
-      suppressUntil = performance.now() + 350;
-      const last = current.samples.at(-1);
-      const first = current.samples.find(sample => event.timeStamp - sample.time <= 100) || last;
-      const elapsed = event.timeStamp - first.time;
-      const velocity = !cancelled && event.timeStamp - last.time < 100 && elapsed > 0
-        ? (event.clientX - first.x) / elapsed * 1000 : 0;
-      if (cancelled || !visible || document.hidden) resetMotion();
-      else momentum(velocity);
+      velocity = DEFAULT_SPEED;
+      if (current.dragging) {
+        suppressUntil = performance.now() + 350;
+        const last = current.samples.at(-1);
+        const first = current.samples.find(sample => event.timeStamp - sample.time <= 100) || last;
+        const elapsed = event.timeStamp - first.time;
+        if (!cancelled && event.timeStamp - last.time < 100 && elapsed > 0)
+          velocity = Math.max(-MAX_RELEASE_SPEED, Math.min(MAX_RELEASE_SPEED, -(event.clientX - first.x) / elapsed * 1000));
+        else if (!cancelled) velocity = 0;
+      }
+      play();
     }
     const up = event => finish(event);
     const cancel = event => finish(event, true);
@@ -129,24 +155,29 @@ export default function useCollectionMotion({ viewport, track, group, duration, 
     const noDrag = event => event.preventDefault();
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
-      if (!visible) resetMotion();
-      else if (!gesture?.dragging && !frame) playWhenVisible();
+      if (!visible) interrupt();
+      else play();
     });
+    const sizes = new ResizeObserver(measure);
+    measure();
+    sizes.observe(firstGroup);
     observer.observe(rail);
-    const visibility = () => resetMotion();
-    document.addEventListener("visibilitychange", visibility);
-    rail.addEventListener("pointerdown", down);
+    document.addEventListener("visibilitychange", interrupt);
+    window.addEventListener("blur", interrupt);
+    rail.addEventListener("pointerdown", down, { capture: true, passive: true });
     rail.addEventListener("lostpointercapture", lost);
     rail.addEventListener("click", click, true);
     rail.addEventListener("dragstart", noDrag);
     window.addEventListener("pointermove", move, { passive: false });
     window.addEventListener("pointerup", up);
     window.addEventListener("pointercancel", cancel);
-    playWhenVisible();
+    play();
     return () => {
       observer.disconnect();
-      document.removeEventListener("visibilitychange", visibility);
-      rail.removeEventListener("pointerdown", down);
+      sizes.disconnect();
+      document.removeEventListener("visibilitychange", interrupt);
+      window.removeEventListener("blur", interrupt);
+      rail.removeEventListener("pointerdown", down, true);
       rail.removeEventListener("lostpointercapture", lost);
       rail.removeEventListener("click", click, true);
       rail.removeEventListener("dragstart", noDrag);
@@ -156,10 +187,12 @@ export default function useCollectionMotion({ viewport, track, group, duration, 
       const current = gesture;
       gesture = null;
       releaseCapture(current);
-      stopMomentum();
-      reset.current = null;
+      stop();
+      strip.style.removeProperty("transform");
+      strip.style.removeProperty("will-change");
+      focus.current = null;
       delete rail.dataset.motion;
     };
-  }, [duration, reducedMotion, selection, repetitions, viewport, track, group]);
-  return useCallback(() => reset.current?.(), []);
+  }, [ready, reducedMotion, viewport, track, group]);
+  return useCallback(element => focus.current?.(element), []);
 }

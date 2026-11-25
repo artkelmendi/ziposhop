@@ -1,4 +1,5 @@
 import { test, expect } from "./fixtures";
+import { collectionPosition, collectionSpeed } from "./collection-motion";
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 428, height: 926 });
@@ -69,13 +70,11 @@ for (const direction of ["left", "right"]) {
     const rail = await collection(page);
     const track = rail.locator(".collection-track");
     await flick(page, rail, direction);
-    const rate = await track.evaluate(node => node.getAnimations()[0].playbackRate);
-    expect(direction === "left" ? rate : -rate).toBeGreaterThan(2);
+    const speed = await collectionSpeed(track);
+    expect(direction === "left" ? speed : -speed).toBeGreaterThan(70);
     await expect(page).toHaveURL(/\/$/);
     await expect(rail).toHaveAttribute("data-motion", "auto");
-    await expect.poll(() => track.evaluate(node => node.getAnimations()[0].playbackRate)).toBe(1);
-    const time = await track.evaluate(node => node.getAnimations()[0].currentTime);
-    await expect.poll(() => track.evaluate(node => node.getAnimations()[0].currentTime)).toBeGreaterThan(time + 100);
+    expect(Math.abs(await collectionSpeed(track) - 34)).toBeLessThan(12);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.screenshot({ path: `.impeccable/review/mobile-interactions/${browserName}-${direction}.png` });
     expect(errors).toEqual([]);
@@ -87,7 +86,7 @@ test("a new swipe interrupts momentum and vertical gestures leave page scrolling
   await expect(rail).toHaveCSS("touch-action", "pan-y pinch-zoom");
   await flick(page, rail, "left");
   await flick(page, rail, "right");
-  await expect.poll(() => rail.locator(".collection-track").evaluate(node => node.getAnimations()[0].playbackRate)).toBeLessThan(0);
+  expect(await collectionSpeed(rail.locator(".collection-track"))).toBeLessThan(-30);
   await expect(rail).toHaveAttribute("data-motion", "auto");
   const box = await rail.boundingBox();
   await page.mouse.move(box.width / 2, box.y + 120);
@@ -111,8 +110,11 @@ test("the continuous loop suspends offscreen and resumes at the same normal spee
   await flick(page, rail, "left");
   await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
   await expect(rail).toHaveAttribute("data-motion", "inactive");
-  await expect.poll(() => rail.locator(".collection-track").evaluate(node => node.getAnimations()[0].playState)).toBe("paused");
+  const track = rail.locator(".collection-track");
+  const before = await collectionPosition(track);
+  await page.waitForTimeout(150);
+  expect(await collectionPosition(track)).toBe(before);
   await rail.scrollIntoViewIfNeeded();
   await expect(rail).toHaveAttribute("data-motion", "auto");
-  await expect.poll(() => rail.locator(".collection-track").evaluate(node => node.getAnimations()[0].playbackRate)).toBe(1);
+  expect(Math.abs(await collectionSpeed(track) - 34)).toBeLessThan(12);
 });

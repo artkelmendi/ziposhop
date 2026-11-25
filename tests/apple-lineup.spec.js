@@ -1,6 +1,7 @@
 import { test, expect, fixtureCatalog } from "./fixtures";
 import { appleProducts } from "../src/data/apple2026";
 import { existsSync } from "node:fs";
+import { collectionSpeed } from "./collection-motion";
 
 test("Apple additions have local photos and resolve from the hero to real admin records", async ({ page }) => {
   const catalog = fixtureCatalog();
@@ -40,8 +41,7 @@ test("collection runs through hover without a pause control", async ({ page }) =
   await expect(collection.locator("button")).toHaveCount(0);
   await expect(collection.getByRole("link", { name: "Hap katalogun" })).toBeVisible();
   const track = collection.locator(".collection-track");
-  const before = await track.evaluate((el) => el.getAnimations()[0]?.currentTime);
   await collection.locator(".collection-window").hover();
-  await expect.poll(() => track.evaluate((el) => el.getAnimations()[0]?.currentTime)).toBeGreaterThan(before + 100);
-  await expect(track).toHaveCSS("animation-play-state", "running");
+  await expect(collection.locator(".collection-window")).toHaveAttribute("data-motion", "auto");
+  expect(await collectionSpeed(track)).toBeGreaterThan(20);
 });
