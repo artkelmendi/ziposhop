@@ -53,6 +53,7 @@ The production hosts serve `dist/`. The GitHub Pages deployment is configured be
 
 The public storefront is hosted at https://artkelmendi.github.io/ziposhop/.
 Pushing to `main` on `artkelmendi/ziposhop` runs `.github/workflows/deploy.yml`, builds with `--base=/ziposhop/`, and publishes `dist/` through GitHub Pages.
+Build/upload and deployment run in separate jobs linked by `needs: build`, avoiding the intermittent artifact-visibility issue when uploading and publishing in the same job.
 The router, product images and collection request use Vite's base URL, so local development and root-hosted builds still work without extra configuration.
 The directory entry points support clean direct links and refreshes on GitHub Pages. Legacy HTML entry points remain available for bookmarks and the existing Supabase password-recovery redirect allowlist; the browser normalizes their visible address after startup.
 
