@@ -30,7 +30,7 @@ export default function Header({ loading }) {
       if (!header.current?.contains(event.target)) setOpen(false);
     }
     function escape(event) {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && toggle.current?.getAttribute("aria-expanded") === "true") {
         setOpen(false);
         toggle.current?.focus();
       }
@@ -48,13 +48,14 @@ export default function Header({ loading }) {
       desktop.removeEventListener("change", resize);
     };
   }, []);
-  function renderLink(link, mobile) {
+  function renderLink(link, mobile, order = 0) {
     return (
       <AppLink
         key={link.page}
         to={link.to}
         className={mobile ? styles.mobileLink : styles.desktopLink}
         aria-current={current === link.page ? "page" : undefined}
+        style={mobile ? { "--nav-order": order } : undefined}
         onClick={() => setOpen(false)}
       >
         {link.label}
@@ -93,7 +94,7 @@ export default function Header({ loading }) {
             aria-label={open ? "Mbyll menunë" : "Hap menunë"}
             onClick={() => setOpen((value) => !value)}
           >
-            <Icon name={open ? "close" : "menu"} />
+            <span className={styles.toggleGlyph} aria-hidden="true"><span /><span /></span>
           </button>
         </div>
       </div>
@@ -102,9 +103,11 @@ export default function Header({ loading }) {
         id="mobile-nav"
         className={styles.mobileNav}
         aria-label="Navigimi në telefon"
-        hidden={!open}
+        data-open={open}
+        aria-hidden={!open}
+        inert={!open}
       >
-        {links.map((link) => renderLink(link, true))}
+        {links.map((link, index) => renderLink(link, true, index))}
       </nav>
     </header>
   );

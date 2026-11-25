@@ -19,6 +19,7 @@ test("the mobile menu has identical rows on every route", async ({ page }) => {
       "Pyetje të shpeshta",
       "Kontakti",
     ]);
+    await expect.poll(() => menu.evaluate(node => node.getAnimations({ subtree: true }).length)).toBe(0);
     const rows = await menu.getByRole("link").evaluateAll((links) =>
       links.map((link) => {
         const box = link.getBoundingClientRect();

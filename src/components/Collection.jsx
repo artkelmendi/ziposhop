@@ -3,6 +3,7 @@ import AppLink from "./AppLink";
 import ProductCard from "./ProductCard";
 import Icon from "./Icon";
 import { useCatalog } from "../data/CatalogContext";
+import useCollectionMotion from "./useCollectionMotion";
 
 export default function Collection() {
   const { products, settings, demo } = useCatalog();
@@ -15,6 +16,7 @@ export default function Collection() {
   const viewport = useRef(null);
   const group = useRef(null);
   const track = useRef(null);
+  const resetMotion = useCollectionMotion({ viewport, track, group, duration, reducedMotion, selection, repetitions });
   useEffect(() => {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
@@ -132,6 +134,7 @@ export default function Collection() {
                       });
                       return;
                     }
+                    resetMotion();
                     const animation = track.current.getAnimations()[0];
                     if (animation)
                       animation.currentTime =

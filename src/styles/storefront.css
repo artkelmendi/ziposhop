@@ -1223,7 +1223,13 @@ svg {
   overflow: hidden;
   margin-inline: calc((100% - 100vw) / 2);
   padding-block: 6px;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
 }
+.collection-window[data-motion="dragging"],
+.collection-window[data-motion="dragging"] .product-card { cursor: grabbing; }
 .collection-track,
 .collection-group {
   display: flex;
@@ -1257,6 +1263,10 @@ svg {
 .has-reduced-motion .collection-window {
   overflow-x: auto;
   padding-inline: max(5vw, calc((100vw - var(--max)) / 2));
+  touch-action: auto;
+  user-select: auto;
+  -webkit-user-select: auto;
+  cursor: auto;
 }
 .has-reduced-motion .collection-repeat,
 .has-reduced-motion [data-filler] {

@@ -15,4 +15,6 @@ Center the links when they fit; preserve one line and allow native horizontal sc
 
 Use the initial categories while catalog data loads, without a skeleton or changing row height. Successful data replaces them with the owner's current categories. Keep new or unusually long names within the rail. The mobile menu opens below both rows and closes on navigation. Anchor offsets and layered service panels account for both rows.
 
+Mobile menu motion: a short clipped reveal and small ordered link entrances explain opening; a faster exit explains dismissal. The two strokes morph into a close mark. CSS transitions reverse from their current position on repeated taps. Inert and aria-hidden update immediately on closing, with visibility hidden after the exit. Reduced motion presents the state immediately. Outside click, Escape, route changes and desktop resizing dismiss it as before.
+
 Validation: Chrome and WebKit at 320, 440, 768 and 1440px; category/product/search navigation; keyboard access to offscreen categories; slow category data and a custom category; persistent header and mobile menu; layered services and iPhone 13 Pro Max portrait/landscape. Screenshots under .impeccable/review/category-nav/ document the rendered result.

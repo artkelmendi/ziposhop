@@ -88,6 +88,12 @@
 .mobileNav {
   display: none;
 }
+.toggleGlyph { position: relative; width: 20px; height: 20px; }
+.toggleGlyph span { position: absolute; top: calc(50% - 0.75px); left: 1px; width: 18px; height: 1.5px; border-radius: 1px; background: currentColor; transition: transform 280ms var(--ease); }
+.toggleGlyph span:first-child { transform: translateY(-4px); }
+.toggleGlyph span:last-child { transform: translateY(4px); }
+.toggle[aria-expanded="true"] .toggleGlyph span:first-child { transform: rotate(45deg); }
+.toggle[aria-expanded="true"] .toggleGlyph span:last-child { transform: rotate(-45deg); }
 .mobileLink {
   display: flex;
   align-items: center;
@@ -159,7 +165,7 @@
   .toggle {
     display: grid;
   }
-  .mobileNav:not([hidden]) {
+  .mobileNav {
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -171,6 +177,28 @@
     box-shadow: 0 12px 20px #1617140e;
     max-height: calc(100dvh - var(--site-header-height));
     overflow-y: auto;
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-6px);
+    transition: clip-path 220ms var(--ease), transform 220ms var(--ease), opacity 160ms ease, visibility 0s 220ms;
+  }
+  .mobileNav[data-open="true"] {
+    visibility: visible;
+    pointer-events: auto;
+    opacity: 1;
+    clip-path: inset(0);
+    transform: translateY(0);
+    transition-duration: 320ms, 320ms, 200ms, 0s;
+    transition-delay: 0s;
+  }
+  .mobileLink { opacity: 0; transform: translateY(-6px); transition: opacity 140ms ease, transform 180ms var(--ease); }
+  .mobileNav[data-open="true"] .mobileLink {
+    opacity: 1;
+    transform: translateY(0);
+    transition-duration: 220ms, 280ms;
+    transition-delay: calc(var(--nav-order) * 25ms);
   }
 }
 @media (hover: none) and (pointer: coarse) {
@@ -181,6 +209,9 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .mobileNav, .mobileLink, .toggleGlyph span { transition: none; }
+  .mobileNav { clip-path: none; transform: none; }
+  .mobileLink { transform: none; }
   .header[data-loading]::after {
     animation: none;
     background: #aaa;
